@@ -3084,6 +3084,12 @@
         </div>
 
         <div class="id-card-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:0.75rem;margin-bottom:0.65rem;flex-wrap:wrap;">
+            <div class="card-title" style="margin:0;">Enrollee ID</div>
+            <button type="button" class="btn btn-ghost" id="downloadIdBtn" onclick="downloadEnrolleeId()" title="Download Enrollee ID as JPEG">
+              ⬇ Download ID (JPEG)
+            </button>
+          </div>
           <div class="id-card" id="studentIdCard" aria-label="Student ID Card">
             <div class="id-photo">
               <div class="id-photo-inner" id="idPhotoInner"><span id="idPhotoLetter">L</span></div>
@@ -3132,6 +3138,10 @@
             </div>
             <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
             <button class="btn btn-ghost" style="margin-left:0.5rem;" onclick="resetProgress()">Reset All Progress</button>
+            <button class="btn btn-danger" style="margin-left:0.5rem;margin-top:0.55rem;" onclick="resetProfile()" title="Clear profile and Rules agreement — you will need to accept the Rules and re-register">
+              ⚠ Reset Profile
+            </button>
+            <p class="hint" style="margin-top:0.65rem;">Reset Profile clears your name, school, email, photo, and Rules acceptance. The Rules and Regulations dialog will appear again before you can sign in.</p>
           </div>
         </div>
       </section>
@@ -6011,6 +6021,253 @@
       alert('Profile saved!');
     }
 
+    function resetProfile() {
+      const msg = 'Reset PROFILE?\n\nThis will clear:\n• Full name, school, and email\n• Profile photo\n• Rules and Regulations acceptance\n\nLearning progress (sessions, quizzes, videos) will be kept.\n\nAfter reset, the Rules and Regulations dialog will appear again. You must agree and re-enter your profile before continuing.\n\nThis cannot be undone.';
+      if (!confirm(msg)) return;
+      try {
+        try { if (typeof destroyPlayer === 'function') destroyPlayer(); } catch (e) {}
+        try { if (typeof stopQuizTimer === 'function') stopQuizTimer(); } catch (e) {}
+        try { if (typeof stopActivityTimer === 'function') stopActivityTimer(); } catch (e) {}
+        activeQuiz = null;
+        window._currentLessonId = null;
+        window._currentCourseId = null;
+
+        state.name = '';
+        state.school = '';
+        state.email = '';
+        state.photoData = '';
+        state.profileComplete = false;
+        state.termsAccepted = false;
+        saveState();
+
+        // Clear edit / onboarding form fields
+        ['nameInput', 'schoolInput', 'emailInput', 'onboardName', 'onboardSchool', 'onboardEmail'].forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
+        });
+        const photoInput = document.getElementById('photoInput');
+        if (photoInput) photoInput.value = '';
+
+        applyProfileToUI();
+        if (typeof updateStudentIdCard === 'function') updateStudentIdCard();
+
+        // Close any open rules modal; force terms gate
+        try { if (typeof closeRulesModal === 'function') closeRulesModal(); } catch (e) {}
+        try { if (typeof closeOnboarding === 'function') closeOnboarding(); } catch (e) {}
+        openTermsGate();
+      } catch (err) {
+        console.error('resetProfile failed', err);
+        alert('Could not fully reset profile. Please try again.');
+      }
+    }
+
+    function downloadEnrolleeId() {
+      const name = (state.name || '').trim() || 'Learner';
+      const school = (state.school || '').trim() || '—';
+      const email = (state.email || '').trim() || '—';
+      const letter = (typeof avatarLetterFromName === 'function') ? avatarLetterFromName(name) : (name.charAt(0) || 'L').toUpperCase();
+
+      // High-res card for print/download
+      const W = 1120;
+      const H = 400;
+      const canvas = document.createElement('canvas');
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        alert('Could not create image. Try another browser.');
+        return;
+      }
+
+      // Background gradient
+      const grad = ctx.createLinearGradient(0, 0, W, H);
+      grad.addColorStop(0, '#0b1c3a');
+      grad.addColorStop(0.55, '#1a3c5e');
+      grad.addColorStop(1, '#0f2744');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Soft highlight
+      const rad = ctx.createRadialGradient(W * 0.9, H * 0.1, 10, W * 0.9, H * 0.1, W * 0.45);
+      rad.addColorStop(0, 'rgba(56,189,248,0.22)');
+      rad.addColorStop(1, 'rgba(56,189,248,0)');
+      ctx.fillStyle = rad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Photo panel
+      const photoW = 300;
+      ctx.fillStyle = '#0a1628';
+      ctx.fillRect(0, 0, photoW, H);
+      ctx.fillStyle = 'rgba(56,189,248,0.35)';
+      ctx.fillRect(photoW - 6, 0, 6, H);
+
+      const photoPad = 28;
+      const photoInnerW = photoW - photoPad * 2;
+      const photoInnerH = Math.min(H - photoPad * 2, Math.round(photoInnerW * 4 / 3));
+      const photoX = photoPad;
+      const photoY = Math.round((H - photoInnerH) / 2);
+      const photoR = 16;
+
+      function roundRectPath(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+
+      function drawLetterAvatar() {
+        const avGrad = ctx.createLinearGradient(photoX, photoY, photoX + photoInnerW, photoY + photoInnerH);
+        avGrad.addColorStop(0, '#6366f1');
+        avGrad.addColorStop(1, '#a855f7');
+        ctx.fillStyle = avGrad;
+        roundRectPath(photoX, photoY, photoInnerW, photoInnerH, photoR);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 120px "Segoe UI", system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(letter, photoX + photoInnerW / 2, photoY + photoInnerH / 2 + 4);
+      }
+
+      function drawLabels() {
+        const left = photoW + 48;
+        let y = 48;
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'alphabetic';
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = '800 18px "Segoe UI", system-ui, sans-serif';
+        ctx.letterSpacing = '2px';
+        ctx.fillText('CALQARE REFRESHER HUB', left, y);
+        y += 28;
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '600 18px "Segoe UI", system-ui, sans-serif';
+        ctx.fillText('www.calqare.com', left, y);
+        y += 48;
+
+        function field(label, value, valueSize, bold) {
+          ctx.fillStyle = '#64748b';
+          ctx.font = '700 14px "Segoe UI", system-ui, sans-serif';
+          ctx.fillText(label.toUpperCase(), left, y);
+          y += 28;
+          ctx.fillStyle = '#f1f5f9';
+          ctx.font = (bold ? '700 ' : '600 ') + valueSize + 'px "Segoe UI", system-ui, sans-serif';
+          // Wrap long values
+          const maxW = W - left - 40;
+          const words = String(value).split(/\s+/);
+          let line = '';
+          for (let i = 0; i < words.length; i++) {
+            const test = line ? line + ' ' + words[i] : words[i];
+            if (ctx.measureText(test).width > maxW && line) {
+              ctx.fillText(line, left, y);
+              y += valueSize + 6;
+              line = words[i];
+            } else {
+              line = test;
+            }
+          }
+          if (line) {
+            ctx.fillText(line, left, y);
+            y += valueSize + 22;
+          } else {
+            y += 22;
+          }
+        }
+
+        field('Full Name', name, 28, true);
+        field('School', school, 22, false);
+        field('Email Address', email, 22, false);
+
+        // Footer bar
+        const footY = H - 52;
+        ctx.strokeStyle = 'rgba(148,163,184,0.35)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(left, footY);
+        ctx.lineTo(W - 40, footY);
+        ctx.stroke();
+
+        // Badge chip
+        const badgeText = 'ENROLLEE ID';
+        ctx.font = '800 14px "Segoe UI", system-ui, sans-serif';
+        const bw = ctx.measureText(badgeText).width + 24;
+        const bh = 28;
+        const bx = left;
+        const by = footY + 14;
+        ctx.fillStyle = 'rgba(56,189,248,0.25)';
+        roundRectPath(bx, by, bw, bh, 6);
+        ctx.fill();
+        ctx.fillStyle = '#7dd3fc';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(badgeText, bx + 12, by + bh / 2);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '600 16px "Segoe UI", system-ui, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('Civil Engineering Board Exam', W - 40, by + bh / 2);
+      }
+
+      function finishAndDownload() {
+        drawLabels();
+        try {
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+          const a = document.createElement('a');
+          const safe = name.replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 40) || 'Enrollee';
+          a.href = dataUrl;
+          a.download = 'CALQARE_Enrollee_ID_' + safe + '.jpg';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        } catch (err) {
+          console.error(err);
+          alert('Could not download the ID image. Please try again.');
+        }
+      }
+
+      if (state.photoData) {
+        const img = new Image();
+        img.onload = function () {
+          ctx.save();
+          roundRectPath(photoX, photoY, photoInnerW, photoInnerH, photoR);
+          ctx.clip();
+          // Cover fit
+          const ir = img.width / img.height;
+          const br = photoInnerW / photoInnerH;
+          let dw, dh, dx, dy;
+          if (ir > br) {
+            dh = photoInnerH;
+            dw = img.width * (photoInnerH / img.height);
+            dx = photoX - (dw - photoInnerW) / 2;
+            dy = photoY;
+          } else {
+            dw = photoInnerW;
+            dh = img.height * (photoInnerW / img.width);
+            dx = photoX;
+            dy = photoY - (dh - photoInnerH) / 2;
+          }
+          ctx.drawImage(img, dx, dy, dw, dh);
+          ctx.restore();
+          // Soft border
+          ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+          ctx.lineWidth = 2;
+          roundRectPath(photoX, photoY, photoInnerW, photoInnerH, photoR);
+          ctx.stroke();
+          finishAndDownload();
+        };
+        img.onerror = function () {
+          drawLetterAvatar();
+          finishAndDownload();
+        };
+        img.src = state.photoData;
+      } else {
+        drawLetterAvatar();
+        finishAndDownload();
+      }
+    }
+
     function resetProgress() {
       const msg = 'Reset ALL learning progress?\n\nThis clears:\n• Completed sessions\n• Quiz scores & history\n• Video / activity progress\n\nYour profile (name, school, email, photo) and Rules acceptance will be kept.\n\nThis cannot be undone.';
       if (!confirm(msg)) return;
@@ -6080,6 +6337,10 @@
     }
 
     function showSection(id) {
+      if (!state.termsAccepted) {
+        openTermsGate();
+        return;
+      }
       if (!isProfileComplete() && id !== 'profile') {
         openOnboarding();
         return;
