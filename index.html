@@ -886,6 +886,87 @@
       color: #fff;
     }
     .btn-danger:hover { filter: brightness(0.92); }
+    .btn-danger:active { filter: brightness(0.88); }
+
+    /* Profile action buttons — stack full-width on narrow screens for reliable mobile taps */
+    .profile-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.35rem;
+    }
+    .profile-actions .btn {
+      min-height: 44px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: rgba(37, 99, 235, 0.2);
+    }
+    @media (max-width: 560px) {
+      .profile-actions {
+        flex-direction: column;
+      }
+      .profile-actions .btn {
+        width: 100%;
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+        justify-content: center;
+      }
+      #downloadIdBtn {
+        min-height: 44px;
+        width: 100%;
+        justify-content: center;
+        touch-action: manipulation;
+      }
+    }
+
+    /* In-app confirm (more reliable than window.confirm on some mobile browsers) */
+    .confirm-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.72);
+      z-index: 4000;
+      align-items: center;
+      justify-content: center;
+      padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+      box-sizing: border-box;
+      -webkit-overflow-scrolling: touch;
+    }
+    .confirm-overlay.open { display: flex; }
+    .confirm-modal {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      width: min(100%, 420px);
+      max-height: min(85dvh, 90vh);
+      overflow: auto;
+      padding: 1.15rem 1.15rem 1rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      animation: calPop 0.2s ease;
+    }
+    .confirm-modal h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.55rem;
+    }
+    .confirm-modal p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      white-space: pre-line;
+      margin-bottom: 1rem;
+    }
+    .confirm-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .confirm-actions .btn {
+      flex: 1;
+      min-width: 120px;
+      min-height: 44px;
+      justify-content: center;
+      touch-action: manipulation;
+    }
 
     /* Rules read-only dialog (from Profile) */
     .rules-overlay {
@@ -2777,7 +2858,7 @@
         <span id="sidebarThemeLabel">🌙 Dark mode<span class="sub">Switch appearance</span></span>
         <span class="sidebar-theme-switch" id="sidebarThemeSwitch" aria-hidden="true"></span>
       </button>
-      <button type="button" onclick="resetProgress()" title="Clear all completed sessions, quizzes, and video progress">
+      <button type="button" onclick="resetProgress()" title="Clear all completed sessions, quizzes, and video progress" style="min-height:40px;touch-action:manipulation;-webkit-tap-highlight-color:rgba(255,255,255,0.12);">
         🔄 Reset All Progress
       </button>
     </div>
@@ -3136,11 +3217,13 @@
               </div>
               <div class="hint">Image is stored on this device only (local browser storage).</div>
             </div>
-            <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
-            <button class="btn btn-ghost" style="margin-left:0.5rem;" onclick="resetProgress()">Reset All Progress</button>
-            <button class="btn btn-danger" style="margin-left:0.5rem;margin-top:0.55rem;" onclick="resetProfile()" title="Clear profile and Rules agreement — you will need to accept the Rules and re-register">
-              ⚠ Reset Profile
-            </button>
+            <div class="profile-actions">
+              <button type="button" class="btn btn-primary" id="saveProfileBtn" onclick="saveProfile()">Save Changes</button>
+              <button type="button" class="btn btn-ghost" id="resetProgressBtn" onclick="resetProgress()">Reset All Progress</button>
+              <button type="button" class="btn btn-danger" id="resetProfileBtn" onclick="resetProfile()" title="Clear profile and Rules agreement — you will need to accept the Rules and re-register">
+                ⚠ Reset Profile
+              </button>
+            </div>
             <p class="hint" style="margin-top:0.65rem;">Reset Profile clears your name, school, email, photo, and Rules acceptance. The Rules and Regulations dialog will appear again before you can sign in.</p>
           </div>
         </div>
@@ -3171,6 +3254,18 @@
   </div>
 
   
+
+  <!-- In-app confirm dialog (mobile-friendly) -->
+  <div class="confirm-overlay" id="confirmOverlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" onclick="if(event.target===this)closeAppConfirm(false)">
+    <div class="confirm-modal">
+      <h3 id="confirmTitle">Confirm</h3>
+      <p id="confirmMessage"></p>
+      <div class="confirm-actions">
+        <button type="button" class="btn btn-ghost" id="confirmCancelBtn" onclick="closeAppConfirm(false)">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmOkBtn" onclick="closeAppConfirm(true)">Confirm</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Rules & Regulations agreement gate (must accept before Hub) -->
   <div class="terms-overlay" id="termsOverlay" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
@@ -6021,9 +6116,55 @@
       alert('Profile saved!');
     }
 
-    function resetProfile() {
-      const msg = 'Reset PROFILE?\n\nThis will clear:\n• Full name, school, and email\n• Profile photo\n• Rules and Regulations acceptance\n\nLearning progress (sessions, quizzes, videos) will be kept.\n\nAfter reset, the Rules and Regulations dialog will appear again. You must agree and re-enter your profile before continuing.\n\nThis cannot be undone.';
-      if (!confirm(msg)) return;
+    // Mobile-friendly confirm (native window.confirm is unreliable on some phones)
+    var _confirmResolve = null;
+    function openAppConfirm(title, message, okLabel, okDanger) {
+      return new Promise(function (resolve) {
+        _confirmResolve = resolve;
+        var ov = document.getElementById('confirmOverlay');
+        var titleEl = document.getElementById('confirmTitle');
+        var msgEl = document.getElementById('confirmMessage');
+        var okBtn = document.getElementById('confirmOkBtn');
+        var cancelBtn = document.getElementById('confirmCancelBtn');
+        if (!ov) {
+          // Fallback if overlay missing
+          resolve(window.confirm(message));
+          return;
+        }
+        if (titleEl) titleEl.textContent = title || 'Confirm';
+        if (msgEl) msgEl.textContent = message || '';
+        if (okBtn) {
+          okBtn.textContent = okLabel || 'Confirm';
+          okBtn.className = 'btn ' + (okDanger === false ? 'btn-primary' : 'btn-danger');
+        }
+        if (cancelBtn) cancelBtn.textContent = 'Cancel';
+        ov.classList.add('open');
+        try { document.body.style.overflow = 'hidden'; } catch (e) {}
+        // Focus OK for accessibility; delay so mobile keyboard doesn't jump
+        setTimeout(function () {
+          try { if (okBtn) okBtn.focus(); } catch (e) {}
+        }, 50);
+      });
+    }
+    function closeAppConfirm(ok) {
+      var ov = document.getElementById('confirmOverlay');
+      if (ov) ov.classList.remove('open');
+      // Only restore body scroll if no higher-priority overlay is open
+      var termsOpen = document.getElementById('termsOverlay') && document.getElementById('termsOverlay').classList.contains('open');
+      var onboardOpen = document.getElementById('onboardOverlay') && document.getElementById('onboardOverlay').classList.contains('open');
+      var rulesOpen = document.getElementById('rulesOverlay') && document.getElementById('rulesOverlay').classList.contains('open');
+      if (!termsOpen && !onboardOpen && !rulesOpen) {
+        try { document.body.style.overflow = ''; } catch (e) {}
+      }
+      var r = _confirmResolve;
+      _confirmResolve = null;
+      if (typeof r === 'function') r(!!ok);
+    }
+    // Expose for inline handlers
+    window.closeAppConfirm = closeAppConfirm;
+    window.openAppConfirm = openAppConfirm;
+
+    function doResetProfile() {
       try {
         try { if (typeof destroyPlayer === 'function') destroyPlayer(); } catch (e) {}
         try { if (typeof stopQuizTimer === 'function') stopQuizTimer(); } catch (e) {}
@@ -6051,15 +6192,27 @@
         applyProfileToUI();
         if (typeof updateStudentIdCard === 'function') updateStudentIdCard();
 
-        // Close any open rules modal; force terms gate
+        // Close any open rules/onboarding modals; force terms gate
         try { if (typeof closeRulesModal === 'function') closeRulesModal(); } catch (e) {}
         try { if (typeof closeOnboarding === 'function') closeOnboarding(); } catch (e) {}
-        openTermsGate();
+
+        // Defer slightly so mobile browsers finish the confirm dismiss animation
+        setTimeout(function () {
+          openTermsGate();
+        }, 80);
       } catch (err) {
         console.error('resetProfile failed', err);
         alert('Could not fully reset profile. Please try again.');
       }
     }
+
+    function resetProfile() {
+      var msg = 'This will clear:\n• Full name, school, and email\n• Profile photo\n• Rules and Regulations acceptance\n\nLearning progress (sessions, quizzes, videos) will be kept.\n\nAfter reset, the Rules dialog will appear again. You must agree and re-enter your profile before continuing.\n\nThis cannot be undone.';
+      openAppConfirm('Reset Profile?', msg, 'Reset Profile', true).then(function (ok) {
+        if (ok) doResetProfile();
+      });
+    }
+    window.resetProfile = resetProfile;
 
     function downloadEnrolleeId() {
       const name = (state.name || '').trim() || 'Learner';
@@ -6268,10 +6421,7 @@
       }
     }
 
-    function resetProgress() {
-      const msg = 'Reset ALL learning progress?\n\nThis clears:\n• Completed sessions\n• Quiz scores & history\n• Video / activity progress\n\nYour profile (name, school, email, photo) and Rules acceptance will be kept.\n\nThis cannot be undone.';
-      if (!confirm(msg)) return;
-
+    function doResetProgress() {
       try {
         // Stop any active learning session
         try { if (typeof destroyPlayer === 'function') destroyPlayer(); } catch (e) {}
@@ -6335,6 +6485,14 @@
         alert('Could not fully reset progress. Please try again or clear site data for this page.');
       }
     }
+
+    function resetProgress() {
+      var msg = 'This clears:\n• Completed sessions\n• Quiz scores & history\n• Video / activity progress\n\nYour profile (name, school, email, photo) and Rules acceptance will be kept.\n\nThis cannot be undone.';
+      openAppConfirm('Reset All Progress?', msg, 'Reset Progress', true).then(function (ok) {
+        if (ok) doResetProgress();
+      });
+    }
+    window.resetProgress = resetProgress;
 
     function showSection(id) {
       if (!state.termsAccepted) {
@@ -7380,19 +7538,46 @@
     function openTermsGate() {
       const ov = document.getElementById('termsOverlay');
       if (!ov) return;
-      ov.classList.add('open');
-      ov.scrollTop = 0;
-      document.body.style.overflow = 'hidden';
+      // Close confirm overlay if still visible
+      try {
+        const conf = document.getElementById('confirmOverlay');
+        if (conf) conf.classList.remove('open');
+      } catch (e) {}
       // Keep profile onboarding closed until terms accepted
       const onboard = document.getElementById('onboardOverlay');
       if (onboard) onboard.classList.remove('open');
+      // Force visible on mobile (class + inline display as backup)
+      ov.classList.add('open');
+      ov.style.display = 'flex';
+      ov.scrollTop = 0;
+      try {
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+      } catch (e) {}
+      // iOS: ensure overlay is painted above the current view
+      try {
+        ov.offsetHeight; // reflow
+        window.scrollTo(0, 0);
+      } catch (e) {}
+      setTimeout(function () {
+        try {
+          var body = document.getElementById('termsBody');
+          if (body) body.scrollTop = 0;
+          var agree = ov.querySelector('.btn-primary');
+          if (agree) agree.focus();
+        } catch (e) {}
+      }, 60);
     }
 
     function closeTermsGate() {
       const ov = document.getElementById('termsOverlay');
       if (!ov) return;
       ov.classList.remove('open');
-      document.body.style.overflow = '';
+      ov.style.display = '';
+      try {
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      } catch (e) {}
     }
 
     function acceptTerms() {
