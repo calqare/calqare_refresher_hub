@@ -6012,29 +6012,70 @@
     }
 
     function resetProgress() {
-      if (confirm('Reset all progress AND profile information? This cannot be undone.\n\nYou will need to fill in your profile again.')) {
-        state = {
-          name: '',
-          school: '',
-          email: '',
-          photoData: '',
-          profileComplete: false,
-          completed: {},
-          quizScores: {},
-          videoProgress: {},
-          quizHistory: [],
-          activity: {},
-          forceUnlock: false
-        };
+      const msg = 'Reset ALL learning progress?\n\nThis clears:\n• Completed sessions\n• Quiz scores & history\n• Video / activity progress\n\nYour profile (name, school, email, photo) and Rules acceptance will be kept.\n\nThis cannot be undone.';
+      if (!confirm(msg)) return;
+
+      try {
+        // Stop any active learning session
+        try { if (typeof destroyPlayer === 'function') destroyPlayer(); } catch (e) {}
+        try { if (typeof stopQuizTimer === 'function') stopQuizTimer(); } catch (e) {}
+        try { if (typeof stopActivityTimer === 'function') stopActivityTimer(); } catch (e) {}
+        activeQuiz = null;
+        window._currentLessonId = null;
+        window._currentCourseId = null;
+
+        // Destroy analytics charts if present
+        try {
+          if (typeof chartInstances === 'object' && chartInstances) {
+            Object.keys(chartInstances).forEach(function (k) {
+              try { if (chartInstances[k] && chartInstances[k].destroy) chartInstances[k].destroy(); } catch (e) {}
+              chartInstances[k] = null;
+            });
+          }
+        } catch (e) {}
+
+        // Keep identity / terms; clear learning progress only
+        state.completed = {};
+        state.quizScores = {};
+        state.videoProgress = {};
+        state.quizHistory = [];
+        state.activity = {};
+        // forceUnlock is an internal debug gate — leave as-is (do not re-lock admin unlock)
+
         saveState();
-        applyProfileToUI();
-        updateDashboard();
-        renderCourses();
-        renderTests();
-        renderProgress();
-        if (document.getElementById('dashboard').classList.contains('active')) renderAnalytics();
-        openOnboarding();
-        alert('Progress and profile have been reset.');
+
+        // Refresh all progress-driven UI
+        if (typeof applyProfileToUI === 'function') applyProfileToUI();
+        if (typeof updateDashboard === 'function') updateDashboard();
+        if (typeof renderCourses === 'function') renderCourses();
+        if (typeof renderTests === 'function') renderTests();
+        if (typeof renderProgress === 'function') renderProgress();
+        if (typeof updateWeeklyFromCalendar === 'function') updateWeeklyFromCalendar();
+        if (typeof updateTodaySchedule === 'function') updateTodaySchedule();
+        if (typeof renderLatestDownloads === 'function') renderLatestDownloads();
+        if (typeof updateSessionBulletin === 'function') updateSessionBulletin();
+
+        const dash = document.getElementById('dashboard');
+        if (dash && dash.classList.contains('active') && typeof renderAnalytics === 'function') {
+          renderAnalytics();
+        }
+
+        // Leave lesson/course detail views so stale completed locks are not shown
+        const lessonView = document.getElementById('lessonView');
+        const courseDetail = document.getElementById('courseDetail');
+        if ((lessonView && lessonView.classList.contains('active')) ||
+            (courseDetail && courseDetail.classList.contains('active'))) {
+          if (typeof showSection === 'function') showSection('home');
+        } else if (typeof showSection === 'function') {
+          // Re-show current section to refresh lists
+          const active = document.querySelector('.section.active');
+          if (active && active.id) showSection(active.id);
+        }
+
+        alert('All learning progress has been reset.');
+      } catch (err) {
+        console.error('resetProgress failed', err);
+        alert('Could not fully reset progress. Please try again or clear site data for this page.');
       }
     }
 
