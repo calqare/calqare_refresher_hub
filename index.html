@@ -784,10 +784,11 @@
       inset: 0;
       background: rgba(15, 23, 42, 0.78);
       z-index: 3000;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
-      padding: 1.25rem 1rem 2rem;
-      overflow-y: auto;
+      padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+      overflow: hidden;
+      box-sizing: border-box;
     }
     .terms-overlay.open { display: flex; }
     .terms-modal {
@@ -795,46 +796,59 @@
       color: var(--text);
       border-radius: 16px;
       box-shadow: 0 24px 64px rgba(0,0,0,0.4);
-      width: 100%;
-      max-width: 640px;
-      max-height: min(92vh, calc(100vh - 2.5rem));
+      width: min(100%, 640px);
+      max-width: 100%;
+      height: min(85vh, 720px);
+      max-height: min(85dvh, calc(100vh - 1.5rem), calc(100dvh - 1.5rem));
       overflow: hidden;
       display: flex;
       flex-direction: column;
       border: 1px solid var(--border);
-      margin-top: 0.5rem;
       animation: calPop 0.25s ease;
+      margin: 0 auto;
     }
     .terms-modal-head {
-      padding: 1.25rem 1.35rem 0.75rem;
+      padding: 1.1rem 1.25rem 0.7rem;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
     .terms-modal-head h2 {
-      font-size: 1.25rem;
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
       margin-bottom: 0.25rem;
     }
     .terms-modal-head p {
       color: var(--text-muted);
-      font-size: 0.88rem;
+      font-size: clamp(0.8rem, 2vw, 0.88rem);
       line-height: 1.45;
     }
     .terms-body {
-      padding: 1rem 1.35rem;
+      padding: 0.85rem 1.15rem;
+      overflow-x: hidden;
       overflow-y: auto;
-      flex: 1;
+      flex: 1 1 auto;
       min-height: 0;
-      font-size: 0.88rem;
+      max-height: 100%;
+      font-size: clamp(0.8rem, 2vw, 0.88rem);
       line-height: 1.55;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
     }
+    .terms-body::-webkit-scrollbar { width: 8px; }
+    .terms-body::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 999px;
+    }
+    .terms-body::-webkit-scrollbar-track { background: transparent; }
     .terms-cat {
-      margin-bottom: 1.15rem;
-      padding-bottom: 0.85rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
       border-bottom: 1px solid var(--border);
     }
     .terms-cat:last-child { border-bottom: none; margin-bottom: 0; }
     .terms-cat h3 {
-      font-size: 0.92rem;
+      font-size: clamp(0.85rem, 2.2vw, 0.92rem);
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 0.4rem;
@@ -858,15 +872,15 @@
     .terms-cat li { margin-bottom: 0.25rem; color: var(--text); }
     .terms-cat p { color: var(--text); margin-bottom: 0.35rem; }
     .terms-actions {
-      padding: 1rem 1.35rem 1.25rem;
+      padding: 0.85rem 1.15rem 1rem;
       border-top: 1px solid var(--border);
       display: flex;
       flex-wrap: wrap;
-      gap: 0.65rem;
+      gap: 0.55rem;
       flex-shrink: 0;
       background: var(--surface-2);
     }
-    .terms-actions .btn { flex: 1; justify-content: center; min-width: 140px; }
+    .terms-actions .btn { flex: 1; justify-content: center; min-width: 120px; }
     .btn-danger {
       background: var(--danger);
       color: #fff;
@@ -880,10 +894,11 @@
       inset: 0;
       background: var(--modal-overlay);
       z-index: 2100;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
-      padding: 1.25rem 1rem 2rem;
-      overflow-y: auto;
+      padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+      overflow: hidden;
+      box-sizing: border-box;
     }
     .rules-overlay.open { display: flex; }
     .rules-modal {
@@ -891,19 +906,20 @@
       color: var(--text);
       border-radius: 16px;
       box-shadow: 0 24px 64px rgba(0,0,0,0.35);
-      width: 100%;
-      max-width: 640px;
-      max-height: min(92vh, calc(100vh - 2.5rem));
+      width: min(100%, 640px);
+      max-width: 100%;
+      height: min(85vh, 720px);
+      max-height: min(85dvh, calc(100vh - 1.5rem), calc(100dvh - 1.5rem));
       overflow: hidden;
       display: flex;
       flex-direction: column;
       border: 1px solid var(--border);
-      margin-top: 0.5rem;
       animation: calPop 0.25s ease;
       position: relative;
+      margin: 0 auto;
     }
     .rules-modal-head {
-      padding: 1.15rem 1.35rem 0.75rem;
+      padding: 1rem 1.15rem 0.7rem;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -911,7 +927,10 @@
       gap: 0.75rem;
       flex-shrink: 0;
     }
-    .rules-modal-head h2 { font-size: 1.2rem; margin: 0; }
+    .rules-modal-head h2 {
+      font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+      margin: 0;
+    }
     .rules-modal-close {
       width: 36px; height: 36px;
       border-radius: 50%;
@@ -926,12 +945,59 @@
     }
     .rules-modal-close:hover { background: var(--border); }
     .rules-body {
-      padding: 1rem 1.35rem 1.35rem;
+      padding: 0.85rem 1.15rem 1.15rem;
+      overflow-x: hidden;
       overflow-y: auto;
-      flex: 1;
+      flex: 1 1 auto;
       min-height: 0;
-      font-size: 0.88rem;
+      max-height: 100%;
+      font-size: clamp(0.8rem, 2vw, 0.88rem);
       line-height: 1.55;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .rules-body::-webkit-scrollbar { width: 8px; }
+    .rules-body::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 999px;
+    }
+    .rules-body::-webkit-scrollbar-track { background: transparent; }
+
+    @media (max-width: 560px) {
+      .terms-modal,
+      .rules-modal {
+        width: 100%;
+        height: min(88dvh, calc(100vh - 1rem));
+        max-height: min(88dvh, calc(100vh - 1rem));
+        border-radius: 14px;
+      }
+      .terms-actions .btn {
+        min-width: 100%;
+        flex: 1 1 100%;
+      }
+      .terms-modal-head,
+      .rules-modal-head {
+        padding: 0.9rem 0.95rem 0.6rem;
+      }
+      .terms-body,
+      .rules-body {
+        padding: 0.75rem 0.95rem;
+      }
+      .terms-actions {
+        padding: 0.75rem 0.95rem 0.9rem;
+      }
+    }
+    @media (max-height: 560px) {
+      .terms-modal,
+      .rules-modal {
+        height: min(92dvh, calc(100vh - 0.75rem));
+        max-height: min(92dvh, calc(100vh - 0.75rem));
+      }
+      .terms-modal-head h2,
+      .rules-modal-head h2 { font-size: 1rem; }
+      .terms-modal-head p { font-size: 0.78rem; }
     }
 
     /* Student ID Card */
