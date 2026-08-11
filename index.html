@@ -474,8 +474,39 @@
       transition: all 0.15s;
     }
 
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary { background: var(--primary); color: #ffffff !important; }
+    a.btn-primary, a.btn-primary:visited, a.btn-primary:hover, a.btn-primary:active {
+      color: #ffffff !important;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: var(--primary-hover); color: #ffffff !important; }
+    .schedule-mode-toggle {
+      display: inline-flex;
+      gap: 0.25rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.15rem;
+      margin-bottom: 0.55rem;
+    }
+    .schedule-mode-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .schedule-mode-btn:hover { color: var(--text); }
+    .schedule-mode-btn.active {
+      background: var(--primary);
+      color: #ffffff !important;
+    }
     .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
     .btn-ghost:hover { background: var(--surface-2); color: var(--text); }
     .btn-success { background: var(--success); color: white; }
@@ -2417,13 +2448,17 @@
     .slideshow-dot.active { background: var(--primary); }
     .slideshow-notice {
       margin-top: 0.75rem;
-      padding: 0.65rem 0.9rem;
+      padding: 0.75rem 0.95rem;
       border-radius: 8px;
       background: rgba(245,158,11,0.12);
       border: 1px solid rgba(245,158,11,0.35);
       color: #fbbf24;
       font-size: 0.85rem;
-      line-height: 1.45;
+      line-height: 1.55;
+    }
+    html[data-theme="dark"] .slideshow-notice {
+      color: #fcd34d;
+      background: rgba(245,158,11,0.14);
     }
 
     /* Quiz UI */
@@ -2963,10 +2998,14 @@
         <div class="hub-bottom">
           <div class="hub-panel">
             <div class="hub-panel-head">
-              <span class="hub-panel-title">Weekly Schedule</span>
+              <span class="hub-panel-title" id="schedulePanelTitle">Weekly Schedule</span>
               <button class="hub-link" type="button" onclick="openCalendarModal()">View Full Calendar</button>
             </div>
             <div class="hub-bottom-body">
+              <div class="schedule-mode-toggle" role="group" aria-label="Schedule view mode">
+                <button type="button" class="schedule-mode-btn active" id="schedModeWeekly" onclick="setScheduleViewMode('weekly')">Weekly Schedule</button>
+                <button type="button" class="schedule-mode-btn" id="schedModeAll" onclick="setScheduleViewMode('all')">All Schedule</button>
+              </div>
               <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;" id="weekScheduleRange">This week</p>
               <table class="week-table">
                 <tbody id="weekScheduleBody">
@@ -3496,20 +3535,50 @@
         badge: 'MSTHC',
         badgeClass: 'badge-orange',
         lessons: [
-          { id: 'msthc-aug11', title: 'August 11 Session', subtitle: 'Start of Refresher Program • MSTHC – Live (GMeet) Discussion · Algebra, Plane and Spherical Trigonometry', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-11T08:00:00+08:00', pdfUrl: 'https://drive.google.com/file/d/1CrLLn5D0z_CzSXD-2KRaPTRXSO8uwYqt/preview', content: 'Session topics:\n• Algebra, Plane and Spherical Trigonometry\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug12', title: 'August 12 Session', subtitle: 'MSTHC – Self-Paced Session · Plane and Solid Geometry', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-12T08:00:00+08:00', content: 'Session topics:\n• Plane and Solid Geometry\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug13', title: 'August 13 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Plane and Space Analytic Geometry', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-13T08:00:00+08:00', content: 'Session topics:\n• Plane and Space Analytic Geometry\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug14', title: 'August 14 Session', subtitle: 'MSTHC – Self-Paced Session · Differential Calculus', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-14T08:00:00+08:00', content: 'Session topics:\n• Differential Calculus\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug15', title: 'August 15 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Integral Calculus and Differential Equations', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-15T08:00:00+08:00', content: 'Session topics:\n• Integral Calculus and Differential Equations\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug16', title: 'August 16 Session', subtitle: '75 items – MSTHC Supplemental Problem Set · Problem Set (Topics from August 11–15)', type: 'set', duration: 'Problem Set', unlockAt: '2026-08-16T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Topics from August 11–15)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
-          { id: 'msthc-aug17', title: 'August 17 Session', subtitle: 'MSTHC – Self-Paced Session · Engineering Economy; Advanced Mathematics, Numerical Methods, Permutations', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-17T08:00:00+08:00', content: 'Session topics:\n• Engineering Economy\n• Advanced Mathematics, Numerical Methods, Permutations\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug18', title: 'August 18 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Combinations, Probability and Statistics', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-18T08:00:00+08:00', content: 'Session topics:\n• Combinations, Probability and Statistics\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug19', title: 'August 19 Session', subtitle: 'MSTHC – Self-Paced Session · Elementary and Higher Surveying', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-19T08:00:00+08:00', content: 'Session topics:\n• Elementary and Higher Surveying\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug20', title: 'August 20 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Highway Engineering', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-20T08:00:00+08:00', content: 'Session topics:\n• Highway Engineering\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug21', title: 'August 21 Session', subtitle: 'MSTHC – Self-Paced Session · Transportation Engineering', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-21T08:00:00+08:00', content: 'Session topics:\n• Transportation Engineering\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug22', title: 'August 22 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Ports and Harbors; Construction Equipment Productivity', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-22T08:00:00+08:00', content: 'Session topics:\n• Ports and Harbors; Construction Equipment Productivity\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug23', title: 'August 23 Session', subtitle: '75 items – MSTHC Supplemental Problem Set · Problem Set (Topics from August 17–22)', type: 'set', duration: 'Problem Set', unlockAt: '2026-08-23T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Topics from August 17–22)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
-          { id: 'msthc-aug25', title: 'August 25 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Construction Estimates, Project Management and Safety', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-25T08:00:00+08:00', content: 'Session topics:\n• Construction Estimates, Project Management and Safety\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' }
+          { id: 'msthc-aug11', title: '2026 August 11 Session', subtitle: 'Start of Refresher Program • MSTHC – Live (GMeet) Discussion · Algebra', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/qr7i-6u_N7o', unlockAt: '2026-08-11T08:00:00+08:00', pdfUrl: 'https://drive.google.com/file/d/18eh3amJT6J-Pj88uqnP7x2kdFa2ug5RE/preview', images: ['https://lh3.googleusercontent.com/d/16qGuPkqNbUAd9Tkv5DCWFyZGRqJ7PWIM=w1920',
+            'https://lh3.googleusercontent.com/d/13qkljgD-Zi1bwMc1u8AHdGVWPilTJxjU=w1920',
+            'https://lh3.googleusercontent.com/d/1OmncDgKGoMjBPq0eBr5f_CrS_qgMMp2y=w1920',
+            'https://lh3.googleusercontent.com/d/1yjq1HelvWjckAvSrxKAedo2PDEQN52_z=w1920',
+            'https://lh3.googleusercontent.com/d/1B402cV5bqA0NtRjZvvYl5WYxlMPJEU1Y=w1920',
+            'https://lh3.googleusercontent.com/d/171IpPhE2bkSZA-0W_InysJQEXT_L7naB=w1920',
+            'https://lh3.googleusercontent.com/d/1uW4kNXZQoBgwPuMyGq7ykeZdNnwYWZXS=w1920',
+            'https://lh3.googleusercontent.com/d/1fKk-6ULIwKAG8i_lUuaUZ-Lt3iV3iRoa=w1920',
+            'https://lh3.googleusercontent.com/d/1FQg2YxScCYEXkPB3p25ICFPses2riRHv=w1920',
+            'https://lh3.googleusercontent.com/d/186SZ0N0IKS18rELzI-uCY0IcOvfWnIEw=w1920',
+            'https://lh3.googleusercontent.com/d/1c18xabC5aYets0khI6b0CVchFZMfESIY=w1920',
+            'https://lh3.googleusercontent.com/d/18QIJTHz2rSB45UHbbWqYrQZeWb66cfCJ=w1920',
+            'https://lh3.googleusercontent.com/d/1SDAkCRizmIKYs8nG6FN3ywJLZerlXZKt=w1920',
+            'https://lh3.googleusercontent.com/d/1_QXCE0rL8T5tFt5IKUlfvODvrCyuI_vW=w1920',
+            'https://lh3.googleusercontent.com/d/1yff5Ze33QafAI51N5Ah2ebgJser1i77p=w1920',
+            'https://lh3.googleusercontent.com/d/14jOJnKwHvJMhmNsK4XnxEzftJi2-6vI5=w1920',
+            'https://lh3.googleusercontent.com/d/1de5DhLLyYqV7AuSAYhnmLeZhkEs0Ev9d=w1920',
+            'https://lh3.googleusercontent.com/d/1GPlbuGKZ8eETgudhyuxA7sXLhaf7u5T0=w1920',
+            'https://lh3.googleusercontent.com/d/1hoLRUd-ShMr1xRNNxRUyBSzvAAM9CMD7=w1920',
+            'https://lh3.googleusercontent.com/d/1xEmZChN0A0WHF8pO1oL2yRbZOZpjQlQC=w1920',
+            'https://lh3.googleusercontent.com/d/1LywjsSARwJi64LdWhXCUyteXmjNmzH5C=w1920',
+            'https://lh3.googleusercontent.com/d/1jRPGs89uLs2yYG4CHz1YAELA6pR0QnXP=w1920',
+            'https://lh3.googleusercontent.com/d/1oPNy_KXwWbDgQossZxIa6rEzZ2ZD7PFH=w1920',
+            'https://lh3.googleusercontent.com/d/1t3mfwQEdNrc87gQZ3pIwqhauQnC1W32u=w1920',
+            'https://lh3.googleusercontent.com/d/1WueYciktRrqCJogQpw7cZPDj9k_xIa51=w1920',
+            'https://lh3.googleusercontent.com/d/1F6_XP-fSfAg0a0SSihI9DJH5T7Jna5VN=w1920',
+            'https://lh3.googleusercontent.com/d/1Sv6Z-cDdNnb9RMAm_94BwEvKWk8oIG86=w1920',
+            'https://lh3.googleusercontent.com/d/1q7nBVOGPkGQFF84M0ZI8zfKAzWbJm89R=w1920',
+            'https://lh3.googleusercontent.com/d/16qPvigFzotuFpxp2hQGD3dZuJA-cMlZA=w1920',
+            'https://lh3.googleusercontent.com/d/1L487ebkCCY2y4uqoQuWh5trWbStLFRIu=w1920',
+            'https://lh3.googleusercontent.com/d/1kDQkKCFNSVLgKDTDCpwOG3hbdYrOfu40=w1920'], content: 'Session topics:\n• Algebra\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug12', title: '2026 August 12 Session', subtitle: 'MSTHC – Self-Paced Session · Trigonometry and Plane Geometry', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-12T08:00:00+08:00', content: 'Session topics:\n• Trigonometry and Plane Geometry\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug13', title: '2026 August 13 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Solid Geometry and Analytic Geometry', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-13T08:00:00+08:00', content: 'Session topics:\n• Solid Geometry and Analytic Geometry\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug14', title: '2026 August 14 Session', subtitle: 'MSTHC – Self-Paced Session · Differential Calculus', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-14T08:00:00+08:00', content: 'Session topics:\n• Differential Calculus\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug15', title: '2026 August 15 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Integral Calculus and Differential Equations', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-15T08:00:00+08:00', content: 'Session topics:\n• Integral Calculus and Differential Equations\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug16', title: '2026 August 16 Session', subtitle: '75 items – MSTHC Supplemental Problem Set · Problem Set (Topics from August 11–15)', type: 'set', duration: 'Problem Set', unlockAt: '2026-08-16T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Topics from August 11–15)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
+          { id: 'msthc-aug17', title: '2026 August 17 Session', subtitle: 'MSTHC – Self-Paced Session · Engineering Economy; Advanced Mathematics, Numerical Methods, Permutations', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-17T08:00:00+08:00', content: 'Session topics:\n• Engineering Economy\n• Advanced Mathematics, Numerical Methods, Permutations\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug18', title: '2026 August 18 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Combinations, Probability and Statistics', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-18T08:00:00+08:00', content: 'Session topics:\n• Combinations, Probability and Statistics\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug19', title: '2026 August 19 Session', subtitle: 'MSTHC – Self-Paced Session · Elementary and Higher Surveying', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-19T08:00:00+08:00', content: 'Session topics:\n• Elementary and Higher Surveying\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug20', title: '2026 August 20 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Highway Engineering', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-20T08:00:00+08:00', content: 'Session topics:\n• Highway Engineering\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug21', title: '2026 August 21 Session', subtitle: 'MSTHC – Self-Paced Session · Transportation Engineering', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-21T08:00:00+08:00', content: 'Session topics:\n• Transportation Engineering\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug22', title: '2026 August 22 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Ports and Harbors; Construction Equipment Productivity', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-22T08:00:00+08:00', content: 'Session topics:\n• Ports and Harbors; Construction Equipment Productivity\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug23', title: '2026 August 23 Session', subtitle: '75 items – MSTHC Supplemental Problem Set · Problem Set (Topics from August 17–22)', type: 'set', duration: 'Problem Set', unlockAt: '2026-08-23T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Topics from August 17–22)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
+          { id: 'msthc-aug25', title: '2026 August 25 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Construction Estimates, Project Management and Safety', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-25T08:00:00+08:00', content: 'Session topics:\n• Construction Estimates, Project Management and Safety\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' }
         ]
       },
       {
@@ -3521,19 +3590,19 @@
         badge: 'HGE',
         badgeClass: 'badge-blue',
         lessons: [
-          { id: 'hge-aug24', title: 'August 24 Session', subtitle: 'HGE – Self-Paced Session · Geotechnical Engineering 1 (Soil Properties, Relative Density, Soil Compaction, Soil Consistency)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-24T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering 1 (Soil Properties, Relative Density, Soil Compaction, Soil Consistency)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'hge-aug26', title: 'August 26 Session', subtitle: 'HGE – Self-Paced Session · Geotechnical Engineering 1 (Soil Permeability, Pumping Well Tests, Flow Nets, Effective Stress)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-26T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering 1 (Soil Permeability, Pumping Well Tests, Flow Nets, Effective Stress)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'hge-aug27', title: 'August 27 Session', subtitle: 'HGE – Live (GMeet) Discussion · Geotechnical Engineering 1 (Shear Strength of Soil, Boussinesq Equation – All Cases)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-27T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering 1 (Shear Strength of Soil, Boussinesq Equation – All Cases)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'hge-aug28', title: 'August 28 Session', subtitle: 'HGE – Self-Paced Session · Geotechnical Engineering (Soil Settlement, Oedometer Tests, Soil Stability Analysis)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-28T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering (Soil Settlement, Oedometer Tests, Soil Stability Analysis)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'hge-aug29', title: 'August 29 Session', subtitle: 'HGE – Live (GMeet) Discussion · Foundation Engineering 1 (Soil Bearing Capacity, Retaining Wall, Pile Analysis, Pile Settlement)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-29T08:00:00+08:00', content: 'Session topics:\n• Foundation Engineering 1 (Soil Bearing Capacity, Retaining Wall, Pile Analysis, Pile Settlement)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'hge-aug30', title: 'August 30 Session', subtitle: '50 items – HGE Supplemental Problem Set · Problem Set (Geotech & Foundations covered so far)', type: 'set', duration: 'Problem Set', unlockAt: '2026-08-30T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Geotech & Foundations covered so far)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
-          { id: 'hge-aug31', title: 'August 31 Session', subtitle: 'HGE – Self-Paced Session', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-31T08:00:00+08:00', content: 'Self-paced HGE session.\n\nReinforce weak areas from the problem set. Continue with seepage, retaining structures, and foundation topics.' },
-          { id: 'hge-sep1', title: 'September 1 Session', subtitle: 'HGE – Live (GMeet) Discussion · Hydraulics (Fluid Mechanics, Pressure, Manometer Problems, Buoyancy, Stability of Floating Bodies)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-01T08:00:00+08:00', content: 'Session topics:\n• Hydraulics (Fluid Mechanics, Pressure, Manometer Problems, Buoyancy, Stability of Floating Bodies)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'hge-sep2', title: 'September 2 Session', subtitle: 'HGE – Self-Paced Session · Hydraulics (Hydrostatics on Plane and Curve Surfaces, Fluid in Motion, Rotating Vessels, Revolving Manometer)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-02T08:00:00+08:00', content: 'Session topics:\n• Hydraulics (Hydrostatics on Plane and Curve Surfaces, Fluid in Motion, Rotating Vessels, Revolving Manometer)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'hge-sep3', title: 'September 3 Session', subtitle: 'HGE – Live (GMeet) Discussion · Hydraulics (Pipes, Headloss, Bernoulli’s Energy Equation and Continuity Equation, Velocity Distribution in Pipes, Pipe Connections)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-03T08:00:00+08:00', content: 'Session topics:\n• Hydraulics (Pipes, Headloss, Bernoulli’s Energy Equation and Continuity Equation, Velocity Distribution in Pipes, Pipe Connections)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'hge-sep4', title: 'September 4 Session', subtitle: 'HGE – Self-Paced Session · Hydraulics (3-Reservoir Problems, Venturimeter, Pitot Tube, Orificemeter, Weirs)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-04T08:00:00+08:00', content: 'Session topics:\n• Hydraulics (3-Reservoir Problems, Venturimeter, Pitot Tube, Orificemeter, Weirs)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'hge-sep5', title: 'September 5 Session', subtitle: 'HGE – Live (GMeet) Discussion · Hydraulics (Orifice, Channels, Hydrodynamics, Hydrology)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-05T08:00:00+08:00', content: 'Session topics:\n• Hydraulics (Orifice, Channels, Hydrodynamics, Hydrology)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'hge-sep6', title: 'September 6 Session', subtitle: '50 items – HGE Supplemental Problem Set · Problem Set (Hydraulics topics covered so far)', type: 'set', duration: 'Problem Set', unlockAt: '2026-09-06T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Hydraulics topics covered so far)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' }
+          { id: 'hge-aug24', title: '2026 August 24 Session', subtitle: 'HGE – Self-Paced Session · Geotechnical Engineering 1 (Soil Properties, Relative Density, Soil Compaction, Soil Consistency)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-24T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering 1 (Soil Properties, Relative Density, Soil Compaction, Soil Consistency)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-aug26', title: '2026 August 26 Session', subtitle: 'HGE – Self-Paced Session · Geotechnical Engineering 1 (Soil Permeability, Pumping Well Tests, Flow Nets, Effective Stress)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-26T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering 1 (Soil Permeability, Pumping Well Tests, Flow Nets, Effective Stress)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-aug27', title: '2026 August 27 Session', subtitle: 'HGE – Live (GMeet) Discussion · Geotechnical Engineering 1 (Shear Strength of Soil, Boussinesq Equation – All Cases)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-27T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering 1 (Shear Strength of Soil, Boussinesq Equation – All Cases)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-aug28', title: '2026 August 28 Session', subtitle: 'HGE – Self-Paced Session · Geotechnical Engineering (Soil Settlement, Oedometer Tests, Soil Stability Analysis)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-28T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering (Soil Settlement, Oedometer Tests, Soil Stability Analysis)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-aug29', title: '2026 August 29 Session', subtitle: 'HGE – Live (GMeet) Discussion · Foundation Engineering 1 (Soil Bearing Capacity, Retaining Wall, Pile Analysis, Pile Settlement)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-29T08:00:00+08:00', content: 'Session topics:\n• Foundation Engineering 1 (Soil Bearing Capacity, Retaining Wall, Pile Analysis, Pile Settlement)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-aug30', title: '2026 August 30 Session', subtitle: '50 items – HGE Supplemental Problem Set · Problem Set (Geotech & Foundations covered so far)', type: 'set', duration: 'Problem Set', unlockAt: '2026-08-30T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Geotech & Foundations covered so far)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
+          { id: 'hge-aug31', title: '2026 August 31 Session', subtitle: 'HGE – Self-Paced Session', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-31T08:00:00+08:00', content: 'Self-paced HGE session.\n\nReinforce weak areas from the problem set. Continue with seepage, retaining structures, and foundation topics.' },
+          { id: 'hge-sep1', title: '2026 September 1 Session', subtitle: 'HGE – Live (GMeet) Discussion · Hydraulics (Fluid Mechanics, Pressure, Manometer Problems, Buoyancy, Stability of Floating Bodies)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-01T08:00:00+08:00', content: 'Session topics:\n• Hydraulics (Fluid Mechanics, Pressure, Manometer Problems, Buoyancy, Stability of Floating Bodies)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-sep2', title: '2026 September 2 Session', subtitle: 'HGE – Self-Paced Session · Hydraulics (Hydrostatics on Plane and Curve Surfaces, Fluid in Motion, Rotating Vessels, Revolving Manometer)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-02T08:00:00+08:00', content: 'Session topics:\n• Hydraulics (Hydrostatics on Plane and Curve Surfaces, Fluid in Motion, Rotating Vessels, Revolving Manometer)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-sep3', title: '2026 September 3 Session', subtitle: 'HGE – Live (GMeet) Discussion · Hydraulics (Pipes, Headloss, Bernoulli’s Energy Equation and Continuity Equation, Velocity Distribution in Pipes, Pipe Connections)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-03T08:00:00+08:00', content: 'Session topics:\n• Hydraulics (Pipes, Headloss, Bernoulli’s Energy Equation and Continuity Equation, Velocity Distribution in Pipes, Pipe Connections)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-sep4', title: '2026 September 4 Session', subtitle: 'HGE – Self-Paced Session · Hydraulics (3-Reservoir Problems, Venturimeter, Pitot Tube, Orificemeter, Weirs)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-04T08:00:00+08:00', content: 'Session topics:\n• Hydraulics (3-Reservoir Problems, Venturimeter, Pitot Tube, Orificemeter, Weirs)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-sep5', title: '2026 September 5 Session', subtitle: 'HGE – Live (GMeet) Discussion · Hydraulics (Orifice, Channels, Hydrodynamics, Hydrology)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-05T08:00:00+08:00', content: 'Session topics:\n• Hydraulics (Orifice, Channels, Hydrodynamics, Hydrology)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-sep6', title: '2026 September 6 Session', subtitle: '50 items – HGE Supplemental Problem Set · Problem Set (Hydraulics topics covered so far)', type: 'set', duration: 'Problem Set', unlockAt: '2026-09-06T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Hydraulics topics covered so far)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' }
         ]
       },
       {
@@ -3545,20 +3614,20 @@
         badge: 'PSAD',
         badgeClass: 'badge-pink',
         lessons: [
-          { id: 'psad-sep7', title: 'September 7 Session', subtitle: 'PSAD – Self-Paced Session · Statics 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-07T08:00:00+08:00', content: 'Session topics:\n• Statics 1\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep8', title: 'September 8 Session', subtitle: 'PSAD – Live (GMeet) Discussion · Statics 2', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-08T08:00:00+08:00', content: 'Session topics:\n• Statics 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep9', title: 'September 9 Session', subtitle: 'PSAD – Self-Paced Session · Dynamics 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-09T08:00:00+08:00', content: 'Session topics:\n• Dynamics 1\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep10', title: 'September 10 Session', subtitle: 'PSAD – Live (GMeet) Discussion · Dynamics 2', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-10T08:00:00+08:00', content: 'Session topics:\n• Dynamics 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep11', title: 'September 11 Session', subtitle: 'PSAD – Self-Paced Session · Strength of Materials 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-11T08:00:00+08:00', content: 'Session topics:\n• Strength of Materials 1\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep12', title: 'September 12 Session', subtitle: 'PSAD – Live (GMeet) Discussion · Strength of Materials 2', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-12T08:00:00+08:00', content: 'Session topics:\n• Strength of Materials 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep13', title: 'September 13 Session', subtitle: '75 items – PSAD Supplemental Problem Set · Problem Set (Statics, Dynamics, Strength of Materials)', type: 'set', duration: 'Problem Set', unlockAt: '2026-09-13T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Statics, Dynamics, Strength of Materials)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
-          { id: 'psad-sep14', title: 'September 14 Session', subtitle: 'PSAD – Self-Paced Session · Theory of Structures 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-14T08:00:00+08:00', content: 'Session topics:\n• Theory of Structures 1\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep15', title: 'September 15 Session', subtitle: 'PSAD – Live (GMeet) Discussion · Theory of Structures 2', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-15T08:00:00+08:00', content: 'Session topics:\n• Theory of Structures 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep16', title: 'September 16 Session', subtitle: 'PSAD – Self-Paced Session · Reinforced Concrete Design 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-16T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Reinforced Concrete Design 1\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
-          { id: 'psad-sep17', title: 'September 17 Session', subtitle: 'PSAD – Live (GMeet) Discussion · Reinforced Concrete Design 2', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-17T08:00:00+08:00', content: 'Session topics:\n• Reinforced Concrete Design 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep18', title: 'September 18 Session', subtitle: 'PSAD – Self-Paced Session · Structural Steel Design 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-18T08:00:00+08:00', content: 'Session topics:\n• Structural Steel Design 1\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep19', title: 'September 19 Session', subtitle: 'End of Refresher Program • PSAD – Live (GMeet) Discussion · Structural Steel Design 2', type: 'end', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-19T08:00:00+08:00', content: 'Session topics:\n• Structural Steel Design 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'psad-sep20', title: 'September 20 Session', subtitle: '75 items – PSAD Supplemental Problem Set · Problem Set (Theory of Structures, RCD, Structural Steel)', type: 'set', duration: 'Problem Set', unlockAt: '2026-09-20T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Theory of Structures, RCD, Structural Steel)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' }
+          { id: 'psad-sep7', title: '2026 September 7 Session', subtitle: 'PSAD – Self-Paced Session · Statics 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-07T08:00:00+08:00', content: 'Session topics:\n• Statics 1\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep8', title: '2026 September 8 Session', subtitle: 'PSAD – Live (GMeet) Discussion · Statics 2', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-08T08:00:00+08:00', content: 'Session topics:\n• Statics 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep9', title: '2026 September 9 Session', subtitle: 'PSAD – Self-Paced Session · Dynamics 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-09T08:00:00+08:00', content: 'Session topics:\n• Dynamics 1\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep10', title: '2026 September 10 Session', subtitle: 'PSAD – Live (GMeet) Discussion · Dynamics 2', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-10T08:00:00+08:00', content: 'Session topics:\n• Dynamics 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep11', title: '2026 September 11 Session', subtitle: 'PSAD – Self-Paced Session · Strength of Materials 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-11T08:00:00+08:00', content: 'Session topics:\n• Strength of Materials 1\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep12', title: '2026 September 12 Session', subtitle: 'PSAD – Live (GMeet) Discussion · Strength of Materials 2', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-12T08:00:00+08:00', content: 'Session topics:\n• Strength of Materials 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep13', title: '2026 September 13 Session', subtitle: '75 items – PSAD Supplemental Problem Set · Problem Set (Statics, Dynamics, Strength of Materials)', type: 'set', duration: 'Problem Set', unlockAt: '2026-09-13T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Statics, Dynamics, Strength of Materials)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
+          { id: 'psad-sep14', title: '2026 September 14 Session', subtitle: 'PSAD – Self-Paced Session · Theory of Structures 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-14T08:00:00+08:00', content: 'Session topics:\n• Theory of Structures 1\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep15', title: '2026 September 15 Session', subtitle: 'PSAD – Live (GMeet) Discussion · Theory of Structures 2', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-15T08:00:00+08:00', content: 'Session topics:\n• Theory of Structures 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep16', title: '2026 September 16 Session', subtitle: 'PSAD – Self-Paced Session · Reinforced Concrete Design 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-16T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Reinforced Concrete Design 1\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
+          { id: 'psad-sep17', title: '2026 September 17 Session', subtitle: 'PSAD – Live (GMeet) Discussion · Reinforced Concrete Design 2', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-17T08:00:00+08:00', content: 'Session topics:\n• Reinforced Concrete Design 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep18', title: '2026 September 18 Session', subtitle: 'PSAD – Self-Paced Session · Structural Steel Design 1', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-18T08:00:00+08:00', content: 'Session topics:\n• Structural Steel Design 1\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep19', title: '2026 September 19 Session', subtitle: 'End of Refresher Program • PSAD – Live (GMeet) Discussion · Structural Steel Design 2', type: 'end', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-09-19T08:00:00+08:00', content: 'Session topics:\n• Structural Steel Design 2\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'psad-sep20', title: '2026 September 20 Session', subtitle: '75 items – PSAD Supplemental Problem Set · Problem Set (Theory of Structures, RCD, Structural Steel)', type: 'set', duration: 'Problem Set', unlockAt: '2026-09-20T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Theory of Structures, RCD, Structural Steel)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' }
         ]
       }
     ];
@@ -3576,7 +3645,7 @@
         category: 'terminology',
         lessons: [
           { id: 'ceterms-gi', title: 'General Instructions', subtitle: 'Read before the CE Terminologies Test', type: 'self', duration: 'Guide', content: 'GENERAL INSTRUCTIONS — CE Terminologies\n\n1. Read these instructions carefully before September 21.\n2. The CE Terminologies Test session unlocks at exactly 8:00 AM (Asia/Manila) on September 21, 2026.\n3. Treat this as a board-exam-style assessment of civil engineering terminology across MSTHC, HGE, and PSAD.\n4. Ensure a stable internet connection and a quiet environment.\n5. Once the session unlocks, complete the test in one sitting when possible.\n6. Review your weak topics after submitting.\n\nYou may mark this guide as complete after reading. The September 21 session stays locked until the scheduled open time.' },
-          { id: 'ceterms-sep21', title: 'September 21 Session', subtitle: 'CE Terminologies Test • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-21T08:00:00+08:00', content: 'CE Terminologies Test.\n\nFull-length assessment covering major civil engineering terminologies for the board exam. Simulate exam conditions as much as possible.\n\nCalendar: September 21 — CE Terminologies Test.\nUnlock: 8:00 AM Asia/Manila.' }
+          { id: 'ceterms-sep21', title: '2026 September 21 Session', subtitle: 'CE Terminologies Test • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-21T08:00:00+08:00', content: 'CE Terminologies Test.\n\nFull-length assessment covering major civil engineering terminologies for the board exam. Simulate exam conditions as much as possible.\n\nCalendar: September 21 — CE Terminologies Test.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
       {
@@ -3590,7 +3659,7 @@
         category: 'formulas',
         lessons: [
           { id: 'ceformulas-gi', title: 'General Instructions', subtitle: 'Read before the CE Formulas Test', type: 'self', duration: 'Guide', content: 'GENERAL INSTRUCTIONS — CE Formulas\n\n1. Read these instructions carefully before September 22.\n2. The CE Formulas Memorize Test unlocks at exactly 8:00 AM (Asia/Manila) on September 22, 2026.\n3. Focus on important formulas across MSTHC, HGE, and PSAD.\n4. Ensure a stable internet connection and a quiet environment.\n5. Complete the test in one sitting when possible.\n6. Review missed formulas after submitting.\n\nYou may mark this guide as complete after reading. The September 22 session stays locked until the scheduled open time.' },
-          { id: 'ceformulas-sep22', title: 'September 22 Session', subtitle: 'CE Formulas Memorize Test • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-22T08:00:00+08:00', content: 'CE Formulas Memorization Test.\n\nTest your mastery of important formulas across MSTHC, HGE, and PSAD. Review and memorize key equations, constants, and design values.\n\nCalendar: September 22 — CE Formulas Test.\nUnlock: 8:00 AM Asia/Manila.' }
+          { id: 'ceformulas-sep22', title: '2026 September 22 Session', subtitle: 'CE Formulas Memorize Test • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-22T08:00:00+08:00', content: 'CE Formulas Memorization Test.\n\nTest your mastery of important formulas across MSTHC, HGE, and PSAD. Review and memorize key equations, constants, and design values.\n\nCalendar: September 22 — CE Formulas Test.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
       {
@@ -3604,8 +3673,8 @@
         category: 'preboard',
         lessons: [
           { id: 'pre-preboard-gi', title: 'General Instructions', subtitle: 'Read before Pre-Preboard', type: 'self', duration: 'Guide', content: 'GENERAL INSTRUCTIONS — Pre-Preboard\n\n1. Pre-Preboard runs on August 16 and 17, 2026 per the program calendar.\n2. Each session unlocks at exactly 8:00 AM (Asia/Manila) on its date.\n3. Treat this as an early diagnostic of your readiness across MSTHC topics covered so far.\n4. Complete General Instructions first; then take Day 1 and Day 2 in order.\n5. Review results thoroughly before continuing regular refresher sessions.\n\nMark this guide complete after reading.' },
-          { id: 'pre-preboard-aug16', title: 'August 16 Session', subtitle: 'Pre-Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-08-16T08:00:00+08:00', content: 'Pre-Preboard Examination — Day 1.\n\nTimed problem set covering topics discussed in the early MSTHC phase. Simulate board-exam conditions.\n\nCalendar: August 16 — Pre-Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
-          { id: 'pre-preboard-aug17', title: 'August 17 Session', subtitle: 'Pre-Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-08-17T08:00:00+08:00', content: 'Pre-Preboard Examination — Day 2.\n\nContinue the early preboard assessment. Review Day 1 results and strengthen weak areas.\n\nCalendar: August 17 — Pre-Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
+          { id: 'pre-preboard-aug16', title: '2026 August 16 Session', subtitle: 'Pre-Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-08-16T08:00:00+08:00', content: 'Pre-Preboard Examination — Day 1.\n\nTimed problem set covering topics discussed in the early MSTHC phase. Simulate board-exam conditions.\n\nCalendar: August 16 — Pre-Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'pre-preboard-aug17', title: '2026 August 17 Session', subtitle: 'Pre-Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-08-17T08:00:00+08:00', content: 'Pre-Preboard Examination — Day 2.\n\nContinue the early preboard assessment. Review Day 1 results and strengthen weak areas.\n\nCalendar: August 17 — Pre-Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
       {
@@ -3619,8 +3688,8 @@
         category: 'preboard',
         lessons: [
           { id: 'mid-preboard-gi', title: 'General Instructions', subtitle: 'Read before Mid-Preboard', type: 'self', duration: 'Guide', content: 'GENERAL INSTRUCTIONS — Mid-Preboard\n\n1. Mid-Preboard runs on September 6 and 7, 2026 per the program calendar.\n2. Each session unlocks at exactly 8:00 AM (Asia/Manila) on its date.\n3. Scope: MSTHC and HGE topics covered up to this point of the refresher.\n4. Complete General Instructions first; then Day 1 and Day 2 in order.\n5. Use results to prioritize PSAD and remaining review time.\n\nMark this guide complete after reading.' },
-          { id: 'mid-preboard-sep6', title: 'September 6 Session', subtitle: 'Mid-Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-06T08:00:00+08:00', content: 'Mid-Preboard Examination — Day 1.\n\nTimed set covering MSTHC and HGE. Simulate exam pacing and conditions.\n\nCalendar: September 6 — Mid-Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
-          { id: 'mid-preboard-sep7', title: 'September 7 Session', subtitle: 'Mid-Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-07T08:00:00+08:00', content: 'Mid-Preboard Examination — Day 2.\n\nSecond day of the mid-program preboard. Review Day 1 and close gaps before PSAD intensifies.\n\nCalendar: September 7 — Mid-Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
+          { id: 'mid-preboard-sep6', title: '2026 September 6 Session', subtitle: 'Mid-Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-06T08:00:00+08:00', content: 'Mid-Preboard Examination — Day 1.\n\nTimed set covering MSTHC and HGE. Simulate exam pacing and conditions.\n\nCalendar: September 6 — Mid-Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'mid-preboard-sep7', title: '2026 September 7 Session', subtitle: 'Mid-Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-07T08:00:00+08:00', content: 'Mid-Preboard Examination — Day 2.\n\nSecond day of the mid-program preboard. Review Day 1 and close gaps before PSAD intensifies.\n\nCalendar: September 7 — Mid-Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
       {
@@ -3634,8 +3703,8 @@
         category: 'preboard',
         lessons: [
           { id: 'final-preboard-gi', title: 'General Instructions', subtitle: 'Read before Final Preboard', type: 'self', duration: 'Guide', content: 'GENERAL INSTRUCTIONS — Final Preboard\n\n1. Final Preboard runs on September 23 and 24, 2026 per the program calendar.\n2. Each session unlocks at exactly 8:00 AM (Asia/Manila) on its date.\n3. September 23: full-scope final review assessment across MSTHC, HGE, and PSAD.\n4. September 24: lighter follow-up / rest-oriented wrap — prioritize calm and logistics.\n5. Complete General Instructions first; sessions open only after the previous item is done and the schedule time is reached.\n\nMark this guide complete after reading.' },
-          { id: 'final-preboard-sep23', title: 'September 23 Session', subtitle: 'Final Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-23T08:00:00+08:00', content: 'Final Preboard Examination — Day 1.\n\nComprehensive final practice before the board exam. Review notes, formulas, and weak areas after submitting.\n\nCalendar: September 23 — Final Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
-          { id: 'final-preboard-sep24', title: 'September 24 Session', subtitle: 'Final Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-24T08:00:00+08:00', content: 'Final Preboard Examination — Day 2.\n\nLight review / wrap-up. Rest well, prepare materials, and maintain a positive mindset for the board exam.\n\nCalendar: September 24 — Final Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
+          { id: 'final-preboard-sep23', title: '2026 September 23 Session', subtitle: 'Final Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-23T08:00:00+08:00', content: 'Final Preboard Examination — Day 1.\n\nComprehensive final practice before the board exam. Review notes, formulas, and weak areas after submitting.\n\nCalendar: September 23 — Final Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'final-preboard-sep24', title: '2026 September 24 Session', subtitle: 'Final Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-24T08:00:00+08:00', content: 'Final Preboard Examination — Day 2.\n\nLight review / wrap-up. Rest well, prepare materials, and maintain a positive mindset for the board exam.\n\nCalendar: September 24 — Final Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       }
     ];
@@ -3678,7 +3747,40 @@
       return SELF_PACED_REMINDERS[key % SELF_PACED_REMINDERS.length];
     }
 
+    /** Live GMeet time rules for the program calendar */
+    function getLiveGMeetTime(date) {
+      if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
+        return '7:00 PM – 10:00 PM';
+      }
+      const y = date.getFullYear();
+      const m = date.getMonth(); // 0-based
+      const d = date.getDate();
+      const dow = date.getDay(); // 0=Sun … 6=Sat
+
+      // August 13, 2026 — special window
+      if (y === 2026 && m === 7 && d === 13) {
+        return '7:00 PM – 10:00 PM';
+      }
+
+      // All Saturdays in the Aug–Sep 2026 program schedule
+      if (y === 2026 && (m === 7 || m === 8) && dow === 6) {
+        return '6:00 PM – 9:00 PM';
+      }
+
+      // Tue & Thu from August 18 through September 24, 2026
+      const t = new Date(y, m, d).getTime();
+      const start = new Date(2026, 7, 18).getTime();
+      const end = new Date(2026, 8, 24).getTime();
+      if ((dow === 2 || dow === 4) && t >= start && t <= end) {
+        return '1:00 PM – 4:00 PM';
+      }
+
+      // Other live discussion days (e.g. early Aug midweek)
+      return '7:00 PM – 10:00 PM';
+    }
+
     function updateSessionBulletin() {
+
       const card = document.getElementById('sessionBulletin');
       const kicker = document.getElementById('bulletinKicker');
       const title = document.getElementById('bulletinTitle');
@@ -3697,15 +3799,17 @@
         card.classList.add('live');
         if (kicker) kicker.textContent = 'LIVE DISCUSSION';
         title.textContent = labels || 'Live GMeet Discussion';
+        const gmeetTime = getLiveGMeetTime(now);
         body.innerHTML =
           '<p>Join the scheduled live discussion via Google Meet.</p>' +
+          '<p style="margin:0.35rem 0 0.55rem;font-weight:700;color:var(--text);">🕒 ' + gmeetTime + '</p>' +
           '<div class="bulletin-gmeet">' +
           '<strong>To join the video meeting, click this link:</strong><br>' +
           '<a href="' + GMEET_LINK + '" target="_blank" rel="noopener noreferrer">' + GMEET_LINK + '</a><br><br>' +
           'Otherwise, to join by phone, dial <strong>' + GMEET_PHONE + '</strong> and enter this PIN: <strong>' + GMEET_PIN + '</strong>' +
           '</div>' +
           '<div class="bulletin-actions">' +
-          '<a class="btn btn-primary" href="' + GMEET_LINK + '" target="_blank" rel="noopener noreferrer">Join GMeet</a>' +
+          '<a class="btn btn-primary" href="' + GMEET_LINK + '" target="_blank" rel="noopener noreferrer" style="color:#ffffff !important;">Join GMeet</a>' +
           '</div>';
       } else if (isSelf) {
         card.classList.add('selfpaced');
@@ -3783,20 +3887,22 @@
 
     // Public sample PDF (replace with your own lecture notes)
     const DEFAULT_PDF = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
-    // Default SOLUTION slideshow (Google Drive, sequential) — thumbnail API loads more reliably in <img>
+    // Default SOLUTION slideshow for sessions from 2026 Aug 12 onward (Aug 11 has its own images)
     const DEFAULT_IMAGES = [
       'https://lh3.googleusercontent.com/d/1XsRpoZ8bcZfL0I8BA3a65BkVBlE7RkKC=w1920',
       'https://lh3.googleusercontent.com/d/1FM8rs0LtegNkxkz59b4lc3-EuOk_93kY=w1920',
       'https://lh3.googleusercontent.com/d/1kA-1FI04oFkn1kur-VQLXJWFc_PO_MWv=w1920',
-      'https://lh3.googleusercontent.com/d/1vqe3YL-Kn0f_oSxTFqgMeiWfFWJM6eWL=w1920',
-      'https://lh3.googleusercontent.com/d/1M6d6pHJOcelHukJKroO4n1OLHaLfJu2_=w1920',
-      'https://lh3.googleusercontent.com/d/1Zz_H7vmr697wr96XFVd7Ux-SDL7JgXVm=w1920',
-      'https://lh3.googleusercontent.com/d/1OzkLT9tyWhb7zaxSQQ8adNVWKBcF6xo0=w1920',
-      'https://lh3.googleusercontent.com/d/1Db4dreMCz6-BDurrxARZoLh06Bae1N-j=w1920',
-      'https://lh3.googleusercontent.com/d/1bAEKTFe2stxTAg751q54yl9DF_LZR0jQ=w1920'
+      'https://lh3.googleusercontent.com/d/1McLbdWJpIrK5APtjDY9bgUYLvz6ZoIFL=w1920',
+      'https://lh3.googleusercontent.com/d/1M6d6pHJOcelHukJKroO4n1OLHaLfJu2_=w1920'
     ];
     // Same IDs kept for fallback resolution
-    const DEFAULT_IMAGE_IDS = ['1XsRpoZ8bcZfL0I8BA3a65BkVBlE7RkKC', '1FM8rs0LtegNkxkz59b4lc3-EuOk_93kY', '1kA-1FI04oFkn1kur-VQLXJWFc_PO_MWv', '1vqe3YL-Kn0f_oSxTFqgMeiWfFWJM6eWL', '1M6d6pHJOcelHukJKroO4n1OLHaLfJu2_', '1Zz_H7vmr697wr96XFVd7Ux-SDL7JgXVm', '1OzkLT9tyWhb7zaxSQQ8adNVWKBcF6xo0', '1Db4dreMCz6-BDurrxARZoLh06Bae1N-j', '1bAEKTFe2stxTAg751q54yl9DF_LZR0jQ'];
+    const DEFAULT_IMAGE_IDS = [
+      '1XsRpoZ8bcZfL0I8BA3a65BkVBlE7RkKC',
+      '1FM8rs0LtegNkxkz59b4lc3-EuOk_93kY',
+      '1kA-1FI04oFkn1kur-VQLXJWFc_PO_MWv',
+      '1McLbdWJpIrK5APtjDY9bgUYLvz6ZoIFL',
+      '1M6d6pHJOcelHukJKroO4n1OLHaLfJu2_'
+    ];
 
     // ===================== QUIZ BANKS (initial – replace later) =====================
     // Google Drive image helper — paste your Drive file ID (share: Anyone with the link → Viewer)
@@ -3828,6 +3934,7 @@
         'https://lh3.googleusercontent.com/d/' + id + '=w1920',
         'https://drive.google.com/thumbnail?id=' + id + '&sz=w2000',
         'https://drive.google.com/uc?export=view&id=' + id,
+        'https://docs.google.com/presentation/d/' + id + '/export/png',
         'https://drive.google.com/uc?id=' + id + '&export=download'
       ];
     }
@@ -3896,7 +4003,7 @@
       '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'  // Q30
     ];
 
-    // Base CE board-style MCQs. Regular sessions use 30-item; Problem Sets use 75-item (generated).
+    // Base CE board-style MCQs. Regular session REPEAT uses 20-item; Supplementary / major tests use 75-item (generated).
     // Each question has an img from Google Drive (see QUIZ_GDRIVE_IDS above).
     const BASE_QUESTIONS = [
       { q: 'The derivative of sin(x) with respect to x is:', choices: ['cos(x)', '-sin(x)', 'tan(x)', 'sec(x)'], a: 0, topic: 'Math', img: gdriveImg(QUIZ_GDRIVE_IDS[0]) },
@@ -3955,7 +4062,7 @@
     }
 
 
-    // ===== August 11 Session ONLY — 30-item REPEAT quiz (Module 1: Algebra / Trig) =====
+    // ===== August 11 Session ONLY — REPEAT quiz bank (Module 1: Algebra / Trig); first 20 used =====
     // Images only where a GDrive figure was provided; other items have no figure.
     const QUIZ_MSTHC_AUG11 = [
       {
@@ -4171,7 +4278,7 @@
     ];
 
 
-    const QUIZ_30 = buildQuiz(30, 0);
+    const QUIZ_20 = buildQuiz(20, 0);
     const QUIZ_75 = buildQuiz(75, 7);
 
     // ===================== STATE =====================
@@ -5144,7 +5251,7 @@
         const selfp = events.some(e => (e.cls || '').includes('selfpaced'));
         const supp = events.some(e => (e.cls || '').includes('supp') || (e.cls || '').includes('formulas') || (e.cls || '') === 'preboard' || (e.cls || '') === 'board-exam');
         if (live) {
-          sub = '7:00 PM – 10:00 PM · GMeet';
+          sub = getLiveGMeetTime(now) + ' · GMeet';
           tag = 'LIVE';
         } else if (supp) {
           sub = 'Problem set / assessment day';
@@ -5558,9 +5665,14 @@
 
     function fitPdfEmbedUrl(url) {
       if (!url) return url;
-      const u = String(url).trim();
+      let u = String(url).trim();
+      // Normalize Drive file share/view links to /preview for iframe embed
+      const driveFile = u.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/i);
+      if (driveFile) {
+        return 'https://drive.google.com/file/d/' + driveFile[1] + '/preview';
+      }
       // Google Drive preview — keep /preview; width is controlled by iframe CSS
-      if (/drive\.google\.com\/file\/d\//i.test(u) || /drive\.google\.com\/.*preview/i.test(u)) {
+      if (/drive\.google\.com\/.*preview/i.test(u)) {
         return u;
       }
       // Native browser PDF viewer: FitH = fit page width to display
@@ -5692,11 +5804,11 @@
         </div>`;
       }
 
-      // SLIDESHOW panel (view-only)
+      // SLIDESHOW panel (view-only) — image links preferred
       if (!problemSet && images.length) {
         const slides = images.map((src, i) => {
           const id = extractDriveId(src) || (DEFAULT_IMAGE_IDS && DEFAULT_IMAGE_IDS[i]) || '';
-          const fbs = id ? gdriveImgFallbacks(id) : [src];
+          const fbs = id ? gdriveImgFallbacks(id) : [String(src || '')];
           const primary = fbs[0] || src;
           const fbAttr = fbs.join('|').replace(/"/g, '&quot;');
           return `<div class="slideshow-slide">
@@ -5716,15 +5828,15 @@
             <button class="slideshow-btn next" onclick="moveSlideshow(1)">›</button>
           </div>
           <div class="slideshow-dots" id="slideshowDots">${dots}</div>
-          <div class="slideshow-notice">🔒 View only — these lecture slides cannot be downloaded or saved.</div>
+          <div class="slideshow-notice">🔒 <strong>View only</strong> — these lecture slides cannot be downloaded or saved. You have unlimited access to the HUB, so this file is intentionally not made available for download. You will lose access to the HUB once you have successfully passed the Civil Engineering Licensure Examination, provided you remain in good standing and have not committed a serious offense as stated under the Rules and Regulations.</div>
         </div>`;
       }
 
       // QUIZ panel
-      const quizSize = problemSet ? 75 : 30;
+      const quizSize = problemSet ? 75 : 20;
       const quizLabel = problemSet
         ? '75-item Timed Problem Set Quiz (results recorded in Summary Log)'
-        : '30-item Timed REPEAT Quiz — 120 minutes (results recorded in Summary Log)';
+        : '20-item Timed REPEAT Quiz — 80 minutes (results recorded in Summary Log)';
       panels += `
         <div class="tab-panel ${problemSet ? 'active' : ''}" id="panel-quiz">
           <div id="quizContainer">
@@ -5733,7 +5845,7 @@
               <p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.35rem;">
                 ${problemSet
                   ? 'Time-pressured. Once started, the timer runs. Your answers and score are stored and visible in the Summary Log.'
-                  : 'Time-pressured: <strong>120-minute</strong> countdown. Answer all 30 items. When time runs out the quiz auto-submits. Results are stored in the Summary Log.'}
+                  : 'Time-pressured: <strong>80-minute</strong> countdown. Answer all 20 items. When time runs out the quiz auto-submits. Results are stored in the Summary Log.'}
               </p>
               <button class="btn btn-primary" style="margin-top:1rem;" onclick="startQuiz('${courseId}','${lesson.id}',${problemSet})">
                 Start ${quizSize}-item Timed Quiz
@@ -5833,17 +5945,17 @@
     }
 
     function startQuiz(courseId, lessonId, isTimed) {
-      // isTimed true => 75-item problem set; false => 30-item REPEAT — both are time-pressured
+      // isTimed true => 75-item supplementary / major set; false => 20-item REPEAT — both time-pressured
       const is75 = !!isTimed;
       let questions;
       if (!is75 && lessonId === 'msthc-aug11' && typeof QUIZ_MSTHC_AUG11 !== 'undefined') {
-        // August 11 Session exclusive Module-1 questionnaire (figures only where provided)
-        questions = QUIZ_MSTHC_AUG11.map(q => ({ ...q, img: q.img || null }));
+        // August 11 Session exclusive Module-1 questionnaire (figures only where provided) — first 20 for REPEAT
+        questions = QUIZ_MSTHC_AUG11.slice(0, 20).map(q => ({ ...q, img: q.img || null }));
       } else {
-        questions = is75 ? QUIZ_75.map(q => ({...q})) : QUIZ_30.map(q => ({...q}));
+        questions = is75 ? QUIZ_75.map(q => ({...q})) : QUIZ_20.map(q => ({...q}));
       }
-      // 30-item REPEAT: 120 minutes; 75-item set: keep ~90s/item (~112.5 min)
-      const timeLimitSec = is75 ? (75 * 90) : (120 * 60);
+      // 20-item REPEAT: 80 minutes (4 min/item); 75-item set: ~90s/item (~112.5 min)
+      const timeLimitSec = is75 ? (75 * 90) : (80 * 60);
       activeQuiz = {
         questions,
         answers: {},
@@ -5853,7 +5965,7 @@
         startedAt: Date.now(),
         lessonId,
         courseId,
-        type: is75 ? '75' : '30'
+        type: is75 ? '75' : '20'
       };
       stopQuizTimer();
       quizTimerId = setInterval(() => {
@@ -6628,7 +6740,7 @@
         chartInstances.quizType = new Chart(ctx3, {
           type: 'pie',
           data: {
-            labels: ['30-item REPEAT Quizzes', '75-item Problem Sets'],
+            labels: ['20-item REPEAT Quizzes', '75-item Problem Sets'],
             datasets: [{
               data: [n20 || 0.01, n75 || 0.01],
               backgroundColor: ['#60a5fa', '#f472b6'],
@@ -6931,7 +7043,7 @@
     augSpecial[14] = [calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
     augSpecial[15] = [calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
     augSpecial[16] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard'), calEv(CAL_COURSE, 'mSTHC-supp', '75 items - MSTHC Supp')];
-    augSpecial[17] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard'), calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced · Eng. Economy')];
+    augSpecial[17] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard'), calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
     augSpecial[18] = [calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
     augSpecial[19] = [calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
     augSpecial[20] = [calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
@@ -6980,41 +7092,80 @@
     ];
     let calIndex = 0;
 
-    /** Weekly schedule panel — mirrors calendar events for the current week */
+    /** Schedule panel mode: 'weekly' | 'all' */
+    let scheduleViewMode = 'weekly';
+
+    function setScheduleViewMode(mode) {
+      scheduleViewMode = (mode === 'all') ? 'all' : 'weekly';
+      const weeklyBtn = document.getElementById('schedModeWeekly');
+      const allBtn = document.getElementById('schedModeAll');
+      if (weeklyBtn) weeklyBtn.classList.toggle('active', scheduleViewMode === 'weekly');
+      if (allBtn) allBtn.classList.toggle('active', scheduleViewMode === 'all');
+      const title = document.getElementById('schedulePanelTitle');
+      if (title) title.textContent = scheduleViewMode === 'all' ? 'All Schedule' : 'Weekly Schedule';
+      updateWeeklyFromCalendar();
+    }
+
+    function formatScheduleRow(d, days, fmt) {
+      const events = getCalendarEventsForDate(d);
+      let cell;
+      if (!events.length) {
+        cell = '<span style="color:var(--text-muted)">No scheduled session</span>';
+      } else {
+        const live = events.some(e => (e.cls || '').includes('live'));
+        const labels = events.map(e => e.label).join(' · ');
+        const timeHint = live
+          ? ' <small style="color:var(--text-muted)">' + getLiveGMeetTime(d) + '</small>' + ' <span class="live-pill">LIVE</span>'
+          : '';
+        cell = labels + timeHint;
+      }
+      return '<tr><td class="week-day">' + days[d.getDay()] + '</td><td>' + cell +
+        '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.15rem;">' + fmt(d) + '</div></td></tr>';
+    }
+
+    /** Schedule panel — weekly (current week) or full program (All Schedule) */
     function updateWeeklyFromCalendar() {
       const body = document.getElementById('weekScheduleBody');
       const rangeEl = document.getElementById('weekScheduleRange');
       if (!body) return;
+      const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+      const fmt = d => d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+
+      if (scheduleViewMode === 'all') {
+        // Full program window: Aug 11 – Sep 27, 2026 (board exam end)
+        const start = new Date(2026, 7, 11);
+        const end = new Date(2026, 8, 27);
+        if (rangeEl) rangeEl.textContent = fmt(start) + ' – ' + fmt(end) + ' (full program schedule)';
+        let html = '';
+        const cursor = new Date(start);
+        while (cursor <= end) {
+          const events = getCalendarEventsForDate(cursor);
+          if (events.length) {
+            html += formatScheduleRow(new Date(cursor), days, fmt);
+          }
+          cursor.setDate(cursor.getDate() + 1);
+        }
+        body.innerHTML = html || '<tr><td colspan="2" style="color:var(--text-muted)">No sessions in program range.</td></tr>';
+        return;
+      }
+
+      // Weekly view — current week (Sun–Sat)
       const now = new Date();
       const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
       start.setDate(start.getDate() - start.getDay()); // Sunday
       const end = new Date(start);
       end.setDate(start.getDate() + 6);
-      const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-      const fmt = d => d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
       if (rangeEl) rangeEl.textContent = fmt(start) + ' – ' + fmt(end) + ' (matches program calendar)';
 
       let html = '';
       for (let i = 0; i < 7; i++) {
         const d = new Date(start);
         d.setDate(start.getDate() + i);
-        const events = getCalendarEventsForDate(d);
-        let cell;
-        if (!events.length) {
-          cell = '<span style="color:var(--text-muted)">No scheduled session</span>';
-        } else {
-          const live = events.some(e => (e.cls || '').includes('live'));
-          const labels = events.map(e => e.label).join(' · ');
-          const timeHint = live
-            ? ' <small style="color:var(--text-muted)">7:00 PM – 10:00 PM</small>' + ' <span class="live-pill">LIVE</span>'
-            : '';
-          cell = labels + timeHint;
-        }
-        html += '<tr><td class="week-day">' + days[i] + '</td><td>' + cell +
-          '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.15rem;">' + fmt(d) + '</div></td></tr>';
+        html += formatScheduleRow(d, days, fmt);
       }
       body.innerHTML = html;
     }
+
 
     /** Find course+lesson for a calendar date (2026 Aug/Sep program). */
     function findSessionForCalendarDate(year, monthIndex, day) {
@@ -7430,9 +7581,9 @@
     // ===================== TOPICS OUTLINE (Home) =====================
     const SESSION_TOPICS = [
       { course: 'MSTHC', color: '#f59e0b', items: [
-        { date: 'Aug 11', type: 'live', topic: 'Algebra, Plane and Spherical Trigonometry' },
-        { date: 'Aug 12', type: 'self', topic: 'Plane and Solid Geometry' },
-        { date: 'Aug 13', type: 'live', topic: 'Plane and Space Analytic Geometry' },
+        { date: 'Aug 11', type: 'live', topic: 'Algebra' },
+        { date: 'Aug 12', type: 'self', topic: 'Trigonometry and Plane Geometry' },
+        { date: 'Aug 13', type: 'live', topic: 'Solid Geometry and Analytic Geometry' },
         { date: 'Aug 14', type: 'self', topic: 'Differential Calculus' },
         { date: 'Aug 15', type: 'live', topic: 'Integral Calculus and Differential Equations' },
         { date: 'Aug 16', type: 'set', topic: 'Problem Set (Topics from August 11–15)' },
