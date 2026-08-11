@@ -3566,7 +3566,7 @@
             'https://lh3.googleusercontent.com/d/16qPvigFzotuFpxp2hQGD3dZuJA-cMlZA=w1920',
             'https://lh3.googleusercontent.com/d/1L487ebkCCY2y4uqoQuWh5trWbStLFRIu=w1920',
             'https://lh3.googleusercontent.com/d/1kDQkKCFNSVLgKDTDCpwOG3hbdYrOfu40=w1920'], content: 'Session topics:\n• Algebra\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug12', title: '2026 August 12 Session', subtitle: 'MSTHC – Self-Paced Session · Trigonometry and Plane Geometry', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-12T08:00:00+08:00', content: 'Session topics:\n• Trigonometry and Plane Geometry\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug12', title: '2026 August 12 Session', subtitle: 'MSTHC – Self-Paced Session · Trigonometry and Plane Geometry', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-12T08:00:00+08:00', pdfUrl: 'https://drive.google.com/file/d/1sfaUmn0MK0auSL1dQxv2Sk6iJY-JfwdS/preview', content: 'Session topics:\n• Trigonometry and Plane Geometry\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug13', title: '2026 August 13 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Solid Geometry and Analytic Geometry', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-13T08:00:00+08:00', content: 'Session topics:\n• Solid Geometry and Analytic Geometry\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug14', title: '2026 August 14 Session', subtitle: 'MSTHC – Self-Paced Session · Differential Calculus', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-14T08:00:00+08:00', content: 'Session topics:\n• Differential Calculus\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug15', title: '2026 August 15 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Integral Calculus and Differential Equations', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-15T08:00:00+08:00', content: 'Session topics:\n• Integral Calculus and Differential Equations\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
@@ -4273,6 +4273,143 @@
         id: 'q30', topic: 'Spherical Trigonometry',
         q: '[CELE NOVEMBER 2018] A spherical triangle ABC has angle C = 90°, side a = 50°, and side c = 80°. Find side b in degrees.',
         choices: ['74.33°', '83.21°', '55.43°', '75.06°'],
+        a: 0
+      }
+    ];
+
+
+
+    // ===== August 12 Session ONLY — 20-item REPEAT quiz (Module 2: Trig / Plane Geometry) =====
+    // Answer keys from yellow-shaded choices in MSTHC Module 2 Answer Keys
+    const QUIZ_MSTHC_AUG12 = [
+      {
+        id: 'q1', topic: 'Algebra / Work',
+        q: '[CELE MARCH 2026] 50 equally efficient people were employed to complete a work in 90 days. How long did it actually take to complete the work?\n(1) After 30 days, the 50 people had completed only 25 percent of the work and worked at the same rate thereafter.\n(2) Had 25 additional people, each having an efficiency equal to each of the initial 50 people, been employed after 30 days, the work would have been completed on time.',
+        choices: ['120 days', '110 days', '115 days', '150 days'],
+        a: 0
+      },
+      {
+        id: 'q2', topic: 'Trigonometry / Clock',
+        q: '[CELE NOVEMBER 2016] What time between 2 and 3 o\'clock will the angle between the hands of the clock be bisected by the line connecting the center of the clock and the 3 o\'clock mark?',
+        choices: ['2:18:27.6', '2:45:23.2', '2:20:54.1', '2:22:25.5'],
+        a: 0
+      },
+      {
+        id: 'q3', topic: 'Trigonometry',
+        q: '[CELE NOVEMBER 2025] An object under water is not exactly where it appears to be. The displacement x depends on the angle A at which the light strikes the surface of the water from below, the depth t of the object, and the angle B at which the light leaves the surface of the water. The measure of displacement is expressed by: x = t [sin(B − A) / cos A]. Suppose a biologist is trying to net a fish under water. Find the measure of displacement if the depth measures 10 cm, the angle at which the light strikes the surface of the water from below is 41°, and the measure of the angle at which the light leaves the surface of the water is 60°.',
+        choices: ['7.73 cm', '5.56 cm', '4.31 cm', '3.92 cm'],
+        a: 2
+      },
+      {
+        id: 'q4', topic: 'Trigonometry / Ferris Wheel',
+        q: '[CELE NOVEMBER 2025] A Ferris wheel has a diameter of 30 m with a center 17 m above the ground. It makes one complete rotation every 60 seconds. Assume a rider starts at the lowest point. Which of the following equations best describes the height of the rider with respect to time?',
+        choices: [
+          'h(t) = −17 cos(πt/30) + 15',
+          'h(t) = −30 cos(πt/60) + 17',
+          'h(t) = −15 cos(πt/30) + 17',
+          'h(t) = −30 cos(πt/60) + 17'
+        ],
+        a: 2
+      },
+      {
+        id: 'q5', topic: 'Trigonometry / Coordinates',
+        q: '[CELE NOVEMBER 2024] The Ferris wheel first appeared at the 1893 Chicago Exposition. Its axle was 45 ft long. Spokes radiated from it that supported 36 wooden cars, which could hold 60 people each. The diameter of the wheel itself was 250 ft. Suppose the axle was located at the origin; find the coordinates of the location of the car at 90° counterclockwise.',
+        choices: ['(155, 0)', '(205, 0)', '(125, 0)', '(385, 0)'],
+        a: 2
+      },
+      {
+        id: 'q6', topic: 'Trigonometry / Overhang',
+        q: '[CELE APRIL 2024] An engineer is designing an overhang above a sliding door. During the heat of the summer, the engineer wants the overhang to prevent the rays of the sun from striking the glass at noon. The overhang has an angle of depression of 55° and starts 13 feet above the ground. If the angle of elevation of the sun during this time is 63°, how long should the overhang be?',
+        choices: ['5.55 ft', '7.73 ft', '6.68 ft', '9.89 ft'],
+        a: 2
+      },
+      {
+        id: 'q7', topic: 'Trigonometry / Heights',
+        q: '[CELE APRIL 2025] Immediately after Mayon Volcano showed telltale signs of activity, PHIVOLCS set up stations to monitor the volcano. Two such stations were located at points A and B, 7 km apart and on the same horizontal plane as the base of the volcano, B being closer to the volcano. From A, the angle of elevation of the top of Mayon Volcano is 8°. At the height of Mayon Volcano’s wrath, the vertical smoke emitted from the volcano’s crater subtended an angle of 64° on each of stations A and B. Assuming the smoke and the two stations are on the same vertical plane, find the height of the smoke.',
+        choices: ['48.34 km', '58.45 km', '77.34 km', '36.24 km'],
+        a: 3
+      },
+      {
+        id: 'q8', topic: 'Trigonometry / Heights',
+        q: '[CELE NOVEMBER 2025] The traffic pattern for airplanes into Clark International Airport is over the heart of downtown. Therefore, there are restrictions on the heights of new construction. The owner of an office building wishes to erect a microwave tower on top of the building. According to the architect’s design, the angle of elevation from a point on the ground to the top of the 40 m tower is 56°. The angle of elevation from the ground point to the top of the building is 42°. If DPWH limits the maximum allowed height of any structure to 100 m, is the construction of the microwave tower permissible?',
+        choices: [
+          'Yes, the height of the building is about 26 m for a total of about 66 m with the tower.',
+          'Yes, the height of the building is about 62 m for a total of about 102 m with the tower.',
+          'No, the height of the building is about 26 m for a total of about 66 m with the tower.',
+          'No, the height of the building is about 62 m for a total of about 102 m with the tower.'
+        ],
+        a: 3
+      },
+      {
+        id: 'q9', topic: 'Trigonometric Identities',
+        q: '[CELE NOVEMBER 2016] Simplify the expression using the fundamental identities: (sin²x + cos²x) / tan x',
+        choices: ['cot x', 'cos x', 'csc x', 'sec x'],
+        a: 0
+      },
+      {
+        id: 'q10', topic: 'Spherical Trigonometry',
+        q: '[CELE NOVEMBER 2018] A spherical triangle ABC has angle C = 90°, side a = 50°, and side c = 80°. Find side b in degrees.',
+        choices: ['74.33°', '83.21°', '55.43°', '75.06°'],
+        a: 0
+      },
+      {
+        id: 'q11', topic: 'Plane Geometry',
+        q: '[CELE NOVEMBER 2016] A point O is inside an equilateral triangular lot ABC. Point O is 3 m from A, 4 m from B, and 5 m from C. Compute the area of the triangular lot in square meters.',
+        choices: ['25.54 sq.m', '65.66 sq.m', '19.85 sq.m', '83.45 sq.m'],
+        a: 2
+      },
+      {
+        id: 'q12', topic: 'Plane Geometry',
+        q: '[CELE MAY 2019] In triangle ABC, AB = 30 m, BC = 36 m, and AC = 48 m. The perpendicular bisectors of the sides intersect at point P. How far is P from side BC?',
+        choices: ['15.92 m from side BC', '14.21 m from side BC', '16.65 m from side BC', '18.21 m from side BC'],
+        a: 0
+      },
+      {
+        id: 'q13', topic: 'Plane Geometry',
+        q: '[CELE APRIL 2024] The municipality of Santa Fe has a 50-foot by 70-foot area for construction of a new public swimming pool. The pool will be surrounded by a concrete walkway of constant width. Because of water restrictions, the pool can have a maximum area of 2400 square feet. What should be the width of the walkway that surrounds the pool?',
+        choices: ['4 ft', '6 ft', '5 ft', '8 ft'],
+        a: 2
+      },
+      {
+        id: 'q14', topic: 'Plane Geometry',
+        q: '[CELE NOVEMBER 2018] A lot has a frontage of 120 m long along a road. The other sides, which are both perpendicular to the road, are 90 m and 60 m, respectively. If it is desired to subdivide the lot into two parts by another line perpendicular to the road such that the area of the lot that adjoins the 90 m side is equal to one-third of the whole area, determine the length of the dividing line.',
+        choices: ['71.54 m', '61.76 m', '81.24 m', '51.25 m'],
+        a: 2
+      },
+      {
+        id: 'q15', topic: 'Plane Geometry',
+        q: '[CELE MAY 2018] A regular octagon is to be cut out from a square section having a side of 16 cm. Determine the side of the octagon.',
+        choices: ['4.22 cm', '8.34 cm', '9.43 cm', '6.63 cm'],
+        a: 3
+      },
+      {
+        id: 'q16', topic: 'Plane Geometry',
+        q: '[CELE NOVEMBER 2021] The area of the sector AOB with point O as its center is equal to 96π, having a radius of 24 cm. A small circle is inscribed in the sector which is tangent to all three sides of the sector. Find the radius of the small circle inscribed in the sector.',
+        choices: ['8 cm', '10 cm', '12 cm', '14 cm'],
+        a: 0
+      },
+      {
+        id: 'q17', topic: 'Plane Geometry',
+        q: '[CELE MAY 2018] Two perpendicular chords both 5 cm from the center of a circle divide it into four parts. If the radius of the circle is 13 cm, find the area of the smallest part.',
+        choices: ['31 sq.cm', '21 sq.cm', '41 sq.cm', '51 sq.cm'],
+        a: 0
+      },
+      {
+        id: 'q18', topic: 'Plane Geometry',
+        q: '[CELE MAY 2018] Three circles with radii 3, 5, and 9 cm are externally tangent. What is the area of the triangle formed by joining their centers?',
+        choices: ['48', '58', '28', '108'],
+        a: 0
+      },
+      {
+        id: 'q19', topic: 'Plane Geometry',
+        q: '[CELE NOVEMBER 2015] In triangle ABC, c = 30, a = 36, and b = 18. Find the radius of the circle tangent to side c and exscribed outside the triangle.',
+        choices: ['27.43', '22.45', '26.32', '25.05'],
+        a: 1
+      },
+      {
+        id: 'q20', topic: 'Plane Geometry',
+        q: '[CELE MAY 2015] A quadrilateral ABCD is inscribed in a circle having a diameter AD = 8.224 cm. If AB = 2 cm, BC = 4 cm, and CD = 6 cm, find the area of the quadrilateral.',
+        choices: ['19.6 cm²', '25.65 cm²', '15.82 cm²', '33.86 cm²'],
         a: 0
       }
     ];
@@ -5951,6 +6088,9 @@
       if (!is75 && lessonId === 'msthc-aug11' && typeof QUIZ_MSTHC_AUG11 !== 'undefined') {
         // August 11 Session exclusive Module-1 questionnaire (figures only where provided) — first 20 for REPEAT
         questions = QUIZ_MSTHC_AUG11.slice(0, 20).map(q => ({ ...q, img: q.img || null }));
+      } else if (!is75 && lessonId === 'msthc-aug12' && typeof QUIZ_MSTHC_AUG12 !== 'undefined') {
+        // August 12 Session exclusive Module-2 questionnaire (Trig / Plane Geometry)
+        questions = QUIZ_MSTHC_AUG12.map(q => ({ ...q, img: q.img || null }));
       } else {
         questions = is75 ? QUIZ_75.map(q => ({...q})) : QUIZ_20.map(q => ({...q}));
       }
