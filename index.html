@@ -3628,7 +3628,7 @@
             'https://lh3.googleusercontent.com/d/1nzjYMmR4gqkNV97zTpSZD0XJd_mXN1af=w1920',
             'https://lh3.googleusercontent.com/d/1Xauiq6y-RiJmDcD6WC2NS-5Hr9TJsVae=w1920',
             'https://lh3.googleusercontent.com/d/1OSgqPAy3ksHhVZxHVL5CwZS9KIQJqD5X=w1920'], content: 'Session topics:\n• Solid Geometry and Analytic Geometry\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug14', title: '2026 August 14 Session', subtitle: 'MSTHC – Self-Paced Session · Analytic Geometry and Differential Calculus', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-14T08:00:00+08:00', pdfUrl: 'https://drive.google.com/file/d/18594FDiinhE4oGV7VxaaprEKdq3XxwyA/view?usp=sharing', images: ['https://lh3.googleusercontent.com/d/1hYDAJ2AfF_xFgUTLDNdg_XmL6WuxZA6Y=w1920',
+          { id: 'msthc-aug14', title: '2026 August 14 Session', subtitle: 'MSTHC – Self-Paced Session · Analytic Geometry and Differential Calculus', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/oFN1a6r3Uz0', videoUrls: ['https://youtu.be/oFN1a6r3Uz0', 'https://youtu.be/ZbwfDQIj3Zo'], unlockAt: '2026-08-14T08:00:00+08:00', pdfUrl: 'https://drive.google.com/file/d/18594FDiinhE4oGV7VxaaprEKdq3XxwyA/view?usp=sharing', images: ['https://lh3.googleusercontent.com/d/1hYDAJ2AfF_xFgUTLDNdg_XmL6WuxZA6Y=w1920',
             'https://lh3.googleusercontent.com/d/1cZ-kg7g4S7MoY0nDMh5Ucf2T-4X82NMA=w1920',
             'https://lh3.googleusercontent.com/d/1ssmdufwVugwXvSbCP3BR2K0nXCny3Ks6=w1920',
             'https://lh3.googleusercontent.com/d/1C0SJJFWZe7Ln0m7AhPnkrajwjBMMWjgy=w1920',
@@ -5400,7 +5400,7 @@
       if (ytPendingCreate && ytPendingCreate.videoId) {
         const pending = ytPendingCreate;
         ytPendingCreate = null;
-        createYouTubePlayer(pending.videoId, pending.lessonId, pending.courseId, pending.autoplay);
+        createYouTubePlayer(pending.videoId, pending.lessonId, pending.courseId, pending.autoplay, pending.partIdx);
       }
     };
 
@@ -5474,8 +5474,17 @@
           if (!dur || dur <= 0 || !isFinite(dur)) return;
           const pct = Math.min(100, (cur / dur) * 100);
           if (currentVideoLessonId) {
-            trackVideoProgress(currentVideoLessonId, pct);
-            updateVideoUI(getVideoProgress(currentVideoLessonId), cur, dur);
+            const pIdx = (typeof window._currentVideoPartIdx === 'number') ? window._currentVideoPartIdx : 0;
+            const pCount = window._sessionVideoPartCount || 1;
+            if (pCount > 1) {
+              setVideoProgress(currentVideoLessonId + '#' + pIdx, pct);
+              const overall = recomputeOverallVideoProgress(currentVideoLessonId, pCount);
+              trackVideoProgress(currentVideoLessonId, overall);
+              updateVideoUI(overall, cur, dur);
+            } else {
+              trackVideoProgress(currentVideoLessonId, pct);
+              updateVideoUI(getVideoProgress(currentVideoLessonId), cur, dur);
+            }
           }
         } catch (e) { /* player may be mid-destroy */ }
       }, 1000);
@@ -5542,8 +5551,17 @@
             const cur = ytPlayer.getCurrentTime();
             if (dur > 0) {
               const pct = Math.min(100, (cur / dur) * 100);
-              trackVideoProgress(currentVideoLessonId, pct);
-              updateVideoUI(getVideoProgress(currentVideoLessonId), cur, dur);
+              const pIdx = (typeof window._currentVideoPartIdx === 'number') ? window._currentVideoPartIdx : 0;
+              const pCount = window._sessionVideoPartCount || 1;
+              if (pCount > 1) {
+                setVideoProgress(currentVideoLessonId + '#' + pIdx, pct);
+                const overall = recomputeOverallVideoProgress(currentVideoLessonId, pCount);
+                trackVideoProgress(currentVideoLessonId, overall);
+                updateVideoUI(overall, cur, dur);
+              } else {
+                trackVideoProgress(currentVideoLessonId, pct);
+                updateVideoUI(getVideoProgress(currentVideoLessonId), cur, dur);
+              }
             }
           }
         } catch (e) {}
@@ -5551,8 +5569,17 @@
       } else if (state === YT.PlayerState.ENDED) {
         stopYtProgressTimer();
         if (currentVideoLessonId) {
-          trackVideoProgress(currentVideoLessonId, 100);
-          updateVideoUI(100);
+          const pIdx = (typeof window._currentVideoPartIdx === 'number') ? window._currentVideoPartIdx : 0;
+          const pCount = window._sessionVideoPartCount || 1;
+          if (pCount > 1) {
+            setVideoProgress(currentVideoLessonId + '#' + pIdx, 100);
+            const overall = recomputeOverallVideoProgress(currentVideoLessonId, pCount);
+            trackVideoProgress(currentVideoLessonId, overall);
+            updateVideoUI(overall);
+          } else {
+            trackVideoProgress(currentVideoLessonId, 100);
+            updateVideoUI(100);
+          }
         }
       } else if (state === YT.PlayerState.BUFFERING) {
         // keep timer if already running; no-op
@@ -5584,22 +5611,23 @@
       }
     }
 
-    function createYouTubePlayer(videoId, lessonId, courseId, autoplay) {
+    function createYouTubePlayer(videoId, lessonId, courseId, autoplay, partIdx) {
       if (!videoId) return;
       destroyPlayer();
       currentVideoLessonId = lessonId || null;
       currentVideoCourseId = courseId || null;
+      window._currentVideoPartIdx = (typeof partIdx === 'number' && partIdx >= 0) ? partIdx : (window._activeVideoIdx || 0);
       const shouldAutoplay = !!autoplay;
 
       const mount = document.getElementById('ytPlayer');
       if (!mount) {
         // DOM not ready — queue
-        ytPendingCreate = { videoId, lessonId, courseId, autoplay: shouldAutoplay };
+        ytPendingCreate = { videoId, lessonId, courseId, autoplay: shouldAutoplay, partIdx: window._currentVideoPartIdx };
         return;
       }
 
       if (!ytApiReady && (typeof YT === 'undefined' || !YT.Player)) {
-        ytPendingCreate = { videoId, lessonId, courseId, autoplay: shouldAutoplay };
+        ytPendingCreate = { videoId, lessonId, courseId, autoplay: shouldAutoplay, partIdx: window._currentVideoPartIdx };
         // Poll briefly in case onYouTubeIframeAPIReady was missed
         let tries = 0;
         const poll = setInterval(function () {
@@ -5611,7 +5639,7 @@
               if (ytPendingCreate && ytPendingCreate.videoId === videoId) {
                 const p = ytPendingCreate;
                 ytPendingCreate = null;
-                createYouTubePlayer(p.videoId, p.lessonId, p.courseId, p.autoplay);
+                createYouTubePlayer(p.videoId, p.lessonId, p.courseId, p.autoplay, p.partIdx);
               }
             }
           }
@@ -6097,7 +6125,35 @@
       // Problem sets / pure tests have no lecture video tab
       if (isProblemSet(lesson)) return null;
       if (lesson.duration === 'Guide' || lesson.duration === 'Exam' || lesson.duration === 'Rest') return null;
+      const urls = getLessonVideoUrls(lesson);
+      if (urls.length) return urls[0];
       return lesson.videoUrl || DEFAULT_VIDEO || 'https://youtu.be/ZbwfDQIj3Zo';
+    }
+
+    /** One or more DISCUSSION YouTube links (videoUrls preferred over single videoUrl). */
+    function getLessonVideoUrls(lesson) {
+      if (!lesson) return [];
+      if (isProblemSet(lesson)) return [];
+      if (lesson.duration === 'Guide' || lesson.duration === 'Exam' || lesson.duration === 'Rest') return [];
+      if (Array.isArray(lesson.videoUrls) && lesson.videoUrls.length) {
+        return lesson.videoUrls.filter(Boolean);
+      }
+      const one = lesson.videoUrl || DEFAULT_VIDEO || 'https://youtu.be/ZbwfDQIj3Zo';
+      return one ? [one] : [];
+    }
+
+    function getVideoPartProgress(lessonId, idx) {
+      if (!lessonId) return 0;
+      return state.videoProgress[lessonId + '#' + idx] || 0;
+    }
+
+    function recomputeOverallVideoProgress(lessonId, partCount) {
+      if (!lessonId || !partCount) return getVideoProgress(lessonId);
+      let sum = 0;
+      for (let i = 0; i < partCount; i++) sum += getVideoPartProgress(lessonId, i);
+      const avg = Math.round(sum / partCount);
+      setVideoProgress(lessonId, avg);
+      return avg;
     }
 
     function getLessonPdf(lesson) {
@@ -6199,8 +6255,13 @@
 
       const alreadyDone = isCompleted(lesson.id);
       const problemSet = isProblemSet(lesson);
-      const videoUrl = getLessonVideoUrl(lesson);
-      const videoId = extractYouTubeId(videoUrl);
+      const videoUrlsList = getLessonVideoUrls(lesson);
+      const videoIds = videoUrlsList.map(function (u) { return extractYouTubeId(u); }).filter(Boolean);
+      const videoUrl = videoUrlsList[0] || null;
+      const videoId = videoIds[0] || null;
+      window._sessionVideoIds = videoIds;
+      window._sessionVideoPartCount = videoIds.length;
+      window._activeVideoIdx = 0;
       const pdfUrl = getLessonPdf(lesson);
       const images = getLessonImages(lesson);
       const watchedPct = getVideoProgress(lesson.id);
@@ -6225,12 +6286,23 @@
       // Panels
       let panels = '';
 
-      // VIDEO panel
+      // VIDEO panel (1+ DISCUSSION videos via lesson.videoUrls)
       if (!problemSet) {
         const thumbUrl = pickCourseThumbnail(course.id, lesson.id);
         const thumbBadge = (course.badge || course.id || 'Lecture').toString();
+        const multi = videoIds.length > 1;
+        let partSwitcher = '';
+        if (multi) {
+          partSwitcher = '<div class="schedule-mode-toggle" role="group" aria-label="Discussion video part" style="margin-bottom:0.75rem;">' +
+            videoIds.map(function (_, i) {
+              return '<button type="button" class="schedule-mode-btn' + (i === 0 ? ' active' : '') +
+                '" id="videoPartBtn' + i + '" onclick="switchSessionVideoPart(' + i + ')">Part ' + (i + 1) + '</button>';
+            }).join('') + '</div>';
+        }
+        const partLabel = multi ? ('Part 1 of ' + videoIds.length) : 'Recorded Lecture';
         panels += `
         <div class="tab-panel ${tabs[0].id === 'video' ? 'active' : ''}" id="panel-video">
+          ${partSwitcher}
           <div class="video-wrap" id="videoWrap">
             <div id="ytPlayer" class="yt-player"></div>
             <div class="video-poster" id="videoPoster" role="button" tabindex="0" aria-label="Play recorded lecture"
@@ -6238,13 +6310,13 @@
               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();playSessionVideo();}">
               <img src="${thumbUrl}" alt="${thumbBadge} lecture thumbnail" loading="eager" draggable="false" />
               <button type="button" class="video-poster-play" aria-hidden="true">▶</button>
-              <span class="video-poster-badge">${thumbBadge} · Recorded Lecture</span>
+              <span class="video-poster-badge" id="videoPosterBadge">${thumbBadge} · ${partLabel}</span>
             </div>
             <div class="video-progress-bar" aria-hidden="true"><div class="video-progress-fill" id="videoProgressFill" style="width:${watchedPct}%"></div></div>
           </div>
           <div class="video-progress-panel" id="videoProgressPanel">
             <div class="video-progress-panel-head">
-              <span class="vp-label">Video Progress</span>
+              <span class="vp-label" id="videoProgressLabel">Video Progress${multi ? ' (overall)' : ''}</span>
               <span class="vp-pct ${watchedPct >= 90 || alreadyDone ? 'done' : ''}" id="videoProgressPct">${alreadyDone ? 100 : watchedPct}%</span>
             </div>
             <div class="video-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${alreadyDone ? 100 : watchedPct}" aria-label="Lecture watch progress">
@@ -6257,6 +6329,7 @@
               </span>
             </div>
           </div>
+          ${multi ? '<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.55rem;max-width:900px;">This session has <strong>' + videoIds.length + ' DISCUSSION videos</strong>. Use Part 1 / Part 2 above. Overall progress is the average of all parts.</p>' : ''}
         </div>`;
       }
 
@@ -6349,11 +6422,11 @@
       window._slideshowIdx = 0;
       updateActivityChecklistUI(lesson.id);
 
-      // Store pending session video; player starts only when learner clicks the thumbnail
-      window._pendingSessionVideo = (!problemSet && videoId)
-        ? { videoId: videoId, lessonId: lesson.id, courseId: courseId }
+      // Store pending session video(s); player starts only when learner clicks the thumbnail
+      window._pendingSessionVideo = (!problemSet && videoIds.length)
+        ? { videoId: videoIds[0], lessonId: lesson.id, courseId: courseId, partIdx: 0, partCount: videoIds.length }
         : null;
-      if (!problemSet && !videoId) {
+      if (!problemSet && !videoIds.length) {
         const poster = document.getElementById('videoPoster');
         if (poster) poster.classList.add('hidden');
         const mount = document.getElementById('ytPlayer');
@@ -6363,13 +6436,42 @@
       }
     }
 
+    function switchSessionVideoPart(idx) {
+      const ids = window._sessionVideoIds || [];
+      if (!ids.length || idx < 0 || idx >= ids.length) return;
+      window._activeVideoIdx = idx;
+      ids.forEach(function (_, i) {
+        const btn = document.getElementById('videoPartBtn' + i);
+        if (btn) btn.classList.toggle('active', i === idx);
+      });
+      try { destroyPlayer(); } catch (e) {}
+      const poster = document.getElementById('videoPoster');
+      if (poster) poster.classList.remove('hidden');
+      const badge = document.getElementById('videoPosterBadge');
+      if (badge) {
+        const left = (badge.textContent.split('·')[0] || 'Lecture').trim();
+        badge.textContent = left + ' · Part ' + (idx + 1) + ' of ' + ids.length;
+      }
+      const lid = window._currentLessonId;
+      const partPct = getVideoPartProgress(lid, idx);
+      const overall = recomputeOverallVideoProgress(lid, ids.length);
+      updateVideoUI(overall);
+      window._pendingSessionVideo = {
+        videoId: ids[idx],
+        lessonId: lid,
+        courseId: window._currentCourseId,
+        partIdx: idx,
+        partCount: ids.length
+      };
+    }
+
     function playSessionVideo() {
       const pending = window._pendingSessionVideo;
       if (!pending || !pending.videoId) return;
       pending._forcePlay = true;
       const poster = document.getElementById('videoPoster');
       if (poster) poster.classList.add('hidden');
-      createYouTubePlayer(pending.videoId, pending.lessonId, pending.courseId, true);
+      createYouTubePlayer(pending.videoId, pending.lessonId, pending.courseId, true, pending.partIdx || 0);
     }
 
     function switchLessonTab(tabId) {
