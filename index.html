@@ -2479,6 +2479,43 @@
       border-radius: 8px;
     }
     .quiz-timer.danger { color: var(--danger); background: rgba(239,68,68,0.15); }
+    .quiz-timer.warn { color: var(--warning); background: rgba(245,158,11,0.15); }
+    .quiz-timer-wrap {
+      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .quiz-clock {
+      width: 52px; height: 52px; flex-shrink: 0;
+    }
+    .quiz-clock-face {
+      width: 52px; height: 52px; border-radius: 50%;
+      border: 3px solid var(--primary);
+      background: var(--surface-2);
+      position: relative;
+      box-shadow: inset 0 0 0 2px var(--border);
+    }
+    .quiz-clock-hand {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 2px; height: 18px;
+      background: var(--danger);
+      transform-origin: bottom center;
+      margin-left: -1px; margin-top: -18px;
+      border-radius: 2px;
+      transition: transform 0.2s linear;
+    }
+    .quiz-clock-center {
+      position: absolute; left: 50%; top: 50%;
+      width: 6px; height: 6px; margin: -3px 0 0 -3px;
+      border-radius: 50%; background: var(--primary);
+    }
+    .quiz-remarks-box {
+      margin: 1rem auto 0; max-width: 420px; text-align: left;
+      padding: 0.85rem 1rem; border-radius: 12px;
+      background: var(--surface-2); border: 1px solid var(--border);
+    }
+    .quiz-remarks-box strong { display: block; margin-bottom: 0.35rem; color: var(--primary); }
+    .quiz-remarks-box p { font-size: 0.92rem; line-height: 1.45; color: var(--text); }
+    .quiz-report-card { max-width: 520px; margin-left: auto; margin-right: auto; }
     .quiz-progress-text { font-size: 0.9rem; color: var(--text-muted); }
     .quiz-nav {
       display: flex;
@@ -3738,7 +3775,6 @@
         badgeClass: 'badge-orange',
         category: 'terminology',
         lessons: [
-          { id: 'ceterms-gi', title: 'General Instructions', subtitle: 'Read before the CE Terminologies Test', type: 'self', duration: 'Guide', content: 'GENERAL INSTRUCTIONS — CE Terminologies\n\n1. Read these instructions carefully before September 21.\n2. The CE Terminologies Test session unlocks at exactly 8:00 AM (Asia/Manila) on September 21, 2026.\n3. Treat this as a board-exam-style assessment of civil engineering terminology across MSTHC, HGE, and PSAD.\n4. Ensure a stable internet connection and a quiet environment.\n5. Once the session unlocks, complete the test in one sitting when possible.\n6. Review your weak topics after submitting.\n\nYou may mark this guide as complete after reading. The September 21 session stays locked until the scheduled open time.' },
           { id: 'ceterms-sep21', title: '2026 September 21 Session', subtitle: 'CE Terminologies Test • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-21T08:00:00+08:00', content: 'CE Terminologies Test.\n\nFull-length assessment covering major civil engineering terminologies for the board exam. Simulate exam conditions as much as possible.\n\nCalendar: September 21 — CE Terminologies Test.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
@@ -3752,23 +3788,21 @@
         badgeClass: 'badge-orange',
         category: 'formulas',
         lessons: [
-          { id: 'ceformulas-gi', title: 'General Instructions', subtitle: 'Read before the CE Formulas Test', type: 'self', duration: 'Guide', content: 'GENERAL INSTRUCTIONS — CE Formulas\n\n1. Read these instructions carefully before September 22.\n2. The CE Formulas Memorize Test unlocks at exactly 8:00 AM (Asia/Manila) on September 22, 2026.\n3. Focus on important formulas across MSTHC, HGE, and PSAD.\n4. Ensure a stable internet connection and a quiet environment.\n5. Complete the test in one sitting when possible.\n6. Review missed formulas after submitting.\n\nYou may mark this guide as complete after reading. The September 22 session stays locked until the scheduled open time.' },
           { id: 'ceformulas-sep22', title: '2026 September 22 Session', subtitle: 'CE Formulas Memorize Test • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-22T08:00:00+08:00', content: 'CE Formulas Memorization Test.\n\nTest your mastery of important formulas across MSTHC, HGE, and PSAD. Review and memorize key equations, constants, and design values.\n\nCalendar: September 22 — CE Formulas Test.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
       {
         id: 'pre-preboard',
         title: 'Pre-Preboard Examination',
-        desc: 'First preboard set of the program. Scheduled August 16–17, 2026. Opens 8:00 AM Asia/Manila on each day.',
+        desc: 'First preboard set of the program. Scheduled August 17–18, 2026. Opens 8:00 AM Asia/Manila on each day.',
         icon: '📋',
         color: '#0d9488',
         badge: 'PRE-PREBOARD',
         badgeClass: 'badge-green',
         category: 'preboard',
         lessons: [
-          { id: 'pre-preboard-gi', title: 'General Instructions', subtitle: 'Read before Pre-Preboard', type: 'self', duration: 'Guide', content: 'GENERAL INSTRUCTIONS — Pre-Preboard\n\n1. Pre-Preboard runs on August 16 and 17, 2026 per the program calendar.\n2. Each session unlocks at exactly 8:00 AM (Asia/Manila) on its date.\n3. Treat this as an early diagnostic of your readiness across MSTHC topics covered so far.\n4. Complete General Instructions first; then take Day 1 and Day 2 in order.\n5. Review results thoroughly before continuing regular refresher sessions.\n\nMark this guide complete after reading.' },
-          { id: 'pre-preboard-aug16', title: '2026 August 16 Session', subtitle: 'Pre-Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-08-16T08:00:00+08:00', content: 'Pre-Preboard Examination — Day 1.\n\nTimed problem set covering topics discussed in the early MSTHC phase. Simulate board-exam conditions.\n\nCalendar: August 16 — Pre-Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
-          { id: 'pre-preboard-aug17', title: '2026 August 17 Session', subtitle: 'Pre-Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-08-17T08:00:00+08:00', content: 'Pre-Preboard Examination — Day 2.\n\nContinue the early preboard assessment. Review Day 1 results and strengthen weak areas.\n\nCalendar: August 17 — Pre-Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
+          { id: 'pre-preboard-aug17', title: '2026 August 17 Session', subtitle: 'Pre-Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-08-17T08:00:00+08:00', content: 'Pre-Preboard Examination — Day 1.\n\nTimed problem set covering topics discussed in the early MSTHC phase. Simulate board-exam conditions.\n\nCalendar: August 17 — Pre-Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'pre-preboard-aug18', title: '2026 August 18 Session', subtitle: 'Pre-Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-08-18T08:00:00+08:00', content: 'Pre-Preboard Examination — Day 2.\n\nContinue the early preboard assessment. Review Day 1 results and strengthen weak areas.\n\nCalendar: August 18 — Pre-Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
       {
@@ -3781,7 +3815,6 @@
         badgeClass: 'badge-blue',
         category: 'preboard',
         lessons: [
-          { id: 'mid-preboard-gi', title: 'General Instructions', subtitle: 'Read before Mid-Preboard', type: 'self', duration: 'Guide', content: 'GENERAL INSTRUCTIONS — Mid-Preboard\n\n1. Mid-Preboard runs on September 6 and 7, 2026 per the program calendar.\n2. Each session unlocks at exactly 8:00 AM (Asia/Manila) on its date.\n3. Scope: MSTHC and HGE topics covered up to this point of the refresher.\n4. Complete General Instructions first; then Day 1 and Day 2 in order.\n5. Use results to prioritize PSAD and remaining review time.\n\nMark this guide complete after reading.' },
           { id: 'mid-preboard-sep6', title: '2026 September 6 Session', subtitle: 'Mid-Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-06T08:00:00+08:00', content: 'Mid-Preboard Examination — Day 1.\n\nTimed set covering MSTHC and HGE. Simulate exam pacing and conditions.\n\nCalendar: September 6 — Mid-Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
           { id: 'mid-preboard-sep7', title: '2026 September 7 Session', subtitle: 'Mid-Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-07T08:00:00+08:00', content: 'Mid-Preboard Examination — Day 2.\n\nSecond day of the mid-program preboard. Review Day 1 and close gaps before PSAD intensifies.\n\nCalendar: September 7 — Mid-Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
@@ -3796,7 +3829,6 @@
         badgeClass: 'badge-green',
         category: 'preboard',
         lessons: [
-          { id: 'final-preboard-gi', title: 'General Instructions', subtitle: 'Read before Final Preboard', type: 'self', duration: 'Guide', content: 'GENERAL INSTRUCTIONS — Final Preboard\n\n1. Final Preboard runs on September 23 and 24, 2026 per the program calendar.\n2. Each session unlocks at exactly 8:00 AM (Asia/Manila) on its date.\n3. September 23: full-scope final review assessment across MSTHC, HGE, and PSAD.\n4. September 24: lighter follow-up / rest-oriented wrap — prioritize calm and logistics.\n5. Complete General Instructions first; sessions open only after the previous item is done and the schedule time is reached.\n\nMark this guide complete after reading.' },
           { id: 'final-preboard-sep23', title: '2026 September 23 Session', subtitle: 'Final Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-23T08:00:00+08:00', content: 'Final Preboard Examination — Day 1.\n\nComprehensive final practice before the board exam. Review notes, formulas, and weak areas after submitting.\n\nCalendar: September 23 — Final Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
           { id: 'final-preboard-sep24', title: '2026 September 24 Session', subtitle: 'Final Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-24T08:00:00+08:00', content: 'Final Preboard Examination — Day 2.\n\nLight review / wrap-up. Rest well, prepare materials, and maintain a positive mindset for the board exam.\n\nCalendar: September 24 — Final Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
@@ -3885,9 +3917,89 @@
       const events = (typeof getCalendarEventsForDate === 'function') ? getCalendarEventsForDate(now) : [];
       const isLive = events.some(e => (e.cls || '').includes('live'));
       const isSelf = events.some(e => (e.cls || '').includes('selfpaced'));
+      const isPreboard = events.some(e => (e.cls || '') === 'preboard');
+      const isCourseSupp = events.some(e => {
+        const c = e.cls || '';
+        return c.includes('supp') && (c.includes('mSTHC') || c.includes('msthc') || c.includes('hge') || c.includes('psad'));
+      });
+      const isTestDay = events.some(e => {
+        const c = e.cls || '';
+        return c.includes('formulas') || c === 'preboard' || c.includes('board-exam') || c.includes('ce-formulas');
+      });
       const labels = events.map(e => e.label).join(' · ');
+      const testsBtn =
+        '<div class="bulletin-actions"><button type="button" class="btn btn-primary" onclick="showSection(\'tests\')">Go to Tests</button></div>';
+
+      // Linked course session for today (e.g. msthc-aug16 for 75-item MSTHC Supp)
+      let sessionHit = null;
+      try {
+        if (typeof findSessionForCalendarDate === 'function') {
+          sessionHit = findSessionForCalendarDate(now.getFullYear(), now.getMonth(), now.getDate());
+        }
+      } catch (e) {}
+      const openSessionBtn = (sessionHit && sessionHit.courseId && sessionHit.lessonId)
+        ? ('<div class="bulletin-actions"><button type="button" class="btn btn-primary" onclick="openLesson(\'' +
+           sessionHit.courseId + '\',\'' + sessionHit.lessonId + '\')">Open Session</button></div>')
+        : '<div class="bulletin-actions"><button type="button" class="btn btn-primary" onclick="showSection(\'courses\')">Go to Courses</button></div>';
 
       card.classList.remove('live', 'selfpaced', 'open');
+
+      // Preboard days (incl. Aug 17–18) — surface assessment even if also live/self-paced
+      if (isPreboard) {
+        if (isLive) {
+          card.classList.add('live');
+          if (kicker) kicker.textContent = 'PRE-PREBOARD + LIVE';
+          title.textContent = labels || 'Pre-Preboard · Live GMeet Discussion';
+          const gmeetTime = getLiveGMeetTime(now);
+          body.innerHTML =
+            '<p>Assessment day: complete the <strong>Pre-Preboard</strong> set under Tests (unlocks 8:00 AM Asia/Manila).</p>' +
+            '<p style="margin:0.35rem 0 0.55rem;">Live discussion also runs today.</p>' +
+            '<p style="margin:0.35rem 0 0.55rem;font-weight:700;color:var(--text);">🕒 ' + gmeetTime + '</p>' +
+            '<div class="bulletin-gmeet">' +
+            '<strong>To join the video meeting, click this link:</strong><br>' +
+            '<a href="' + GMEET_LINK + '" target="_blank" rel="noopener noreferrer">' + GMEET_LINK + '</a><br><br>' +
+            'Otherwise, to join by phone, dial <strong>' + GMEET_PHONE + '</strong> and enter this PIN: <strong>' + GMEET_PIN + '</strong>' +
+            '</div>' +
+            '<div class="bulletin-actions" style="margin-top:0.65rem;">' +
+            '<button type="button" class="btn btn-primary" onclick="showSection(\'tests\')">Go to Tests</button>' +
+            '<a class="btn btn-ghost" href="' + GMEET_LINK + '" target="_blank" rel="noopener noreferrer">Join GMeet</a>' +
+            '</div>';
+        } else if (isSelf) {
+          card.classList.add('selfpaced');
+          if (kicker) kicker.textContent = 'PRE-PREBOARD + SELF-PACED';
+          title.textContent = labels || 'Pre-Preboard · Self-Paced Study Day';
+          const tip = pickSelfPacedReminder(now);
+          body.innerHTML =
+            '<p>Assessment day: complete the <strong>Pre-Preboard</strong> set under Tests (unlocks 8:00 AM Asia/Manila).</p>' +
+            '<p style="margin:0.45rem 0;">Also use this block for recorded lectures and deliberate practice.</p>' +
+            '<p style="font-weight:600;color:var(--text);margin-bottom:0.55rem;">' + tip + '</p>' +
+            testsBtn;
+        } else {
+          card.classList.add('open');
+          if (kicker) kicker.textContent = 'PRE-PREBOARD';
+          title.textContent = labels || 'Pre-Preboard Examination';
+          body.innerHTML =
+            '<p>Pre-Preboard Examination day. Opens <strong>8:00 AM Asia/Manila</strong>.</p>' +
+            '<p style="margin-top:0.35rem;">Open <strong>Tests → Pre-Preboard Examination</strong> for Day 1 / Day 2 sets.</p>' +
+            testsBtn;
+        }
+        return;
+      }
+
+      // Course supplemental problem sets (e.g. 75 items – MSTHC Supp on Aug 16) → open the course session
+      if (isCourseSupp) {
+        card.classList.add('open');
+        if (kicker) kicker.textContent = 'PROBLEM SET';
+        title.textContent = labels || 'Supplemental Problem Set';
+        const sessLabel = (sessionHit && sessionHit.lesson && sessionHit.lesson.title)
+          ? sessionHit.lesson.title
+          : ((sessionHit && sessionHit.lessonId) ? sessionHit.lessonId : 'today\'s course session');
+        body.innerHTML =
+          '<p>Supplemental problem set day. Open the linked course session to work the items (quiz / problem set).</p>' +
+          '<p style="margin-top:0.35rem;color:var(--text-muted);font-size:0.85rem;">Session: <strong style="color:var(--text);">' + sessLabel + '</strong></p>' +
+          openSessionBtn;
+        return;
+      }
 
       if (isLive) {
         card.classList.add('live');
@@ -3915,15 +4027,11 @@
           '<p style="font-weight:600;color:var(--text);">' + tip + '</p>';
       } else if (events.length) {
         card.classList.add('open');
-        if (kicker) kicker.textContent = 'SCHEDULED';
+        if (kicker) kicker.textContent = isTestDay ? 'ASSESSMENT' : 'SCHEDULED';
         title.textContent = labels;
-        const isTestDay = events.some(e => {
-          const c = e.cls || '';
-          return c.includes('supp') || c.includes('formulas') || c === 'preboard' || c.includes('board-exam') || c.includes('ce-formulas');
-        });
         if (isTestDay) {
           body.innerHTML = '<p>Assessment / milestone day. Open <strong>Tests</strong> for CE Terminologies, Formulas, and Preboard sets when unlocked.</p>' +
-            '<div class="bulletin-actions"><button type="button" class="btn btn-primary" onclick="showSection(\'tests\')">Go to Tests</button></div>';
+            testsBtn;
         } else {
           body.innerHTML = '<p>Follow the program calendar for today&apos;s activity. Check Courses or Tests for linked sessions.</p>';
         }
@@ -3934,9 +4042,6 @@
         body.innerHTML = '<p>Use free time to catch up on recordings, notes, and practice. Stay consistent.</p>';
       }
     }
-
-
-
 
     // ===================== MEDIA DEFAULTS =====================
     const DEFAULT_VIDEO = 'https://youtu.be/ZbwfDQIj3Zo';
@@ -4843,6 +4948,836 @@
       }
     ];
 
+    // ===== August 16 Session — 75-item Supplemental Problem Set (5-hour timed) =====
+    const QUIZ_MSTHC_AUG16 = [
+      {
+        id: 'q1', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] An auditorium has 54 seats in the first row, 58 seats in the second row, 62 seats in the third row, and so on. Find the general term of this sequence.',
+        choices: [
+          '4n + 50',
+          '3n + 10',
+          '2n + 10',
+          '5n + 20'
+        ],
+        a: 0
+      },
+      {
+        id: 'q2', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] An oil company bores a hole 80m deep. Estimate the cost of boring if the cost is P30 for drilling, the first meter with an increase in cost of P2 per meter for each succeeding meter.',
+        choices: [
+          'P7640',
+          'P8720',
+          'P9045',
+          'P5550'
+        ],
+        a: 1
+      },
+      {
+        id: 'q3', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] P36000 is to be divided among Arthur, Bernard, and Carlos such that their shares in the same order, form an arithmetic progression. Bernard’s share is three times that of Arthur’s. How much is Arthur’s share?',
+        choices: [
+          'P6000',
+          'P5000',
+          'P3000',
+          'P8000'
+        ],
+        a: 0
+      },
+      {
+        id: 'q4', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Donna had an offer for a job starting at $40,000 per year and guaranteeing her raise of $1600 a year for the next 5 years. Find her salary for the 4th year.',
+        choices: [
+          '$55,900',
+          '$32,500',
+          '$75,100',
+          '$44,800'
+        ],
+        a: 3
+      },
+      {
+        id: 'q5', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] On commencing employment, a man is paid a salary of P7200 per annum and receive annual increments of P350. Determine his salary in the 9th year and calculate the total he will have received in the first 12 years.',
+        choices: [
+          'P20,000 and P120300,respectively',
+          'P30,000 and P220500,respectively',
+          'P10,000 and P109500,respectively',
+          'P60,000 and P750100,respectively'
+        ],
+        a: 2
+      },
+      {
+        id: 'q6', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A new Civil Engineer failing to complete his firs building contract for P700,000 in a specified time is compelled to pay a penalty of ½ of 1% per day for the first 10days of extra time required and for each additional days thereafter, the stipulated penalty is increased by 10%, or P350 each day. If he paid a total penalty of P75,600, how many days did he overrun his contract time?',
+        choices: [
+          '18days',
+          '17days',
+          '20days',
+          '34days'
+        ],
+        a: 0
+      },
+      {
+        id: 'q7', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The population size of the bacterial culture growing under controlled conditions is doubling each day. Predict how large the culture will be at the beginning of day 7 if it measures 10 units at the beginning of the day.',
+        choices: [
+          '640units',
+          '820units',
+          '950units',
+          '250units'
+        ],
+        a: 0
+      },
+      {
+        id: 'q8', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The sum of the first n terms of a series is Sₙ = 3²ⁿ − 132n − 1 + b. What is the quotient of the 9th and 7th terms?',
+        choices: [
+          '61',
+          '71',
+          '91',
+          '81'
+        ],
+        a: 3
+      },
+      {
+        id: 'q9', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The arithmetic mean of 90 numbers is 50. If two numbers namely 280 and 700 are removed, what is the arithmetic mean of the remaining numbers?',
+        choices: [
+          '30',
+          '20',
+          '40',
+          '50'
+        ],
+        a: 2
+      },
+      {
+        id: 'q10', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The average of 11 numbers is 10. One number is eliminated leaving only 10numbers. The average of the remaining number is 7.5. What number was eliminated?',
+        choices: [
+          '24',
+          '35',
+          '67',
+          '40'
+        ],
+        a: 1
+      },
+      {
+        id: 'q11', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The volume of a cone varies jointly as its height and the square of its radius. If the volume of the cone is 32π cubic inches when the radius is 4 inches and the height is 6 inches, find the volume of a cone when the radius is 3 inches and the height is 5 inches.',
+        choices: [
+          '15π',
+          '16π',
+          '17π',
+          '18π'
+        ],
+        a: 0
+      },
+      {
+        id: 'q12', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The amount P of pollution varies directly with the population N of people. City A has a population of 468000 and produces 260000 tons of pollutants. Find how many tons of pollution we should expect City B to produce if we know that its population is 350000.',
+        choices: [
+          '201666tons',
+          '256133tons',
+          '105621tons',
+          '194444tons'
+        ],
+        a: 3
+      },
+      {
+        id: 'q13', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The intensity of light (in foot-candles) varies inversely as the square of x, the distance in feet from the light source. The intensity of light 2 ft from the source is 80ft-candles. How far away is the source if intensity of light is 6ft-candles?',
+        choices: [
+          '13.23ft',
+          '54.43ft',
+          '26.67ft',
+          '69.32ft'
+        ],
+        a: 2
+      },
+      {
+        id: 'q14', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The maximum weight that a rectangular beam can support varies jointly as its width and the square of its height and inversely as its length. If a beam is 1/3 ft wide, ½ ft high and 11ft long can support 20 tons, find how much similar beam can support if the beam is 1/4ft wide, 1/4ft high and 17ft long?',
+        choices: [
+          '1.56tons',
+          '2.43tons',
+          '7.43tons',
+          '5.21tons'
+        ],
+        a: 1
+      },
+      {
+        id: 'q15', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] If the voltage V in an electric circuit is held constant, the current is inversely proportional to the resistance R. If the current is 40 amperes when the resistance is 270 ohms, find the current when the resistance is 150ohms.',
+        choices: [
+          '32amperes',
+          '72amperes',
+          '84amperes',
+          '43amperes'
+        ],
+        a: 1
+      },
+      {
+        id: 'q16', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Determine how much copper and how much zinc is needed to make a 99kgs brass ingot if they have to be proportions copper: zinc, 8:3 by mass.',
+        choices: [
+          '52kgs',
+          '81kgs',
+          '72kgs',
+          '45kgs'
+        ],
+        a: 2
+      },
+      {
+        id: 'q17', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The volume of a cone varies jointly as its height and the square of its radius. If the volume of the cone is 32π cubic inches when the radius is 4 inches and the height is 6 inches, find the volume of the cone when the radius is 3 inches and the height is 5 inches.',
+        choices: [
+          '15π',
+          '16π',
+          '17π',
+          '18π'
+        ],
+        a: 0
+      },
+      {
+        id: 'q18', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] When the expression x⁴ + a x³ + 5x² + b x + 6 is divided by (x − 2), the remainder is 16. When it is divided by (x + 1), the remainder is 10. Find the value of constant b.',
+        choices: [
+          '5',
+          '4',
+          '6',
+          '7'
+        ],
+        a: 3
+      },
+      {
+        id: 'q19', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Meriam and Lilia decided to eat at pizza hut. Meriam ordered 3 slices of pizza and 2 soft drinks while Lilia ordered 2 slices of pizza and 3 soft drinks. Meriam paid P600 while Lilia paid P525. How much did one pizza size cost?',
+        choices: [
+          'P150 cost of 1 pizza',
+          'P200 cost of 1 pizza',
+          'P350 cost of 1 pizza',
+          'P820 cost of 1 pizza'
+        ],
+        a: 0
+      },
+      {
+        id: 'q20', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Solve for x from the following equations: xy = 12, yz = 20, and zx = 15.',
+        choices: [
+          '±5',
+          '±3',
+          '±7',
+          '±9'
+        ],
+        a: 1
+      },
+      {
+        id: 'q21', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Newsprint is either discarded or recycled. Americans recycle about 27% of all newsprint, but an amount of newsprint equivalent to 30million trees is discarded every year. About how many trees worth of newsprint is recycled in the United States each year?',
+        choices: [
+          '12.1Million trees',
+          '18.5Million trees',
+          '22.5Million trees',
+          '11.6Million trees'
+        ],
+        a: 3
+      },
+      {
+        id: 'q22', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The blue whale is the largest of whales. Its average weight is 3 times the difference of the average of a humpback whale and 5 tons. If the total average weight of a blue whale and a humpback whale is 117tons, find the average weight of the blue whale.',
+        choices: [
+          '84tons',
+          '72tons',
+          '90tons',
+          '55tons'
+        ],
+        a: 0
+      },
+      {
+        id: 'q23', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Incandescent, fluorescent and halogen bulbs are lasting longer than ever before. One average of the number of bulb hours for a fluorescent bulb is 25times the number of bulb hours for a halogen bulb. The number of bulb hours for an incandescent bulb is 2500less than the halogen bulb. If the total number of bulb hours for the three types of bulbs is 105,500, find the number of bulb hours for the halogen bulb.',
+        choices: [
+          '2000bulb hours',
+          '3000bulb hours',
+          '4000bulb hours',
+          '5000bulb hours'
+        ],
+        a: 2
+      },
+      {
+        id: 'q24', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] An architect is allowed no more than 15 sq.m to add a small bedroom to a house. Because of the room’s design in relationship to the existing structure, the width of its rectangular floor must be 7meters less than two times the length. Find the precise length and width of the rectangular floor of maximum area that the architect is permitted.',
+        choices: [
+          '3 x 4',
+          '5 x 3',
+          '5 x 7',
+          '3 x 8'
+        ],
+        a: 1
+      },
+      {
+        id: 'q25', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The length of a rectangular garden is 6ft longer than its width. If the area of the garden is 55square foot, find its length and width.',
+        choices: [
+          'The width is 3ft while the length is 10ft',
+          'The width is 2ft while the length is 13ft',
+          'The width is 5ft while the length is 11ft',
+          'The width is 7ft while the length is 9ft'
+        ],
+        a: 2
+      },
+      {
+        id: 'q26', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A country barn house has chickens and pigs. In order to determine the exact number, of each kind of animals in the barn, the former owner told a visiting Civil Engineer graduate to simply count the total number of heads and legs. The visitor did so and reported 60 heads and 140legs. How many pigs were there?',
+        choices: [
+          '20pigs',
+          '10pigs',
+          '30pigs',
+          '15pigs'
+        ],
+        a: 1
+      },
+      {
+        id: 'q27', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] You just purchased a rectangular waterfront lot along a river’s edge. The perimeter of the lot is 1000ft. To create a sense of privacy, you decided to fence along the three sides excluding the sides that face the river. An inexpensive fencing along the lots front cost P10 per foot. The cost of fencing along the three sides comes to P7000. What are the lots dimensions?',
+        choices: [
+          '200ft x 300ft',
+          '100ft x 150ft',
+          '250ft x 500ft',
+          '400ft x 420ft'
+        ],
+        a: 0
+      },
+      {
+        id: 'q28', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The formula for the radius r of a cone with height h = 7 cm and volume V is r = √(3V / (7π)). Rationalize the numerator of the radical expression in the formula.',
+        choices: [
+          '√(21πV) / (7π)',
+          '√(23πV) / (7π)',
+          '√(20πV) / (7π)',
+          '√(22πV) / (7π)'
+        ],
+        a: 0
+      },
+      {
+        id: 'q29', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The pressure P (in pascal) at height h meters above ground level is given by P = P₀ e^(−h/C), where P₀ is the pressure at ground level and C is a constant. Find P when P₀ = 1.012×10⁵ Pa, h = 1420 m, and C = 71500.',
+        choices: [
+          '9.432x10^3 Pa',
+          '9.921x10^4 Pa',
+          '9.004 x 10^4 Pa',
+          '9.432x10^5 Pa'
+        ],
+        a: 1
+      },
+      {
+        id: 'q30', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The log of the quotient M/N and the log of the product MN is equal to 1.55630251 and 0.352182518, respectively. Find the value of M.',
+        choices: [
+          'M = 8',
+          'M = 9',
+          'M = 5',
+          'M = 2'
+        ],
+        a: 1
+      },
+      {
+        id: 'q31', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Find the loudness in decibels of the sound in a library, for which the intensity is 2510 × I₀. (Use L = 10 log₁₀(I/I₀).)',
+        choices: [
+          '34dB',
+          '20dB',
+          '21dB',
+          '47dB'
+        ],
+        a: 0
+      },
+      {
+        id: 'q32', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] In the binomial expansion of (a + b)ⁿ, find the value of n if the coefficients of the 4th and 13th terms are equal.',
+        choices: [
+          '15',
+          '12',
+          '21',
+          '36'
+        ],
+        a: 0
+      },
+      {
+        id: 'q33', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Find the middle term of (2p − ½q)¹⁰.',
+        choices: [
+          '−156 p⁵/q⁵',
+          '−732 p⁵/q⁵',
+          '−444 p⁵/q⁵',
+          '−252 p⁵/q⁵'
+        ],
+        a: 3
+      },
+      {
+        id: 'q34', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] What is the sum of the numerical coefficients of the expansion of (a + b)⁶?',
+        choices: [
+          '32',
+          '64',
+          '56',
+          '77'
+        ],
+        a: 1
+      },
+      {
+        id: 'q35', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] From the expansion of (x − 3y)¹², find the term involving x⁸.',
+        choices: [
+          '41342 x⁸ y⁴',
+          '40095 x⁸ y⁴',
+          '28742 x⁸ y⁴',
+          '210560 x⁸ y⁴'
+        ],
+        a: 1
+      },
+      {
+        id: 'q36', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Compute the transformed equation of the curve xy = 1 by rotating the axes through an angle of 45°.',
+        choices: [
+          '(x′)² + (y′)² = 2',
+          '(x′)² + (y′)² = 1',
+          '(x′)² + (y′)² = 4',
+          '(x′)² + (y′)² = 3'
+        ],
+        a: 0
+      },
+      {
+        id: 'q37', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] During the 2000 Olympic Games in Sydney, Australia, the total number of medals won by Germany, Australia, and the People’s Republic of China were three consecutive integers. Of these countries, Germany won the fewest medals and China won the most. If the sum of the first integer, twice the second integer and four times the third integer is 409, find the number of medals won by each country.',
+        choices: [
+          'Germany won 47 medals, Australia won 48medals, and People’s Republic of China won 49medals, respectively',
+          'Germany won 48 medals, Australia won 47medals, and People’s Republic of China won 46medals, respectively',
+          'Germany won 59medals, Australia won 58medals, and People’s Republic of China won 57medals, respectively',
+          'Germany won 57 medals, Australia won 58medals, and People’s Republic of China won 59medals, respectively'
+        ],
+        a: 3
+      },
+      {
+        id: 'q38', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] During the 2001 Major League Baseball season, the number of homeruns hit by Jim Thome of the Cleveland Indians, Rafael Palmero of the Texas Rangers and Richie Sexson of the Milwaukee Brewers were three consecutive odd integers. Thome hit the most homeruns and Sexson hit the fewest homeruns. The total number of homeruns hit by these three players over the course of the season was 141. How many homeruns did each player hit during the 2001 Seasons?',
+        choices: [
+          'The homeruns each player hit is 46, 48 and 50 by Sexson, Palmero and Thome, respectively.',
+          'The homeruns each player hit is 35, 37 and 39 by Sexson, Palmero and Thome, respectively.',
+          'The homeruns each player hit is 45, 47 and 49 by Sexson, Palmero and Thome, respectively.',
+          'The homeruns each player hit is 12, 14 and 16 by Sexson, Palmero and Thome, respectively.'
+        ],
+        a: 2
+      },
+      {
+        id: 'q39', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A pennant in the shape of an isosceles triangle is to be constructed for the High School Athletic Club and sold at a fundraiser. The company manufacturing the pennant charges according to the perimeter and the athletic club has determined that a perimeter of 149 cm should make a nice profit. If each equal side of the triangle is twice the length of the third side increased by 12cm, find the length of the smallest side of the triangular pennant.',
+        choices: [
+          '12',
+          '121',
+          '25',
+          '76'
+        ],
+        a: 2
+      },
+      {
+        id: 'q40', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] One angle is three times its supplement increased by 20degrees. Find the measures of the two supplementary angles.',
+        choices: [
+          '120 and 30degrees',
+          '180 and 10degrees',
+          '140 and 40degrees',
+          '210 and 45degrees'
+        ],
+        a: 2
+      },
+      {
+        id: 'q41', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Find the sum of the sequence defined by a₁ = 1 and aₙ = 3 aₙ₋₁ for the first 4 terms.',
+        choices: [
+          '11',
+          '33',
+          '22',
+          '44'
+        ],
+        a: 2
+      },
+      {
+        id: 'q42', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A girl on a wharf is pulling a rope tied to a raft at the rate of 0.9m/s. If the hands of the girl pulling the rope at 3.8m above the level of water, how fast is the raft approaching the wharf when there is 6m of rope out?',
+        choices: [
+          '1.163m/s',
+          '0.655m/s',
+          '7.443m/s',
+          '3.054m/s'
+        ],
+        a: 0
+      },
+      {
+        id: 'q43', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Anna is 3 times as old as Mary. Three years ago, she is four times as old as Mary. Find the sum of their ages.',
+        choices: [
+          '12',
+          '36',
+          '45',
+          '87'
+        ],
+        a: 1
+      },
+      {
+        id: 'q44', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Three housewives, Marr, Kathy, and Anne bought a basket of fruits for P800. One half of what Mary paid added to 1/5 of what Kathy paid and 1/10 of what Anne paid will be equal to P300. The sum that Mary paid increased by 1/8 of what Kathy paid diminished by ¼ of Anne paid will make it equal to P500. How much did Mary pay?',
+        choices: [
+          '200',
+          '100',
+          '450',
+          '500'
+        ],
+        a: 3
+      },
+      {
+        id: 'q45', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The amount of evaporation in inches per day, from the surfaces of a large body of water can be modeled by the formula: E = W/20a where a is the area of water in square mile, W is the average wind speed of the air over the water in mph, E is the surface evaporation in inches per day. Determine the evaporation from the surface of a lake whose area is 9 square miles on a day when the wind speed over the water is 10mph.',
+        choices: [
+          '0.1667',
+          '0.133',
+          '0.222',
+          '0.866'
+        ],
+        a: 0
+      },
+      {
+        id: 'q46', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A man makes and sells “n” balloons a day. Each costs x pesos and is sold for y pesos. If n, x and y are all increased by 10%, determine the percentage increase in profit per day?',
+        choices: [
+          '11%',
+          '31%',
+          '21%',
+          '41%'
+        ],
+        a: 2
+      },
+      {
+        id: 'q47', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A father and his son can dig a well if the father works 6 hours and his son works 12 hours or they can do it if the father works 9 hours and the son works 8 hours. How long will it take for the father to dig the well alone?',
+        choices: [
+          '14hrs',
+          '15hrs',
+          '12hrs',
+          '13hrs'
+        ],
+        a: 1
+      },
+      {
+        id: 'q48', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Charles can empty the cookie jar in 1.5hours. It takes her mother 2 hours to bake enough cookies to fill it. If the cookie jar is full when Charles comes from school and his mother continues baking and restocking the cookie jar, then how long will it take him to empty the cookie jar?',
+        choices: [
+          '5hrs',
+          '3hrs',
+          '6hrs',
+          '2hrs'
+        ],
+        a: 2
+      },
+      {
+        id: 'q49', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A high concentrated solution having a volume of 100liters is mixed by 75% alcohol, and 25% gasoline. It was found out that a 50-50% mixture is also appropriate in the solution.  How much gasoline should be added to the high concentrated solution in order to have a 50-50% mixture?',
+        choices: [
+          '50',
+          '40',
+          '30',
+          '20'
+        ],
+        a: 0
+      },
+      {
+        id: 'q50', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] P is a point on BC of the triangle ABC such that AB = AC = BP. If PA = PC, find the value of the angle ABC.',
+        choices: [
+          '36degrees',
+          '12degrees',
+          '42degrees',
+          '67degrees'
+        ],
+        a: 0
+      },
+      {
+        id: 'q51', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] ABCD is a square. A point P is inside the square, which forms a triangle PDC an equilateral. Find the angle between sides AB and PB.',
+        choices: [
+          '15degrees',
+          '14degrees',
+          '12degrees',
+          '16degrees'
+        ],
+        a: 0
+      },
+      {
+        id: 'q52', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A square section ABCD has one of its sides equal to a. Point E is inside the square forming an equilateral triangle BEC having one side equal in length to the side of the square. Find the angle AED.',
+        choices: [
+          '150degrees',
+          '120degrees',
+          '140degrees',
+          '130degrees'
+        ],
+        a: 0
+      },
+      {
+        id: 'q53', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A line is drawn from point P to point Q, where P is along the line AB and Q is along the line AC of the triangular lot ABC. If AP: PB = 3:1 and AQ: QC = 2:5, what is the proportion of the area of APQ and ABC?',
+        choices: [
+          '1/4',
+          '3/14',
+          '3/7',
+          '5/17'
+        ],
+        a: 1
+      },
+      {
+        id: 'q54', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Given triangle ABC, point E is along side AC and point D is along side BC. Line BE and AD are the angle bisectors of angle B and A, respectively. If the angle BEC = 75degrees and angle ADC = 84degrees, find the angle ACB.',
+        choices: [
+          '35degrees',
+          '74degrees',
+          '85degrees',
+          '64degrees'
+        ],
+        a: 1
+      },
+      {
+        id: 'q55', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Two circles are tangent to a third circle internally and tangent to each other externally. If the distances between their centers are 10cm, 7cm, and 5cm, respectively.  Find the radius of the biggest circle.',
+        choices: [
+          '12',
+          '10',
+          '11',
+          '13'
+        ],
+        a: 2
+      },
+      {
+        id: 'q56', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Chords AB and CD intersect each other at 0 inside the circle. AO = 8cm, CO = 12cm, and DO = 20cm. If AB is the diameter of the circle, compute the area of OCA.',
+        choices: [
+          '43.22sq.cm',
+          '52.05sq.cm',
+          '87.23sq.cm',
+          '70.2sq.cm'
+        ],
+        a: 1
+      },
+      {
+        id: 'q57', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Triangle ABC is inscribed in a circle with side a = 60cm, and angle BAC = 20degrees. If the angle ABC = 40degrees, find the diameter of the circle.',
+        choices: [
+          '175.4cm',
+          '184.2cm',
+          '201.7cm',
+          '880.5cm'
+        ],
+        a: 0
+      },
+      {
+        id: 'q58', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Secants PB and PD are drawn from point P having an angle between them equal to 20degrees. The secant intersects a circle at points C, B, D and A. C is along the secant PB while A is along the secant PD with C and A nearer to P. The angle PBA is 40degrees. If AB is a diameter of a circle, find the angle ACD.',
+        choices: [
+          '40degrees',
+          '50degrees',
+          '20degrees',
+          '30degrees'
+        ],
+        a: 3
+      },
+      {
+        id: 'q59', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A road is tangent to a circular lake. Along the road and 12miles from the point of tangency, another road opens towards the lake. From the intersection of the two roads to the periphery of the lake, the length of the new road is 11 miles. If the new road will be prolonged across the lake, find the length of the bridge to be constructed.',
+        choices: [
+          '1.064miles',
+          '6.521miles',
+          '3.763miles',
+          '2.091miles'
+        ],
+        a: 3
+      },
+      {
+        id: 'q60', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A sphere of radius 5cm and a right circular cone of radius 5cm and height 10cm stand on a plane. How far from the base of the cone must a cutting plane (parallel to the base of the cone) pass in order to cut the solids in equal circular sections?',
+        choices: [
+          '2cm',
+          '3cm',
+          '4cm',
+          '5cm'
+        ],
+        a: 0
+      },
+      {
+        id: 'q61', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] An ice cream cone is filed with ice cream and more ice cream in the form of a hemisphere is place on top. The diameter of the hemisphere is equal to the diameter of the cone. If the hemispherical surface is equal to lateral area of the cone, find the total volume of ice cream if the radius of the hemisphere is 2cm.',
+        choices: [
+          '65.211cc',
+          '89.322cc',
+          '31.265cc',
+          '77.431cc'
+        ],
+        a: 2
+      },
+      {
+        id: 'q62', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Find the volume of a regular tetrahedron with an edge of 3m.',
+        choices: [
+          '3.18',
+          '4.21',
+          '7.45',
+          '9.02'
+        ],
+        a: 0
+      },
+      {
+        id: 'q63', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A right circular cone is divided into 3 portions A, B and C by planes parallel to the base. The height of each portion is h, and the base radius of the cone A is “r” units. Cone A is the vertex of the big cone. Determine the ratio of the volume of A to that of B.',
+        choices: [
+          '1:5',
+          '1:7',
+          '3:4',
+          '3:7'
+        ],
+        a: 1
+      },
+      {
+        id: 'q64', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Towers A and B are constructed on a horizontal plain, B being 200 m above the plain. The angle of elevation of the top of tower A as seen from point C in the plain (in the same vertical plane with A and B) is 50°, while the angle of depression of C viewed from the top of tower B is 28°28′, and the angle subtended at the top of tower B by the top of tower A and C is 50°. Find the height of A.',
+        choices: [
+          '642.76m',
+          '801.43cm',
+          '516.59m',
+          '305.32cm'
+        ],
+        a: 2
+      },
+      {
+        id: 'q65', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The angle of elevation of the top of tower A from the foot of tower B is twice the angle of elevation of the top of tower B from the foot of tower A. At a point midway between the two towers, the angles of elevation of the tops of the towers are complementary. If the two towers are 120 m apart, compute the angle of elevation of tower B at the midpoint.',
+        choices: [
+          '33°04′',
+          '45°02′',
+          '25°08′',
+          '18°12′'
+        ],
+        a: 0
+      },
+      {
+        id: 'q66', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] If x + y = 90°, what is the value of (sin x · tan y) / (sin y · tan x)?',
+        choices: [
+          'csc x',
+          'cot x',
+          'sec x',
+          'sin x'
+        ],
+        a: 1
+      },
+      {
+        id: 'q67', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A wooden flagpole is embedded 3m deep at corner A of a concrete horizontal slab ABCD, square in form and measuring 20ft on a side. A storm broke the flagpole at a point one meter above the slab and inclined toward corner C in the direction of diagonal AC. The vertical angles observed at the center of the slab and at corner C to the tip of the flagpole were 65degrees an 35degrees, respectively. What is the total length of the flagpole above the slab in yards?',
+        choices: [
+          '8.42yds',
+          '9.03yds',
+          '5.61yds',
+          '3.65yds'
+        ],
+        a: 2
+      },
+      {
+        id: 'q68', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] At a certain point on the ground, the tower at the top of a 20m high building subtends an angle of 45degrees. At another point on the ground 25m closer the building, the tower subtends an angle of 45degrees. Find the height of the tower.',
+        choices: [
+          '503.21m',
+          '200.65m',
+          '477.33m',
+          '101.84m'
+        ],
+        a: 3
+      },
+      {
+        id: 'q69', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] In a spherical triangle, angle B = 81°50′ and angle C = 94°30′. If side c = 90°, what is the value of side a?',
+        choices: [
+          '56°45′',
+          '12°08′',
+          '45°17′',
+          '33°65′'
+        ],
+        a: 0
+      },
+      {
+        id: 'q70', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A Cebu Pacific plane flew from Busan, Korea (latitude 14° N, longitude 121°30′ E) on a course 30° Southwest, maintaining uniform altitude. At what longitude will it cross the equator?',
+        choices: [
+          '113°03′3″ E',
+          '115°04′4″ E',
+          '132°01′1″ E',
+          '106°02′5″ E'
+        ],
+        a: 0
+      },
+      {
+        id: 'q71', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] The graph y = b − (x + a)² passes through the points (0, −3), (1, 0) and (C, 0). Find the value of C.',
+        choices: [
+          '1',
+          '3',
+          '2',
+          '4'
+        ],
+        a: 1
+      },
+      {
+        id: 'q72', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] A semi-ellipse and a parabola rest on the same base 60 m wide and 20 m high. Using the common base as x-axis, determine the difference of ordinates at a point 25 m from the center of the base.',
+        choices: [
+          '5.22',
+          '1.34',
+          '4.95',
+          '7.77'
+        ],
+        a: 2
+      },
+      {
+        id: 'q73', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Find the equation of the plane which makes an equal angle with the coordinate axis and which cut a volume of 288cubic units from the 1st octant.',
+        choices: [
+          'x + y + z = 12',
+          'x + y + z = 18',
+          'x + y + z = 1',
+          'x + y + z = 6'
+        ],
+        a: 0
+      },
+      {
+        id: 'q74', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Determine the area bounded by the curve y² = 9x/5 and the line y = x − 2.',
+        choices: [
+          '7.54',
+          '1.43',
+          '4.33',
+          '6.86'
+        ],
+        a: 3
+      },
+      {
+        id: 'q75', topic: 'MSTHC Supplemental',
+        q: '[PROBLEM] Find the volume generated by revolving the triangle whose vertices are (2, 2), (4, 8) and (6, 2) about the line 3x − 4y = 12.',
+        choices: [
+          '241.27cubic units',
+          '754.22cubic units',
+          '555.25cubic units',
+          '305.32cubic units'
+        ],
+        a: 0
+      },
+    ];
+
+
 
 
 
@@ -5149,12 +6084,23 @@
       }
     }
 
+    function isTestTrack(course) {
+      if (!course) return false;
+      if (course.category === 'preboard' || course.category === 'terminology' || course.category === 'formulas') return true;
+      return !!(typeof TESTS !== 'undefined' && TESTS.some(function (t) { return t.id === course.id; }));
+    }
+
     function isLessonUnlocked(course, lessonIndex) {
       if (lessonIndex < 0) return false;
       if (state && state.forceUnlock) return true;
       const lesson = course.lessons[lessonIndex];
       // Exception: August 11 Session always available (no sequence or schedule lock)
       if (lesson && lesson.id === 'msthc-aug11') return true;
+      // Tests (preboards, CE terms, CE formulas): unlock only on scheduled date — no sequence lock
+      if (isTestTrack(course)) {
+        return isScheduleOpen(lesson);
+      }
+      // Regular course sessions: previous must be completed AND schedule open
       if (lessonIndex > 0) {
         const prev = course.lessons[lessonIndex - 1];
         if (!prev || !isCompleted(prev.id)) return false;
@@ -5846,8 +6792,14 @@
         title = events.map(e => e.label).join(' · ');
         const live = events.some(e => (e.cls || '').includes('live'));
         const selfp = events.some(e => (e.cls || '').includes('selfpaced'));
+        const preboard = events.some(e => (e.cls || '') === 'preboard');
         const supp = events.some(e => (e.cls || '').includes('supp') || (e.cls || '').includes('formulas') || (e.cls || '') === 'preboard' || (e.cls || '') === 'board-exam');
-        if (live) {
+        if (preboard) {
+          sub = live
+            ? ('Pre-Preboard · ' + getLiveGMeetTime(now) + ' GMeet')
+            : (selfp ? 'Pre-Preboard · Self-paced study also scheduled' : 'Pre-Preboard examination · opens 8:00 AM');
+          tag = 'PRE-PREBOARD';
+        } else if (live) {
           sub = getLiveGMeetTime(now) + ' · GMeet';
           tag = 'LIVE';
         } else if (supp) {
@@ -6128,7 +7080,9 @@
           <div class="progress-fill" style="width:${p.pct}%"></div>
         </div>
         <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;">${p.done} of ${p.total} sessions completed (${p.pct}%)</p>
-        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Sessions unlock in order on their calendar date at 8:00 AM (Asia/Manila). Complete each session before the next unlocks.</p>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">${isTest
+          ? 'Each test opens only on its scheduled calendar date at 8:00 AM (Asia/Manila). Day 1 and Day 2 unlock independently by date — no sequence lock.'
+          : 'Sessions unlock in order on their calendar date at 8:00 AM (Asia/Manila). Complete each session before the next unlocks.'}</p>
         <ul class="lesson-list">
           ${course.lessons.map((l, i) => {
             const done = isCompleted(l.id);
@@ -6151,7 +7105,7 @@
             let lockReason = '';
             let catchUp = '';
             if (!unlocked) {
-              if (i > 0 && !isCompleted(course.lessons[i - 1].id)) {
+              if (!isTest && i > 0 && !isCompleted(course.lessons[i - 1].id)) {
                 lockReason = 'Complete the previous session to unlock';
               } else if (!isScheduleOpen(l)) {
                 lockReason = 'Opens ' + unlockLabel(l) + ' (Asia/Manila)';
@@ -6161,7 +7115,17 @@
             } else if (!done && isScheduleOpen(l)) {
               // Open on/after schedule date but not yet completed — catch-up note
               const sessDate = (typeof getLessonSessionDate === 'function') ? getLessonSessionDate(l) : null;
-              if (sessDate) {
+              if (isTest) {
+                catchUp = sessDate
+                  ? (function () {
+                      const today = new Date(); today.setHours(0,0,0,0);
+                      const sd = new Date(sessDate); sd.setHours(0,0,0,0);
+                      return today > sd
+                        ? ' ⚠️ Available — complete when ready (tests unlock by date only).'
+                        : ' Open today at 8:00 AM Asia/Manila — unlock is date-based only.';
+                    })()
+                  : ' Available by schedule date (no sequence lock).';
+              } else if (sessDate) {
                 const today = new Date();
                 today.setHours(0,0,0,0);
                 const sd = new Date(sessDate); sd.setHours(0,0,0,0);
@@ -6200,15 +7164,18 @@
       if (!course) return;
       const lesson = course.lessons[lessonIndex];
       if (!lesson) return;
-      if (lessonIndex > 0) {
-        const prev = course.lessons[lessonIndex - 1];
-        if (prev && !isCompleted(prev.id)) {
-          alert('This session is locked.\n\nComplete “' + prev.title + '” first to unlock the next session.');
-          return;
+      // Tests unlock by scheduled date only — never require previous completion
+      if (!isTestTrack(course)) {
+        if (lessonIndex > 0) {
+          const prev = course.lessons[lessonIndex - 1];
+          if (prev && !isCompleted(prev.id)) {
+            alert('This session is locked.\n\nComplete “' + prev.title + '” first to unlock the next session.');
+            return;
+          }
         }
       }
       if (!isScheduleOpen(lesson)) {
-        alert('This session is time-locked.\n\nIt opens at ' + unlockLabel(lesson) + ' (Asia/Manila schedule).');
+        alert('This test/session is time-locked.\n\nIt opens at ' + unlockLabel(lesson) + ' (Asia/Manila schedule).');
         return;
       }
       alert('This session is locked.');
@@ -6476,9 +7443,13 @@
 
       // QUIZ panel
       const quizSize = problemSet ? 75 : (lesson.id === 'msthc-aug13' ? 16 : (lesson.id === 'msthc-aug14' ? 15 : (lesson.id === 'msthc-aug15' ? 10 : 20)));
-      const quizMinutes = problemSet ? Math.round(75 * 90 / 60) : (quizSize * 4);
+      const quizMinutes = problemSet
+        ? (lesson.id === 'msthc-aug16' ? 300 : Math.round(75 * 90 / 60))
+        : (quizSize * 4);
       const quizLabel = problemSet
-        ? '75-item Timed Problem Set Quiz (results recorded in Summary Log)'
+        ? (lesson.id === 'msthc-aug16'
+          ? '75-item Simulated Problem Set — 5 hours (HH:MM:SS) · progress autosaved'
+          : '75-item Timed Problem Set Quiz (results recorded in Summary Log)')
         : quizSize + '-item Timed REPEAT Quiz — ' + quizMinutes + ' minutes (results recorded in Summary Log)';
       panels += `
         <div class="tab-panel ${problemSet ? 'active' : ''}" id="panel-quiz">
@@ -6616,9 +7587,46 @@
       if (quizTimerId) { clearInterval(quizTimerId); quizTimerId = null; }
     }
 
+    function saveQuizProgress() {
+      if (!activeQuiz) return;
+      try {
+        localStorage.setItem('calqsept2026hub_quiz_progress', JSON.stringify({
+          lessonId: activeQuiz.lessonId,
+          courseId: activeQuiz.courseId,
+          answers: activeQuiz.answers,
+          current: activeQuiz.current,
+          timeLeft: activeQuiz.timeLeft,
+          startedAt: activeQuiz.startedAt,
+          type: activeQuiz.type,
+          savedAt: Date.now()
+        }));
+      } catch (e) {}
+    }
+
+    function clearQuizProgress() {
+      try { localStorage.removeItem('calqsept2026hub_quiz_progress'); } catch (e) {}
+    }
+
+    function quizRemarks(pct) {
+      if (pct >= 90) return "You're a topnotch level. Keep grinding. Stay on top.";
+      if (pct >= 70) return 'Congratulations! Keep up the good work.';
+      if (pct >= 60) return "Keep Pushing! You're almost there.";
+      if (pct >= 50) return 'Above the minimum PRC requirements.';
+      return 'Keep trying! Never Give Up!';
+    }
+
+    function renderQuizClockFace(secLeft, totalSec) {
+      const total = totalSec || (5 * 3600);
+      const elapsed = Math.max(0, total - Math.max(0, secLeft));
+      const frac = Math.min(1, elapsed / total);
+      // Clock hands: full circle over total duration
+      const deg = frac * 360;
+      return deg;
+    }
+
     function startQuiz(courseId, lessonId, isTimed) {
       // isTimed true => 75-item supplementary / major set; false => 20-item REPEAT — both time-pressured
-      const is75 = !!isTimed;
+      let is75 = !!isTimed;
       let questions;
       if (!is75 && lessonId === 'msthc-aug11' && typeof QUIZ_MSTHC_AUG11 !== 'undefined') {
         // August 11 Session exclusive Module-1 questionnaire (figures only where provided) — first 20 for REPEAT
@@ -6635,22 +7643,48 @@
       } else if (!is75 && lessonId === 'msthc-aug15' && typeof QUIZ_MSTHC_AUG15 !== 'undefined') {
         // August 15 Session exclusive Module-5 questionnaire (Integral Calculus / DE)
         questions = QUIZ_MSTHC_AUG15.map(q => ({ ...q, img: q.img || null }));
+      } else if (lessonId === 'msthc-aug16' && typeof QUIZ_MSTHC_AUG16 !== 'undefined') {
+        // August 16 Supplemental — exclusive 75-item set, 5-hour board-style timer
+        questions = QUIZ_MSTHC_AUG16.map(q => ({ ...q, img: q.img || null }));
+        is75 = true;
       } else {
         questions = is75 ? QUIZ_75.map(q => ({...q})) : QUIZ_20.map(q => ({...q}));
       }
-      // REPEAT: 4 min/item; 75-item set: ~90s/item (~112.5 min)
-      const timeLimitSec = is75 ? (75 * 90) : (questions.length * 4 * 60);
+      // Aug 16 set: 5 hours fixed. Other 75-item: ~90s/item. REPEAT: 4 min/item.
+      const timeLimitSec = (lessonId === 'msthc-aug16')
+        ? (5 * 60 * 60)
+        : (is75 ? (75 * 90) : (questions.length * 4 * 60));
+      // Restore in-progress attempt if same lesson
+      let restoredAnswers = {};
+      let restoredCurrent = 0;
+      let restoredTimeLeft = timeLimitSec;
+      let restoredStarted = Date.now();
+      try {
+        const raw = localStorage.getItem('calqsept2026hub_quiz_progress');
+        if (raw) {
+          const prog = JSON.parse(raw);
+          if (prog && prog.lessonId === lessonId && prog.answers && typeof prog.timeLeft === 'number' && prog.timeLeft > 0) {
+            restoredAnswers = prog.answers;
+            restoredCurrent = Math.min(prog.current || 0, questions.length - 1);
+            restoredTimeLeft = prog.timeLeft;
+            restoredStarted = prog.startedAt || Date.now();
+          }
+        }
+      } catch (e) {}
       activeQuiz = {
         questions,
-        answers: {},
-        current: 0,
+        answers: restoredAnswers,
+        current: restoredCurrent,
         timed: true,
-        timeLeft: timeLimitSec,
-        startedAt: Date.now(),
+        timeLeft: restoredTimeLeft,
+        startedAt: restoredStarted,
         lessonId,
         courseId,
-        type: is75 ? '75' : '20'
+        type: (is75 || lessonId === 'msthc-aug16') ? '75' : '20',
+        longTimer: lessonId === 'msthc-aug16',
+        totalLimitSec: timeLimitSec
       };
+      saveQuizProgress();
       stopQuizTimer();
       quizTimerId = setInterval(() => {
         if (!activeQuiz) { stopQuizTimer(); return; }
@@ -6659,9 +7693,20 @@
         if (el) {
           el.textContent = formatTime(activeQuiz.timeLeft);
           if (activeQuiz.timeLeft <= 300) el.classList.add('danger');
+          else if (activeQuiz.timeLeft <= 1800) el.classList.add('warn');
+        }
+        const hand = document.getElementById('quizClockHand');
+        if (hand && activeQuiz.totalLimitSec) {
+          const deg = renderQuizClockFace(activeQuiz.timeLeft, activeQuiz.totalLimitSec);
+          hand.style.transform = 'rotate(' + deg + 'deg)';
+        }
+        // Autosave every 15 seconds and on each tick near end
+        if (activeQuiz.timeLeft % 15 === 0 || activeQuiz.timeLeft <= 60) {
+          saveQuizProgress();
         }
         if (activeQuiz.timeLeft <= 0) {
           stopQuizTimer();
+          clearQuizProgress();
           submitQuiz(true);
         }
       }, 1000);
@@ -6699,7 +7744,17 @@
       }).join('');
 
       const timerHtml = qz.timed
-        ? `<div class="quiz-timer ${qz.timeLeft <= 300 ? 'danger' : ''}" id="quizTimer">${formatTime(qz.timeLeft)}</div>`
+        ? (qz.longTimer
+          ? `<div class="quiz-timer-wrap">
+              <div class="quiz-clock" aria-hidden="true">
+                <div class="quiz-clock-face">
+                  <div class="quiz-clock-hand" id="quizClockHand" style="transform:rotate(${renderQuizClockFace(qz.timeLeft, qz.totalLimitSec)}deg)"></div>
+                  <div class="quiz-clock-center"></div>
+                </div>
+              </div>
+              <div class="quiz-timer ${qz.timeLeft <= 300 ? 'danger' : (qz.timeLeft <= 1800 ? 'warn' : '')}" id="quizTimer">${formatTime(qz.timeLeft)}</div>
+            </div>`
+          : `<div class="quiz-timer ${qz.timeLeft <= 300 ? 'danger' : ''}" id="quizTimer">${formatTime(qz.timeLeft)}</div>`)
         : '';
 
       const imgHtml = q.img
@@ -6743,6 +7798,7 @@
     function selectAnswer(idx) {
       if (!activeQuiz) return;
       activeQuiz.answers[activeQuiz.current] = idx;
+      saveQuizProgress();
       renderQuizQuestion();
     }
 
@@ -6802,16 +7858,27 @@
       trackQuizResult(qz.lessonId, qz.courseId, pct, true);
       refreshCompleteButton(qz.lessonId);
 
+      clearQuizProgress();
+      const remarks = quizRemarks(pct);
+      const prcNote = pct >= 50
+        ? 'Metric note: scores at or above 50% meet the simplified minimum bar used here (PRC board GWA uses ≥70% overall with no subject below 50% across the full exam set).'
+        : 'Metric note: below 50% — reinforce fundamentals and retake when ready.';
       const pass = pct >= 60;
       document.getElementById('quizContainer').innerHTML = `
-        <div class="card quiz-result-card">
+        <div class="card quiz-result-card quiz-report-card">
+          <div style="font-size:0.78rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.35rem;">Report Summary Card</div>
           <div class="quiz-score ${pass ? 'pass' : 'fail'}">${pct}%</div>
           <p style="font-size:1.1rem;margin:0.5rem 0;">${correct} / ${total} correct</p>
-          <p style="color:var(--text-muted);">Time: ${formatTime(timeSec)} ${auto ? '(auto-submitted)' : ''}</p>
-          <p style="color:var(--text-muted);margin-top:0.5rem;">Results recorded in your Summary Log.</p>
+          <p style="color:var(--text-muted);">Time used: ${formatTime(timeSec)} ${auto ? '(auto-submitted)' : ''}</p>
+          <div class="quiz-remarks-box">
+            <strong>Remarks</strong>
+            <p>${remarks}</p>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.45rem;">${prcNote}</p>
+          </div>
+          <p style="color:var(--text-muted);margin-top:0.75rem;font-size:0.85rem;">Results recorded in your Summary Log.</p>
           <div style="margin-top:1.25rem;display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
             <button class="btn btn-primary" onclick="showQuizReview()">Review Answers</button>
-            <button class="btn btn-ghost" onclick="startQuiz('${qz.courseId}','${qz.lessonId}',${qz.timed})">Retake</button>
+            <button class="btn btn-ghost" onclick="startQuiz('${qz.courseId}','${qz.lessonId}',${qz.type === '75'})">Retake</button>
           </div>
         </div>`;
       activeQuiz._lastResult = result;
@@ -6849,12 +7916,18 @@
       const r = activeQuiz && activeQuiz._lastResult;
       if (!r) return;
       const pass = r.pct >= 60;
+      const remarks = quizRemarks(r.pct);
       document.getElementById('quizContainer').innerHTML = `
-        <div class="card quiz-result-card">
+        <div class="card quiz-result-card quiz-report-card">
+          <div style="font-size:0.78rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.35rem;">Report Summary Card</div>
           <div class="quiz-score ${pass ? 'pass' : 'fail'}">${r.pct}%</div>
           <p style="font-size:1.1rem;margin:0.5rem 0;">${r.score} / ${r.total} correct</p>
-          <p style="color:var(--text-muted);">Time: ${formatTime(r.timeSec)} ${r.autoSubmitted ? '(auto-submitted)' : ''}</p>
-          <p style="color:var(--text-muted);margin-top:0.5rem;">Results recorded in your Summary Log.</p>
+          <p style="color:var(--text-muted);">Time used: ${formatTime(r.timeSec)} ${r.autoSubmitted ? '(auto-submitted)' : ''}</p>
+          <div class="quiz-remarks-box">
+            <strong>Remarks</strong>
+            <p>${remarks}</p>
+          </div>
+          <p style="color:var(--text-muted);margin-top:0.75rem;font-size:0.85rem;">Results recorded in your Summary Log.</p>
           <div style="margin-top:1.25rem;display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
             <button class="btn btn-primary" onclick="showQuizReview()">Review Answers</button>
             <button class="btn btn-ghost" onclick="startQuiz('${r.courseId}','${r.lessonId}',${r.type === '75'})">Retake</button>
@@ -7726,9 +8799,9 @@
     augSpecial[13] = [calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
     augSpecial[14] = [calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
     augSpecial[15] = [calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
-    augSpecial[16] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard'), calEv(CAL_COURSE, 'mSTHC-supp', '75 items - MSTHC Supp')];
+    augSpecial[16] = [calEv(CAL_COURSE, 'mSTHC-supp', '75 items - MSTHC Supp')];
     augSpecial[17] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard'), calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
-    augSpecial[18] = [calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
+    augSpecial[18] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard'), calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
     augSpecial[19] = [calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
     augSpecial[20] = [calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
     augSpecial[21] = [calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
@@ -7876,8 +8949,8 @@
       // Fallback map from calendar event classes / known milestones
       const key = year + '-' + (monthIndex + 1) + '-' + day;
       const fallback = {
-        '2026-8-16': { courseId: 'pre-preboard', lessonId: 'pre-preboard-aug16' },
         '2026-8-17': { courseId: 'pre-preboard', lessonId: 'pre-preboard-aug17' },
+        '2026-8-18': { courseId: 'pre-preboard', lessonId: 'pre-preboard-aug18' },
         '2026-9-6': { courseId: 'mid-preboard', lessonId: 'mid-preboard-sep6' },
         '2026-9-7': { courseId: 'mid-preboard', lessonId: 'mid-preboard-sep7' },
         '2026-9-21': { courseId: 'ceterms', lessonId: 'ceterms-sep21' },
