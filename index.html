@@ -3974,14 +3974,16 @@
       'https://lh3.googleusercontent.com/d/1XsRpoZ8bcZfL0I8BA3a65BkVBlE7RkKC=w1920',
       'https://lh3.googleusercontent.com/d/1FM8rs0LtegNkxkz59b4lc3-EuOk_93kY=w1920',
       'https://lh3.googleusercontent.com/d/1kA-1FI04oFkn1kur-VQLXJWFc_PO_MWv=w1920',
-      'https://lh3.googleusercontent.com/d/1McLbdWJpIrK5APtjDY9bgUYLvz6ZoIFL=w1920'
+      'https://lh3.googleusercontent.com/d/1YDOrLyz7gU9exZylrAGaWRK1bR0hGc46=w1920',
+      'https://lh3.googleusercontent.com/d/1M6d6pHJOcelHukJKroO4n1OLHaLfJu2_=w1920'
     ];
-    // Same IDs kept for fallback resolution
+    // Same IDs kept for fallback resolution (used from Aug 15 onward; Aug 11–14 have their own images)
     const DEFAULT_IMAGE_IDS = [
       '1XsRpoZ8bcZfL0I8BA3a65BkVBlE7RkKC',
       '1FM8rs0LtegNkxkz59b4lc3-EuOk_93kY',
       '1kA-1FI04oFkn1kur-VQLXJWFc_PO_MWv',
-      '1McLbdWJpIrK5APtjDY9bgUYLvz6ZoIFL'
+      '1YDOrLyz7gU9exZylrAGaWRK1bR0hGc46',
+      '1M6d6pHJOcelHukJKroO4n1OLHaLfJu2_'
     ];
 
     // ===================== QUIZ BANKS (initial – replace later) =====================
@@ -4743,6 +4745,92 @@
         a: 2
       }
     ];
+
+    // ===== August 15 Session ONLY — 10-item REPEAT quiz (Module 5: Integral Calculus / DE) =====
+    const QUIZ_MSTHC_AUG15 = [
+      {
+        id: 'q1', topic: 'Integral Calculus / Arc Length',
+        q: '[CELE MARCH 2026] A manufacturer of corrugated metal roofing wants to produce panels that are 28 inches wide and 2 inches thick by processing flat sheets of metal as shown in the figure. The profile of the roofing takes the shape of a sine wave. Verify that the sine curve has equation y = sin(πx/14) and find the width w of a flat metal sheet needed to make a 28-inch panel. Hint: evaluate the integral to four significant digits.',
+        choices: [
+          'w = ∫₀¹⁴ √[1 + (π/7 cos(πx/7))²] dx',
+          'w = ∫₀¹⁴ √[1 − (π/7 cos(πx/7))²] dx',
+          'w = ∫₀²⁸ √[1 − (π/7 cos(πx/7))²] dx',
+          'w = ∫₀²⁸ √[1 + (π/7 cos(πx/7))²] dx'
+        ],
+        a: 3,
+        img: gdriveImg('1hKU1WBIsgffb9fbMVlGI4nCy-WA_A7MY')
+      },
+      {
+        id: 'q2', topic: 'Related Rates',
+        q: '[CELE NOVEMBER 2018] A Toyota Land Cruiser drives East from point A at 30 kph. Another car starting from B at the same time drives S 30° W toward A at 60 kph. B is 30 km away from A. How fast (kph) is the distance between the two cars changing after 30 minutes?',
+        choices: ['60 kph', '50 kph', '80 kph', '30 kph'],
+        a: 0
+      },
+      {
+        id: 'q3', topic: 'Integral Calculus / Continuous Money Flow',
+        q: '[CELE MARCH 2026] A continuous money flow starts at ₱1000 and increases exponentially at 2% per year. The amount of money at time t is given by:\nA = e^(jt) ∫₀ᵗ f(t) e^(−jt) dt\nwhere j = interest rate and f(t) = rate of money flow. Using j = 0.10 and t = 5, what is the amount at the end of 5 years at 10% compounded continuously?',
+        choices: ['8563.22', '5554.06', '7055.54', '6794.37'],
+        a: 3
+      },
+      {
+        id: 'q4', topic: 'Integral Calculus / Present Value',
+        q: '[CELE MARCH 2026] The rate of continuous cash flow is f(x) = 1000x² − 100x. The present value of the cash flow is PV = ∫₀ᵀ f(x) e^(−ix) dx, where i is the interest rate. Which equation represents this cash flow at the end of 10 years at 10% compounded continuously?',
+        choices: [
+          '∫₀¹⁰ (100x² + 1000x) e^(−0.10x) dx',
+          '∫₀¹⁰ (1000x² + 100x) e^(−0.10x) dx',
+          '∫₀¹⁰ (100x² − 1000x) e^(−0.10x) dx',
+          '∫₀¹⁰ (1000x² − 100x) e^(−0.10x) dx'
+        ],
+        a: 3
+      },
+      {
+        id: 'q5', topic: 'Integral Calculus / Area',
+        q: '[CELE APRIL 2024] Two contractors were hired to retrofit the Gateway Arch. The Arch is parabolic, 630 ft high and 630 ft across at the bottom. Using the point on the ground directly below the apex as the origin, the equation of the Arch is:\ny = 630 − x²/157.5\nDetermine the area under the Arch (needed to estimate scaffolding cost).',
+        choices: ['264600 sq.ft', '255100 sq.ft', '288320 sq.ft', '210500 sq.ft'],
+        a: 0
+      },
+      {
+        id: 'q6', topic: 'Integral Calculus / Arc Length',
+        q: '[CELE NOVEMBER 2025] Find the length of the arc of the parabola y² = x from (0, 0) to (1, 1).',
+        choices: [
+          '(√5)/2 + (1/4) ln(2 + √5)',
+          '(√5)/3 + (1/3) ln(2 + √5)',
+          '(√5)/4 + (1/2) ln(2 + √5)',
+          '(√5)/2 + (1/7) ln(2 + √7)'
+        ],
+        a: 0
+      },
+      {
+        id: 'q7', topic: 'Integral Calculus / Area',
+        q: '[CELE APRIL 2025] Find the first-quadrant area bounded by the curves:\ny = x² + 3,   y = 3x − x²,   x = 0,   x = 3',
+        choices: ['16.5 sq.units', '8.5 sq.units', '11.5 sq.units', '13.5 sq.units'],
+        a: 3
+      },
+      {
+        id: 'q8', topic: 'Integral Calculus / Volume of Revolution',
+        q: '[CELE NOVEMBER 2024] The area bounded by the curves y = x² and y = x + 2 is rotated about the x-axis. Determine the volume generated.',
+        choices: ['(62/5)π', '(52/5)π', '(72/5)π', '(82/5)π'],
+        a: 2
+      },
+      {
+        id: 'q9', topic: 'Integral Calculus / Volume of Revolution',
+        q: '[CELE APRIL 2024] Find the volume generated when the first-quadrant area bounded by y = x⁴, the y-axis, and the lines y = 1 and y = 4 is rotated about the y-axis.',
+        choices: ['(14/3)π', '(17/3)π', '(19/3)π', '(41/3)π'],
+        a: 0
+      },
+      {
+        id: 'q10', topic: 'Differential Equations / Newton’s Law of Cooling',
+        q: '[CELE NOVEMBER 2025] When a cake is removed from a baking oven its temperature is measured; three minutes later its temperature is lower. Room temperature is T₀ = 70°F. Using Newton’s Law of Cooling, dT/dt = k(T − T₀), which expression gives the temperature of the cake any time after leaving the oven?',
+        choices: [
+          'T(t) = 130 e^(−0.29t) + 70',
+          'T(t) = 230 e^(−0.29t) + 70',
+          'T(t) = 230 e^(−0.19t) + 70',
+          'T(t) = 130 e^(−0.19t) + 70'
+        ],
+        a: 2
+      }
+    ];
+
 
 
 
@@ -6375,7 +6463,7 @@
       }
 
       // QUIZ panel
-      const quizSize = problemSet ? 75 : (lesson.id === 'msthc-aug13' ? 16 : (lesson.id === 'msthc-aug14' ? 15 : 20));
+      const quizSize = problemSet ? 75 : (lesson.id === 'msthc-aug13' ? 16 : (lesson.id === 'msthc-aug14' ? 15 : (lesson.id === 'msthc-aug15' ? 10 : 20)));
       const quizMinutes = problemSet ? Math.round(75 * 90 / 60) : (quizSize * 4);
       const quizLabel = problemSet
         ? '75-item Timed Problem Set Quiz (results recorded in Summary Log)'
@@ -6532,6 +6620,9 @@
       } else if (!is75 && lessonId === 'msthc-aug14' && typeof QUIZ_MSTHC_AUG14 !== 'undefined') {
         // August 14 Session exclusive Module-4 questionnaire (Analytic Geometry / Differential Calculus)
         questions = QUIZ_MSTHC_AUG14.map(q => ({ ...q, img: q.img || null }));
+      } else if (!is75 && lessonId === 'msthc-aug15' && typeof QUIZ_MSTHC_AUG15 !== 'undefined') {
+        // August 15 Session exclusive Module-5 questionnaire (Integral Calculus / DE)
+        questions = QUIZ_MSTHC_AUG15.map(q => ({ ...q, img: q.img || null }));
       } else {
         questions = is75 ? QUIZ_75.map(q => ({...q})) : QUIZ_20.map(q => ({...q}));
       }
