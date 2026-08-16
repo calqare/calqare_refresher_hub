@@ -2558,7 +2558,143 @@
     .q-dot.correct { background: rgba(16,185,129,0.25); color: var(--success); }
     .q-dot.wrong { background: rgba(239,68,68,0.25); color: var(--danger); }
 
+
+    /* Answer Sheet (TESTS — 75-item bubble sheet) */
+    .answer-sheet {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem 1.25rem;
+      max-width: 920px;
+    }
+    .answer-sheet-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+    .answer-sheet-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .answer-sheet-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+    .answer-sheet-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.35rem 1rem;
+    }
+    @media (max-width: 800px) {
+      .answer-sheet-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .answer-sheet-grid { grid-template-columns: 1fr; }
+    }
+    .as-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.28rem 0.2rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+    .as-num {
+      width: 1.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+      text-align: right;
+    }
+    .as-bubbles {
+      display: flex;
+      gap: 0.3rem;
+      flex: 1;
+    }
+    .as-bubble {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--text-muted);
+      background: transparent;
+      color: var(--text);
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      padding: 0;
+      line-height: 1;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .as-bubble:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .as-bubble.shaded {
+      background: #1e293b;
+      border-color: #1e293b;
+      color: #fff;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.15);
+    }
+    html[data-theme="dark"] .as-bubble.shaded {
+      background: #e2e8f0;
+      border-color: #e2e8f0;
+      color: #0f172a;
+    }
+    .as-bubble.review-correct {
+      background: rgba(16,185,129,0.25);
+      border-color: var(--success);
+      color: var(--success);
+    }
+    .as-bubble.review-wrong {
+      background: rgba(239,68,68,0.2);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+    .as-bubble.review-key {
+      box-shadow: 0 0 0 2px var(--success);
+    }
+    .answer-sheet-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1.1rem;
+      align-items: center;
+    }
+    .answer-sheet-progress {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .answer-sheet-timer {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--warning);
+      background: rgba(245,158,11,0.15);
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+    }
+    .answer-sheet-timer.danger {
+      color: var(--danger);
+      background: rgba(239,68,68,0.15);
+    }
+    .questionnaire-hint {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0.5rem 0 0.85rem;
+      line-height: 1.45;
+    }
+
     /* Analytics */
+
     .chart-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -3794,29 +3930,31 @@
       {
         id: 'pre-preboard',
         title: 'Pre-Preboard Examination',
-        desc: 'First preboard set of the program. Scheduled August 17–18, 2026. Opens 8:00 AM Asia/Manila on each day.',
+        desc: 'First preboard set of the program. Scheduled August 17–19, 2026. Opens 8:00 AM Asia/Manila on each day. PSAD (75 / 6h), MSTHC (75 / 5h), HGE (50 / 4h).',
         icon: '📋',
         color: '#0d9488',
         badge: 'PRE-PREBOARD',
         badgeClass: 'badge-green',
         category: 'preboard',
         lessons: [
-          { id: 'pre-preboard-aug17', title: '2026 August 17 Session', subtitle: 'Pre-Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-08-17T08:00:00+08:00', content: 'Pre-Preboard Examination — Day 1.\n\nTimed problem set covering topics discussed in the early MSTHC phase. Simulate board-exam conditions.\n\nCalendar: August 17 — Pre-Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
-          { id: 'pre-preboard-aug18', title: '2026 August 18 Session', subtitle: 'Pre-Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-08-18T08:00:00+08:00', content: 'Pre-Preboard Examination — Day 2.\n\nContinue the early preboard assessment. Review Day 1 results and strengthen weak areas.\n\nCalendar: August 18 — Pre-Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
+          { id: 'pre-preboard-aug17', title: '2026 August 17 Session', subtitle: 'Pre-Preboard · PSAD • 75 items · 6 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'PSAD', itemCount: 75, timerHours: 6, unlockAt: '2026-08-17T08:00:00+08:00', content: 'Pre-Preboard Examination — PSAD.\n\n75-item answer sheet with a 6-hour countdown. Use the questionnaire PDF and shade answers on the Answer Sheet tab.\n\nSubject: Principles of Structural Analysis and Design (PSAD).\nCalendar: August 17 — Pre-Preboard (PSAD).\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'pre-preboard-aug18', title: '2026 August 18 Session', subtitle: 'Pre-Preboard · MSTHC • 75 items · 5 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'MSTHC', itemCount: 75, timerHours: 5, unlockAt: '2026-08-18T08:00:00+08:00', content: 'Pre-Preboard Examination — MSTHC.\n\n75-item answer sheet with a 5-hour countdown. Use the questionnaire PDF and shade answers on the Answer Sheet tab.\n\nSubject: Mathematics, Surveying, Transportation, Highway Construction (MSTHC).\nCalendar: August 18 — Pre-Preboard (MSTHC).\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'pre-preboard-aug19', title: '2026 August 19 Session', subtitle: 'Pre-Preboard · HGE • 50 items · 4 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'HGE', itemCount: 50, timerHours: 4, unlockAt: '2026-08-19T08:00:00+08:00', content: 'Pre-Preboard Examination — HGE.\n\n50-item answer sheet with a 4-hour countdown. Use the questionnaire PDF and shade answers on the Answer Sheet tab.\n\nSubject: Hydraulics and Geotechnical Engineering (HGE).\nCalendar: August 19 — Pre-Preboard (HGE).\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
       {
         id: 'mid-preboard',
         title: 'Mid-Preboard Examination',
-        desc: 'Second preboard set. Scheduled September 6–7, 2026. Opens 8:00 AM Asia/Manila on each day. Covers MSTHC + HGE progress.',
+        desc: 'Second preboard set. Scheduled September 6–8, 2026. Opens 8:00 AM Asia/Manila on each day. PSAD (75 / 6h), MSTHC (75 / 5h), HGE (50 / 4h).',
         icon: '🧪',
         color: '#0891b2',
         badge: 'MID-PREBOARD',
         badgeClass: 'badge-blue',
         category: 'preboard',
         lessons: [
-          { id: 'mid-preboard-sep6', title: '2026 September 6 Session', subtitle: 'Mid-Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-06T08:00:00+08:00', content: 'Mid-Preboard Examination — Day 1.\n\nTimed set covering MSTHC and HGE. Simulate exam pacing and conditions.\n\nCalendar: September 6 — Mid-Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
-          { id: 'mid-preboard-sep7', title: '2026 September 7 Session', subtitle: 'Mid-Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-07T08:00:00+08:00', content: 'Mid-Preboard Examination — Day 2.\n\nSecond day of the mid-program preboard. Review Day 1 and close gaps before PSAD intensifies.\n\nCalendar: September 7 — Mid-Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
+          { id: 'mid-preboard-sep6', title: '2026 September 6 Session', subtitle: 'Mid-Preboard · PSAD • 75 items · 6 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'PSAD', itemCount: 75, timerHours: 6, unlockAt: '2026-09-06T08:00:00+08:00', content: 'Mid-Preboard Examination — PSAD.\n\n75-item answer sheet with a 6-hour countdown. Use the questionnaire PDF and shade answers on the Answer Sheet tab.\n\nSubject: Principles of Structural Analysis and Design (PSAD).\nCalendar: September 6 — Mid-Preboard (PSAD).\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'mid-preboard-sep7', title: '2026 September 7 Session', subtitle: 'Mid-Preboard · MSTHC • 75 items · 5 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'MSTHC', itemCount: 75, timerHours: 5, unlockAt: '2026-09-07T08:00:00+08:00', content: 'Mid-Preboard Examination — MSTHC.\n\n75-item answer sheet with a 5-hour countdown. Use the questionnaire PDF and shade answers on the Answer Sheet tab.\n\nSubject: Mathematics, Surveying, Transportation, Highway Construction (MSTHC).\nCalendar: September 7 — Mid-Preboard (MSTHC).\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'mid-preboard-sep8', title: '2026 September 8 Session', subtitle: 'Mid-Preboard · HGE • 50 items · 4 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'HGE', itemCount: 50, timerHours: 4, unlockAt: '2026-09-08T08:00:00+08:00', content: 'Mid-Preboard Examination — HGE.\n\n50-item answer sheet with a 4-hour countdown. Use the questionnaire PDF and shade answers on the Answer Sheet tab.\n\nSubject: Hydraulics and Geotechnical Engineering (HGE).\nCalendar: September 8 — Mid-Preboard (HGE).\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
       {
@@ -3831,6 +3969,19 @@
         lessons: [
           { id: 'final-preboard-sep23', title: '2026 September 23 Session', subtitle: 'Final Preboard Day 1 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-23T08:00:00+08:00', content: 'Final Preboard Examination — Day 1.\n\nComprehensive final practice before the board exam. Review notes, formulas, and weak areas after submitting.\n\nCalendar: September 23 — Final Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
           { id: 'final-preboard-sep24', title: '2026 September 24 Session', subtitle: 'Final Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-24T08:00:00+08:00', content: 'Final Preboard Examination — Day 2.\n\nLight review / wrap-up. Rest well, prepare materials, and maintain a positive mindset for the board exam.\n\nCalendar: September 24 — Final Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
+        ]
+      },
+      {
+        id: 'cele-rating',
+        title: 'CELE Board Exam Rating Calculator',
+        desc: 'Manually enter your MSTHC, HGE, and PSAD ratings to compute your projected CELE board exam general weighted average and pass status.',
+        icon: '📊',
+        color: '#7c3aed',
+        badge: 'CELE RATING',
+        badgeClass: 'badge-pink',
+        category: 'rating',
+        lessons: [
+          { id: 'cele-rating-calculator', title: 'CELE Board Exam Rating Calculator', subtitle: 'Enter MSTHC, HGE, and PSAD scores · GWA · Pass / Fail', type: 'set', duration: 'Calculator', subject: '', itemCount: 0, timerHours: 0, unlockAt: null, content: 'CELE Board Exam Rating Calculator.\n\nType your subject ratings below. Results use PRC-style criteria:\n• General weighted average ≥ 70%\n• No subject below 50%\n• Weights: MSTE / MSTHC 35% · Hydraulics & Geotechnical (HGE) 30% · Structural Design & Construction (PSAD) 35%' }
         ]
       }
     ];
@@ -3944,7 +4095,7 @@
 
       card.classList.remove('live', 'selfpaced', 'open');
 
-      // Preboard days (incl. Aug 17–18) — surface assessment even if also live/self-paced
+      // Preboard days (Pre-Preboard Aug 17–19, Mid Sep 6–8, Final Sep 23–24) — surface assessment
       if (isPreboard) {
         if (isLive) {
           card.classList.add('live');
@@ -3980,7 +4131,7 @@
           title.textContent = labels || 'Pre-Preboard Examination';
           body.innerHTML =
             '<p>Pre-Preboard Examination day. Opens <strong>8:00 AM Asia/Manila</strong>.</p>' +
-            '<p style="margin-top:0.35rem;">Open <strong>Tests → Pre-Preboard Examination</strong> for Day 1 / Day 2 sets.</p>' +
+            '<p style="margin-top:0.35rem;">Open <strong>Tests → Pre-Preboard Examination</strong> (PSAD / MSTHC / HGE answer sheets by date).</p>' +
             testsBtn;
         }
         return;
@@ -5914,10 +6065,12 @@
           const parsed = JSON.parse(raw);
           state = Object.assign({
             name: '', school: '', email: '', photoData: '', profileComplete: false,
-            completed: {}, quizScores: {}, videoProgress: {}, quizHistory: [], activity: {}, forceUnlock: false, termsAccepted: false
+            completed: {}, quizScores: {}, videoProgress: {}, quizHistory: [], answerKeys: {}, celeRating: null, celeManualScores: {}, activity: {}, forceUnlock: false, termsAccepted: false
           }, parsed);
           if (!state.videoProgress) state.videoProgress = {};
           if (!state.quizHistory) state.quizHistory = [];
+          if (!state.answerKeys) state.answerKeys = {};
+          if (!state.celeManualScores) state.celeManualScores = {};
           if (!state.activity) state.activity = {};
           if (typeof state.forceUnlock !== 'boolean') state.forceUnlock = false;
           if (typeof state.termsAccepted !== 'boolean') state.termsAccepted = false;
@@ -6084,9 +6237,216 @@
       }
     }
 
+
+    // ===================== CELE BOARD EXAM RATING (manual calculator) =====================
+    const CELE_SUBJECTS = [
+      { key: 'MSTHC', label: 'MSTE (Math, Surveying, Transportation & Highway Construction)', short: 'MSTE / MSTHC', weight: 0.35 },
+      { key: 'HGE', label: 'Hydraulics & Geotechnical Engineering', short: 'HGE', weight: 0.30 },
+      { key: 'PSAD', label: 'Structural Design & Construction (PSAD)', short: 'PSAD', weight: 0.35 }
+    ];
+
+    function getManualCeleScores() {
+      const src = (state && state.celeManualScores) ? state.celeManualScores : {};
+      return {
+        MSTHC: src.MSTHC != null && src.MSTHC !== '' ? Number(src.MSTHC) : null,
+        HGE: src.HGE != null && src.HGE !== '' ? Number(src.HGE) : null,
+        PSAD: src.PSAD != null && src.PSAD !== '' ? Number(src.PSAD) : null
+      };
+    }
+
+    function parseCeleScoreInput(val) {
+      if (val === null || val === undefined || String(val).trim() === '') return null;
+      const n = Number(String(val).trim());
+      if (!Number.isFinite(n)) return null;
+      return Math.max(0, Math.min(100, n));
+    }
+
+    function computeCeleBoardRatingFromScores(scores) {
+      const subjects = CELE_SUBJECTS.map(function (def) {
+        const raw = scores ? scores[def.key] : null;
+        const pct = (raw != null && Number.isFinite(Number(raw))) ? Math.round(Number(raw) * 100) / 100 : null;
+        return {
+          key: def.key,
+          label: def.label,
+          short: def.short,
+          weight: def.weight,
+          pct: pct,
+          remarks: pct == null ? 'Enter a score to see remarks.' : quizRemarks(Math.round(pct)),
+          belowMin: pct != null && pct < 50
+        };
+      });
+      const canCompute = subjects.every(function (s) { return s.pct != null; });
+      let gwa = null;
+      if (canCompute) {
+        gwa = subjects.reduce(function (sum, s) { return sum + s.pct * s.weight; }, 0);
+        gwa = Math.round(gwa * 100) / 100;
+      }
+      const anyBelow50 = subjects.some(function (s) { return s.belowMin; });
+      const pass = canCompute && gwa >= 70 && !anyBelow50;
+      let overallRemarks = '';
+      if (!canCompute) {
+        overallRemarks = 'Enter scores for MSTHC, HGE, and PSAD to compute your board rating.';
+      } else if (pass) {
+        overallRemarks = quizRemarks(Math.round(gwa));
+      } else if (anyBelow50) {
+        overallRemarks = 'Keep trying! Never Give Up! A subject rating below 50% does not meet the minimum PRC subject requirement.';
+      } else if (gwa < 70) {
+        overallRemarks = gwa >= 60
+          ? "Keep Pushing! You're almost there."
+          : (gwa >= 50 ? 'Above the minimum PRC subject floor, but GWA must reach 70%.' : 'Keep trying! Never Give Up!');
+      } else {
+        overallRemarks = quizRemarks(Math.round(gwa));
+      }
+      return {
+        subjects: subjects,
+        gwa: gwa,
+        pass: pass,
+        canCompute: canCompute,
+        anyBelow50: anyBelow50,
+        remarks: overallRemarks,
+        computedAt: new Date().toISOString()
+      };
+    }
+
+    function computeCeleBoardRating() {
+      return computeCeleBoardRatingFromScores(getManualCeleScores());
+    }
+
+    function saveCeleRatingSnapshot(rating) {
+      if (!rating || !rating.canCompute) return;
+      state.celeRating = {
+        gwa: rating.gwa,
+        pass: rating.pass,
+        subjects: rating.subjects.map(function (s) {
+          return { key: s.key, pct: s.pct, weight: s.weight };
+        }),
+        remarks: rating.remarks,
+        date: rating.computedAt
+      };
+      saveState();
+    }
+
+    function onCeleScoreInputChange() {
+      const msthc = parseCeleScoreInput(document.getElementById('celeScoreMSTHC') && document.getElementById('celeScoreMSTHC').value);
+      const hge = parseCeleScoreInput(document.getElementById('celeScoreHGE') && document.getElementById('celeScoreHGE').value);
+      const psad = parseCeleScoreInput(document.getElementById('celeScorePSAD') && document.getElementById('celeScorePSAD').value);
+      state.celeManualScores = {
+        MSTHC: msthc,
+        HGE: hge,
+        PSAD: psad
+      };
+      saveState();
+      const rating = computeCeleBoardRatingFromScores(state.celeManualScores);
+      if (rating.canCompute) saveCeleRatingSnapshot(rating);
+      updateCeleRatingResultsUI(rating);
+    }
+
+    function updateCeleRatingResultsUI(rating) {
+      const host = document.getElementById('celeRatingResults');
+      if (!host || !rating) return;
+      const subjectRows = rating.subjects.map(function (s) {
+        const pctTxt = s.pct == null ? '—' : (s.pct + '%');
+        const color = s.pct == null ? 'var(--text-muted)' : (s.pct >= 70 ? 'var(--success)' : (s.pct >= 50 ? 'var(--warning)' : 'var(--danger)'));
+        return (
+          '<div class="card" style="margin-bottom:0.65rem;">' +
+            '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;flex-wrap:wrap;">' +
+              '<div><div class="card-title" style="margin-bottom:0.15rem;">' + s.short + '</div>' +
+              '<div style="font-size:0.8rem;color:var(--text-muted);">Weight ' + Math.round(s.weight * 100) + '%</div></div>' +
+              '<div style="font-size:1.5rem;font-weight:800;color:' + color + ';">' + pctTxt + '</div>' +
+            '</div>' +
+            '<div class="quiz-remarks-box" style="margin-top:0.65rem;"><strong>Remarks</strong><p>' + s.remarks + '</p></div>' +
+          '</div>'
+        );
+      }).join('');
+
+      let gwaBlock;
+      if (rating.canCompute) {
+        gwaBlock =
+          '<div class="card quiz-result-card quiz-report-card" style="margin-bottom:1rem;">' +
+            '<div style="font-size:0.78rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.35rem;">Report Summary Card · CELE Board Rating</div>' +
+            '<div class="quiz-score ' + (rating.pass ? 'pass' : 'fail') + '">' + rating.gwa + '%</div>' +
+            '<p style="font-size:1.05rem;margin:0.35rem 0;font-weight:700;">General Weighted Average</p>' +
+            '<p style="font-size:0.95rem;color:' + (rating.pass ? 'var(--success)' : 'var(--danger)') + ';font-weight:700;">' +
+              (rating.pass ? '✓ PASSED (projected)' : '✗ NOT YET PASSING') +
+            '</p>' +
+            '<div class="quiz-remarks-box"><strong>Remarks</strong><p>' + rating.remarks + '</p>' +
+              '<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.45rem;">Criteria: GWA ≥ 70% and no subject below 50%. Weights: MSTE 35% · HGE 30% · PSAD 35%.</p></div>' +
+          '</div>';
+      } else {
+        gwaBlock =
+          '<div class="card" style="margin-bottom:1rem;">' +
+            '<div class="card-title">CELE Board Rating</div>' +
+            '<p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.35rem;">' + rating.remarks + '</p>' +
+          '</div>';
+      }
+      host.innerHTML = gwaBlock + '<div class="section-head"><h3>Subject Remarks</h3></div>' + subjectRows;
+    }
+
+    function renderCeleRatingPanel(courseId, lessonId) {
+      const scores = getManualCeleScores();
+      const rating = computeCeleBoardRatingFromScores(scores);
+      if (rating.canCompute) saveCeleRatingSnapshot(rating);
+      if (lessonId) {
+        try { markComplete(lessonId, 'Opened CELE rating calculator'); } catch (e) {}
+      }
+      const val = function (k) {
+        return scores[k] != null ? String(scores[k]) : '';
+      };
+      const formHtml =
+        '<div class="card" style="margin-bottom:1rem;">' +
+          '<div class="card-title">Enter Subject Ratings</div>' +
+          '<p style="color:var(--text-muted);font-size:0.9rem;margin:0.35rem 0 0.85rem;">Type your percentage scores (0–100). Results update as you type.</p>' +
+          '<div class="grid grid-3" style="gap:0.85rem;">' +
+            '<div class="profile-field"><label for="celeScoreMSTHC">MSTHC / MSTE (35%)</label>' +
+              '<input type="number" id="celeScoreMSTHC" min="0" max="100" step="0.01" inputmode="decimal" placeholder="e.g. 78" value="' + val('MSTHC') + '" /></div>' +
+            '<div class="profile-field"><label for="celeScoreHGE">HGE (30%)</label>' +
+              '<input type="number" id="celeScoreHGE" min="0" max="100" step="0.01" inputmode="decimal" placeholder="e.g. 72" value="' + val('HGE') + '" /></div>' +
+            '<div class="profile-field"><label for="celeScorePSAD">PSAD (35%)</label>' +
+              '<input type="number" id="celeScorePSAD" min="0" max="100" step="0.01" inputmode="decimal" placeholder="e.g. 75" value="' + val('PSAD') + '" /></div>' +
+          '</div>' +
+          '<div style="margin-top:0.85rem;display:flex;flex-wrap:wrap;gap:0.5rem;">' +
+            '<button type="button" class="btn btn-primary" onclick="onCeleScoreInputChange()">Calculate Rating</button>' +
+            '<button type="button" class="btn btn-ghost" onclick="clearCeleManualScores()">Clear</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="card" style="margin-bottom:1rem;">' +
+          '<div class="card-title">Passing Criteria & Weights</div>' +
+          '<ul style="margin:0.5rem 0 0 1.1rem;font-size:0.88rem;line-height:1.55;color:var(--text);">' +
+            '<li>General weighted average must be <strong>70% or higher</strong>.</li>' +
+            '<li>No rating below <strong>50%</strong> in any subject.</li>' +
+            '<li>Weights: <strong>MSTE 35%</strong>, <strong>Hydraulics &amp; Geo. 30%</strong>, <strong>Structural &amp; Const. 35%</strong>.</li>' +
+          '</ul>' +
+        '</div>' +
+        '<div id="celeRatingResults"></div>';
+
+      const box = document.getElementById('quizContainer');
+      if (box) {
+        box.innerHTML = formHtml;
+        ['celeScoreMSTHC', 'celeScoreHGE', 'celeScorePSAD'].forEach(function (id) {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.addEventListener('input', onCeleScoreInputChange);
+          el.addEventListener('change', onCeleScoreInputChange);
+        });
+        updateCeleRatingResultsUI(rating);
+      }
+      return formHtml;
+    }
+
+    function clearCeleManualScores() {
+      state.celeManualScores = { MSTHC: null, HGE: null, PSAD: null };
+      state.celeRating = null;
+      saveState();
+      ['celeScoreMSTHC', 'celeScoreHGE', 'celeScorePSAD'].forEach(function (id) {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      updateCeleRatingResultsUI(computeCeleBoardRatingFromScores(state.celeManualScores));
+    }
+
     function isTestTrack(course) {
       if (!course) return false;
-      if (course.category === 'preboard' || course.category === 'terminology' || course.category === 'formulas') return true;
+      if (course.category === 'preboard' || course.category === 'terminology' || course.category === 'formulas' || course.category === 'rating') return true;
       return !!(typeof TESTS !== 'undefined' && TESTS.some(function (t) { return t.id === course.id; }));
     }
 
@@ -6096,8 +6456,13 @@
       const lesson = course.lessons[lessonIndex];
       // Exception: August 11 Session always available (no sequence or schedule lock)
       if (lesson && lesson.id === 'msthc-aug11') return true;
+      // CELE Rating Calculator: always available (manual score entry)
+      if (course && course.id === 'cele-rating') {
+        return true;
+      }
       // Tests (preboards, CE terms, CE formulas): unlock only on scheduled date — no sequence lock
       if (isTestTrack(course)) {
+        if (lesson && lesson.duration === 'Calculator') return true;
         return isScheduleOpen(lesson);
       }
       // Regular course sessions: previous must be completed AND schedule open
@@ -7080,9 +7445,11 @@
           <div class="progress-fill" style="width:${p.pct}%"></div>
         </div>
         <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;">${p.done} of ${p.total} sessions completed (${p.pct}%)</p>
-        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">${isTest
-          ? 'Each test opens only on its scheduled calendar date at 8:00 AM (Asia/Manila). Day 1 and Day 2 unlock independently by date — no sequence lock.'
-          : 'Sessions unlock in order on their calendar date at 8:00 AM (Asia/Manila). Complete each session before the next unlocks.'}</p>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">${course.id === 'cele-rating'
+          ? 'Always available. Manually enter your MSTHC, HGE, and PSAD percentage scores to compute GWA and pass status.'
+          : (isTest
+          ? 'Each test opens only on its scheduled calendar date at 8:00 AM (Asia/Manila). Sessions unlock independently by date — no sequence lock.'
+          : 'Sessions unlock in order on their calendar date at 8:00 AM (Asia/Manila). Complete each session before the next unlocks.')}</p>
         <ul class="lesson-list">
           ${course.lessons.map((l, i) => {
             const done = isCompleted(l.id);
@@ -7092,7 +7459,11 @@
             let mediaHints = '';
             if (unlocked) {
               if (isSet) {
-                mediaHints = ' <span class="media-badge">📝 75-Quiz</span>';
+                if (l.duration === 'Calculator' || course.id === 'cele-rating') {
+                mediaHints = ' <span class="media-badge">📊 Rating Calculator</span>';
+              } else {
+                mediaHints = isTest ? (' <span class="media-badge">📝 Answer Sheet' + (l.itemCount ? (' ' + l.itemCount) : '') + '</span><span class="media-badge">📄 Questionnaire</span>' + (l.subject ? (' <span class="media-badge">' + l.subject + '</span>') : '')) : ' <span class="media-badge">📝 75-Quiz</span>';
+              }
               } else {
                 mediaHints = ' <span class="media-badge">▶ DISCUSSION</span><span class="media-badge">📄 PROBLEM</span><span class="media-badge">🖼 SOLUTION</span><span class="media-badge">📝 REPEAT</span>';
               }
@@ -7303,8 +7674,10 @@
 
       destroyPlayer();
       stopQuizTimer();
+      stopAnswerSheetTimer();
       stopActivityTimer();
       activeQuiz = null;
+      window._answerSheet = null;
       window._currentLessonId = lesson.id;
       window._currentCourseId = courseId;
       ensureActivity(lesson.id);
@@ -7313,8 +7686,10 @@
       document.getElementById('lessonBackBtn').onclick = () => {
         destroyPlayer();
         stopQuizTimer();
+        stopAnswerSheetTimer();
         stopActivityTimer();
         window._currentLessonId = null;
+        window._answerSheet = null;
         openCourse(courseId);
       };
 
@@ -7333,7 +7708,18 @@
 
       // Build tabs
       let tabs = [];
-      if (problemSet) {
+      const isTestLesson = isTestTrack(course);
+      const isCeleCalculator = (course.id === 'cele-rating') || (lesson.duration === 'Calculator');
+      if (isCeleCalculator) {
+        tabs = [{ id: 'rating', label: '📊 CELE Board Rating' }];
+      } else if (problemSet && isTestLesson) {
+        // TESTS: questionnaire PDF + answer sheet (no interactive MCQ)
+        const tabItems = (lesson.itemCount && Number(lesson.itemCount) > 0) ? Number(lesson.itemCount) : 75;
+        tabs = [
+          { id: 'questionnaire', label: '📄 Questionnaire' },
+          { id: 'answersheet', label: '📝 Answer Sheet (' + tabItems + ')' }
+        ];
+      } else if (problemSet) {
         tabs = [{ id: 'quiz', label: '📝 75-item Quiz (Timed)' }];
       } else {
         tabs = [
@@ -7441,7 +7827,49 @@
         </div>`;
       }
 
-      // QUIZ panel
+      // CELE Board Exam Rating Calculator panel
+      if (isCeleCalculator) {
+        panels += `
+        <div class="tab-panel active" id="panel-rating">
+          <div id="quizContainer"></div>
+        </div>`;
+      } else if (problemSet && isTestLesson) {
+      // TESTS: Questionnaire PDF + Answer Sheet panels
+      
+        const qPdf = lesson.questionnairePdf || lesson.pdfUrl || DEFAULT_PDF;
+        const embedQPdf = fitPdfEmbedUrl(qPdf);
+        const asItems = (lesson.itemCount && Number(lesson.itemCount) > 0) ? Number(lesson.itemCount) : 75;
+        const asHours = (lesson.timerHours && Number(lesson.timerHours) > 0) ? Number(lesson.timerHours) : 5;
+        const asSubject = lesson.subject ? String(lesson.subject) : '';
+        const asLabel = asItems + '-item Answer Sheet' + (asSubject ? (' · ' + asSubject) : '') + ' · ' + asHours + ' hours';
+        panels += `
+        <div class="tab-panel active" id="panel-questionnaire">
+          <p class="questionnaire-hint">Open or download the questionnaire PDF below. Shade your answers on the <strong>Answer Sheet</strong> tab (${asItems} items${asSubject ? ', ' + asSubject : ''}). Do not write on the PDF.</p>
+          <div class="pdf-viewer-shell" id="pdfViewerShell">
+            <iframe class="pdf-frame" id="pdfFrame" src="${embedQPdf}" title="Questionnaire PDF"></iframe>
+          </div>
+          <div class="pdf-actions">
+            <a class="btn btn-primary" href="${qPdf}" download target="_blank" rel="noopener">⬇ Download Questionnaire</a>
+            <a class="btn btn-ghost" href="${qPdf}" target="_blank" rel="noopener">Open in new tab</a>
+            <button type="button" class="btn btn-ghost" onclick="switchLessonTab('answersheet')">Go to Answer Sheet →</button>
+          </div>
+        </div>`;
+        panels += `
+        <div class="tab-panel" id="panel-answersheet">
+          <div id="quizContainer">
+            <div class="card" style="margin-bottom:1rem;">
+              <div class="card-title">${asLabel}</div>
+              <p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.35rem;">
+                Use the questionnaire PDF for the questions. Click a letter (A–D) to shade your answer. Click the same letter again to clear. <strong>${asHours}-hour</strong> countdown starts when you begin. Unlocks only on the scheduled date at 8:00 AM (Asia/Manila).
+              </p>
+              <button class="btn btn-primary" style="margin-top:1rem;" onclick="startAnswerSheet('${courseId}','${lesson.id}')">
+                Start ${asItems}-item Answer Sheet
+              </button>
+            </div>
+          </div>
+        </div>`;
+      } else {
+      // QUIZ panel (courses: REPEAT / problem sets)
       const quizSize = problemSet ? 75 : (lesson.id === 'msthc-aug13' ? 16 : (lesson.id === 'msthc-aug14' ? 15 : (lesson.id === 'msthc-aug15' ? 10 : 20)));
       const quizMinutes = problemSet
         ? (lesson.id === 'msthc-aug16' ? 300 : Math.round(75 * 90 / 60))
@@ -7467,6 +7895,7 @@
             </div>
           </div>
         </div>`;
+      }
 
       // Content + complete button
       const container = document.getElementById('lessonContent');
@@ -7490,6 +7919,9 @@
       document.getElementById('pageTitle').textContent = lesson.title;
       window._slideshowIdx = 0;
       updateActivityChecklistUI(lesson.id);
+      if (isCeleCalculator) {
+        try { renderCeleRatingPanel(courseId, lesson.id); } catch (e) { console.error(e); }
+      }
 
       // Store pending session video(s); player starts only when learner clicks the thumbnail
       window._pendingSessionVideo = (!problemSet && videoIds.length)
@@ -7549,7 +7981,7 @@
       // Automated tracking by tab
       const lid = window._currentLessonId;
       if (!lid) return;
-      if (tabId === 'pdf') {
+      if (tabId === 'pdf' || tabId === 'questionnaire') {
         trackPdfViewed(lid);
         resizePdfViewerToDevice();
       } else if (tabId === 'images') {
@@ -7622,6 +8054,293 @@
       // Clock hands: full circle over total duration
       const deg = frac * 360;
       return deg;
+    }
+
+
+    // ===================== ANSWER SHEET (TESTS — 75 bubbles) =====================
+    window._answerSheet = null;
+    var answerSheetTimerId = null;
+
+    function getAnswerSheetMeta(courseId, lessonId) {
+      var course = (typeof findTrack === 'function') ? findTrack(courseId) : null;
+      var lesson = course && course.lessons ? course.lessons.find(function (l) { return l.id === lessonId; }) : null;
+      var itemCount = (lesson && lesson.itemCount) ? Number(lesson.itemCount) : 75;
+      var timerHours = (lesson && lesson.timerHours) ? Number(lesson.timerHours) : 5;
+      var subject = (lesson && lesson.subject) ? lesson.subject : '';
+      if (!(itemCount > 0 && itemCount <= 200)) itemCount = 75;
+      if (!(timerHours > 0 && timerHours <= 12)) timerHours = 5;
+      return { itemCount: itemCount, timerHours: timerHours, subject: subject, lesson: lesson };
+    }
+
+    function getOrCreateAnswerKey(lessonId, itemCount) {
+      itemCount = itemCount || 75;
+      if (!state.answerKeys) state.answerKeys = {};
+      if (state.answerKeys[lessonId] && state.answerKeys[lessonId].length === itemCount) {
+        return state.answerKeys[lessonId];
+      }
+      // Random A–D keys (0–3) — placeholder until official keys are set
+      var key = [];
+      for (var i = 0; i < itemCount; i++) {
+        key.push(Math.floor(Math.random() * 4));
+      }
+      state.answerKeys[lessonId] = key;
+      saveState();
+      return key;
+    }
+
+    function stopAnswerSheetTimer() {
+      if (answerSheetTimerId) {
+        clearInterval(answerSheetTimerId);
+        answerSheetTimerId = null;
+      }
+    }
+
+    function saveAnswerSheetProgress() {
+      var as = window._answerSheet;
+      if (!as) return;
+      try {
+        localStorage.setItem('calqsept2026hub_answersheet_progress', JSON.stringify({
+          lessonId: as.lessonId,
+          courseId: as.courseId,
+          answers: as.answers,
+          timeLeft: as.timeLeft,
+          startedAt: as.startedAt,
+          savedAt: Date.now()
+        }));
+      } catch (e) {}
+    }
+
+    function clearAnswerSheetProgress() {
+      try { localStorage.removeItem('calqsept2026hub_answersheet_progress'); } catch (e) {}
+    }
+
+    function startAnswerSheet(courseId, lessonId) {
+      stopQuizTimer();
+      stopAnswerSheetTimer();
+      activeQuiz = null;
+      var meta = getAnswerSheetMeta(courseId, lessonId);
+      var total = meta.itemCount;
+      var timeLimitSec = Math.round(meta.timerHours * 60 * 60);
+      var key = getOrCreateAnswerKey(lessonId, total);
+      var restoredAnswers = {};
+      var restoredTimeLeft = timeLimitSec;
+      var restoredStarted = Date.now();
+      try {
+        var raw = localStorage.getItem('calqsept2026hub_answersheet_progress');
+        if (raw) {
+          var prog = JSON.parse(raw);
+          if (prog && prog.lessonId === lessonId && prog.answers && typeof prog.timeLeft === 'number' && prog.timeLeft > 0) {
+            restoredAnswers = prog.answers;
+            restoredTimeLeft = prog.timeLeft;
+            restoredStarted = prog.startedAt || Date.now();
+          }
+        }
+      } catch (e) {}
+      window._answerSheet = {
+        lessonId: lessonId,
+        courseId: courseId,
+        answers: restoredAnswers,
+        key: key,
+        timeLeft: restoredTimeLeft,
+        startedAt: restoredStarted,
+        total: total,
+        timerHours: meta.timerHours,
+        subject: meta.subject || '',
+        submitted: false
+      };
+      saveAnswerSheetProgress();
+      answerSheetTimerId = setInterval(function () {
+        var as = window._answerSheet;
+        if (!as || as.submitted) { stopAnswerSheetTimer(); return; }
+        as.timeLeft--;
+        var el = document.getElementById('asTimer');
+        if (el) {
+          el.textContent = formatTime(as.timeLeft);
+          if (as.timeLeft <= 300) el.classList.add('danger');
+        }
+        if (as.timeLeft % 15 === 0 || as.timeLeft <= 60) saveAnswerSheetProgress();
+        if (as.timeLeft <= 0) {
+          stopAnswerSheetTimer();
+          submitAnswerSheet(true);
+        }
+      }, 1000);
+      renderAnswerSheet();
+    }
+
+    function shadeAnswer(itemIdx, choiceIdx) {
+      var as = window._answerSheet;
+      if (!as || as.submitted) return;
+      itemIdx = Number(itemIdx);
+      choiceIdx = Number(choiceIdx);
+      if (as.answers[itemIdx] === choiceIdx) {
+        delete as.answers[itemIdx];
+      } else {
+        as.answers[itemIdx] = choiceIdx;
+      }
+      saveAnswerSheetProgress();
+      renderAnswerSheet();
+    }
+
+    function renderAnswerSheet() {
+      var as = window._answerSheet;
+      var box = document.getElementById('quizContainer');
+      if (!as || !box) return;
+      var letters = ['A', 'B', 'C', 'D'];
+      var answered = Object.keys(as.answers).length;
+      var rows = '';
+      for (var i = 0; i < as.total; i++) {
+        var bubbles = '';
+        for (var c = 0; c < 4; c++) {
+          var shaded = as.answers[i] === c ? ' shaded' : '';
+          bubbles += '<button type="button" class="as-bubble' + shaded + '" aria-label="Item ' + (i + 1) + ' option ' + letters[c] + '"' +
+            ' onclick="shadeAnswer(' + i + ',' + c + ')">' + letters[c] + '</button>';
+        }
+        rows += '<div class="as-row"><span class="as-num">' + (i + 1) + '</span><div class="as-bubbles">' + bubbles + '</div></div>';
+      }
+      box.innerHTML =
+        '<div class="answer-sheet">' +
+          '<div class="answer-sheet-head">' +
+            '<div>' +
+              '<div class="answer-sheet-title">Answer Sheet — ' + as.total + ' Items' + (as.subject ? (' · ' + as.subject) : '') + '</div>' +
+              '<div class="answer-sheet-meta">Click a letter to shade · click again to clear · use Questionnaire tab for questions' + (as.timerHours ? (' · ' + as.timerHours + 'h timer') : '') + '</div>' +
+            '</div>' +
+            '<div class="answer-sheet-timer' + (as.timeLeft <= 300 ? ' danger' : '') + '" id="asTimer">' + formatTime(as.timeLeft) + '</div>' +
+          '</div>' +
+          '<div class="answer-sheet-progress" id="asProgress">' + answered + ' / ' + as.total + ' shaded</div>' +
+          '<div class="answer-sheet-grid">' + rows + '</div>' +
+          '<div class="answer-sheet-actions">' +
+            '<button type="button" class="btn btn-success" onclick="submitAnswerSheet(false)">Submit Answer Sheet</button>' +
+            '<button type="button" class="btn btn-ghost" onclick="switchLessonTab(\'questionnaire\')">📄 View Questionnaire</button>' +
+            '<span class="answer-sheet-progress">Unshaded items count as blank.</span>' +
+          '</div>' +
+        '</div>';
+    }
+
+    function submitAnswerSheet(auto) {
+      var as = window._answerSheet;
+      if (!as || as.submitted) return;
+      as.submitted = true;
+      stopAnswerSheetTimer();
+      var correct = 0;
+      var review = [];
+      var letters = ['A', 'B', 'C', 'D'];
+      for (var i = 0; i < as.total; i++) {
+        var chosen = as.answers[i];
+        var key = as.key[i];
+        var ok = chosen === key;
+        if (ok) correct++;
+        review.push({
+          n: i + 1,
+          chosen: chosen === undefined ? null : chosen,
+          correct: key,
+          ok: ok
+        });
+      }
+      var pct = Math.round((correct / as.total) * 100);
+      var timeSec = Math.round((Date.now() - as.startedAt) / 1000);
+      var result = {
+        lessonId: as.lessonId,
+        courseId: as.courseId,
+        type: String(as.total),
+        score: correct,
+        total: as.total,
+        pct: pct,
+        timeSec: timeSec,
+        date: new Date().toISOString(),
+        autoSubmitted: !!auto,
+        mode: 'answersheet',
+        subject: as.subject || '',
+        review: review
+      };
+      state.quizScores[as.lessonId] = result;
+      state.quizHistory.push({
+        lessonId: result.lessonId,
+        courseId: result.courseId,
+        type: result.type,
+        score: result.score,
+        total: result.total,
+        pct: result.pct,
+        timeSec: result.timeSec,
+        date: result.date,
+        autoSubmitted: result.autoSubmitted,
+        mode: 'answersheet',
+        name: state.name
+      });
+      saveState();
+      trackQuizResult(as.lessonId, as.courseId, pct, true);
+      refreshCompleteButton(as.lessonId);
+      clearAnswerSheetProgress();
+      var remarks = quizRemarks(pct);
+      var pass = pct >= 60;
+      var box = document.getElementById('quizContainer');
+      if (box) {
+        box.innerHTML =
+          '<div class="card quiz-result-card quiz-report-card">' +
+            '<div style="font-size:0.78rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.35rem;">Answer Sheet Report</div>' +
+            '<div class="quiz-score ' + (pass ? 'pass' : 'fail') + '">' + pct + '%</div>' +
+            '<p style="font-size:1.1rem;margin:0.5rem 0;">' + correct + ' / ' + as.total + ' correct</p>' +
+            '<p style="color:var(--text-muted);">Time used: ' + formatTime(timeSec) + (auto ? ' (auto-submitted)' : '') + '</p>' +
+            '<div class="quiz-remarks-box"><strong>Remarks</strong><p>' + remarks + '</p>' +
+              '<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.45rem;">Answer keys are provisional (random placeholders) until official keys are loaded.</p></div>' +
+            '<p style="color:var(--text-muted);margin-top:0.75rem;font-size:0.85rem;">Results recorded in your Summary Log.</p>' +
+            '<div style="margin-top:1.25rem;display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">' +
+              '<button class="btn btn-primary" onclick="showAnswerSheetReview()">Review Shading</button>' +
+              '<button class="btn btn-ghost" onclick="startAnswerSheet(\'' + as.courseId + '\',\'' + as.lessonId + '\')">Retake</button>' +
+            '</div>' +
+          '</div>';
+      }
+      window._answerSheet._lastResult = result;
+      updateDashboard();
+    }
+
+    function showAnswerSheetReview() {
+      var as = window._answerSheet;
+      var r = as && as._lastResult;
+      var box = document.getElementById('quizContainer');
+      if (!r || !box) return;
+      var letters = ['A', 'B', 'C', 'D'];
+      var rows = '';
+      for (var i = 0; i < r.review.length; i++) {
+        var item = r.review[i];
+        var bubbles = '';
+        for (var c = 0; c < 4; c++) {
+          var cls = 'as-bubble';
+          if (item.chosen === c && item.ok) cls += ' review-correct';
+          else if (item.chosen === c && !item.ok) cls += ' review-wrong';
+          else if (item.correct === c) cls += ' review-key';
+          bubbles += '<span class="' + cls + '">' + letters[c] + '</span>';
+        }
+        rows += '<div class="as-row"><span class="as-num">' + item.n + '</span><div class="as-bubbles">' + bubbles + '</div></div>';
+      }
+      box.innerHTML =
+        '<div class="answer-sheet">' +
+          '<div class="answer-sheet-head"><div class="answer-sheet-title">Shading Review</div>' +
+            '<button class="btn btn-ghost" onclick="showAnswerSheetSummary()">← Back to Score</button></div>' +
+          '<p class="questionnaire-hint">Green = your correct shade · Red = your wrong shade · Green ring = correct key</p>' +
+          '<div class="answer-sheet-grid">' + rows + '</div>' +
+        '</div>';
+    }
+
+    function showAnswerSheetSummary() {
+      var as = window._answerSheet;
+      var r = as && as._lastResult;
+      if (!r) return;
+      var pass = r.pct >= 60;
+      var remarks = quizRemarks(r.pct);
+      var box = document.getElementById('quizContainer');
+      if (!box) return;
+      box.innerHTML =
+        '<div class="card quiz-result-card quiz-report-card">' +
+          '<div style="font-size:0.78rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.35rem;">Answer Sheet Report</div>' +
+          '<div class="quiz-score ' + (pass ? 'pass' : 'fail') + '">' + r.pct + '%</div>' +
+          '<p style="font-size:1.1rem;margin:0.5rem 0;">' + r.score + ' / ' + r.total + ' correct</p>' +
+          '<p style="color:var(--text-muted);">Time used: ' + formatTime(r.timeSec) + (r.autoSubmitted ? ' (auto-submitted)' : '') + '</p>' +
+          '<div class="quiz-remarks-box"><strong>Remarks</strong><p>' + remarks + '</p></div>' +
+          '<div style="margin-top:1.25rem;display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">' +
+            '<button class="btn btn-primary" onclick="showAnswerSheetReview()">Review Shading</button>' +
+            '<button class="btn btn-ghost" onclick="startAnswerSheet(\'' + r.courseId + '\',\'' + r.lessonId + '\')">Retake</button>' +
+          '</div>' +
+        '</div>';
     }
 
     function startQuiz(courseId, lessonId, isTimed) {
@@ -8037,8 +8756,10 @@
       try {
         try { if (typeof destroyPlayer === 'function') destroyPlayer(); } catch (e) {}
         try { if (typeof stopQuizTimer === 'function') stopQuizTimer(); } catch (e) {}
+        try { if (typeof stopAnswerSheetTimer === 'function') stopAnswerSheetTimer(); } catch (e) {}
         try { if (typeof stopActivityTimer === 'function') stopActivityTimer(); } catch (e) {}
         activeQuiz = null;
+        window._answerSheet = null;
         window._currentLessonId = null;
         window._currentCourseId = null;
 
@@ -8295,8 +9016,10 @@
         // Stop any active learning session
         try { if (typeof destroyPlayer === 'function') destroyPlayer(); } catch (e) {}
         try { if (typeof stopQuizTimer === 'function') stopQuizTimer(); } catch (e) {}
+        try { if (typeof stopAnswerSheetTimer === 'function') stopAnswerSheetTimer(); } catch (e) {}
         try { if (typeof stopActivityTimer === 'function') stopActivityTimer(); } catch (e) {}
         activeQuiz = null;
+        window._answerSheet = null;
         window._currentLessonId = null;
         window._currentCourseId = null;
 
@@ -8376,8 +9099,10 @@
       if (id !== 'lessonView') {
         destroyPlayer();
         stopQuizTimer();
+        stopAnswerSheetTimer();
         stopActivityTimer();
         window._currentLessonId = null;
+        window._answerSheet = null;
       }
 
       // progress merged into dashboard
@@ -8800,9 +9525,9 @@
     augSpecial[14] = [calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
     augSpecial[15] = [calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
     augSpecial[16] = [calEv(CAL_COURSE, 'mSTHC-supp', '75 items - MSTHC Supp')];
-    augSpecial[17] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard'), calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
-    augSpecial[18] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard'), calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
-    augSpecial[19] = [calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
+    augSpecial[17] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard · PSAD 75'), calEv(CAL_COURSE, 'psad-supp', 'PSAD Answer Sheet (6h)')];
+    augSpecial[18] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard · MSTHC 75'), calEv(CAL_COURSE, 'mSTHC-supp', 'MSTHC Answer Sheet (5h)')];
+    augSpecial[19] = [calEv(CAL_MILESTONE, 'preboard', 'Pre-Preboard · HGE 50'), calEv(CAL_COURSE, 'hge-supp', 'HGE Answer Sheet (4h)')];
     augSpecial[20] = [calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
     augSpecial[21] = [calEv(CAL_COURSE, 'mSTHC-selfpaced', 'MSTHC - Self-Paced')];
     augSpecial[22] = [calEv(CAL_COURSE, 'mSTHC-live', 'MSTHC - Live')];
@@ -8822,16 +9547,17 @@
     sepSpecial[3] = [calEv(CAL_COURSE, 'hge-live', 'HGE - Live')];
     sepSpecial[4] = [calEv(CAL_COURSE, 'hge-selfpaced', 'HGE - Self-Paced')];
     sepSpecial[5] = [calEv(CAL_COURSE, 'hge-live', 'HGE - Live')];
-    sepSpecial[6] = [calEv(CAL_MILESTONE, 'preboard', 'Mid-Preboard'), calEv(CAL_COURSE, 'hge-supp', '50 items - HGE Supp')];
-    const psadLiveDays = [8, 10, 12, 15, 17, 19];
-    for (let d = 7; d <= 19; d++) {
+    sepSpecial[6] = [calEv(CAL_MILESTONE, 'preboard', 'Mid-Preboard · PSAD 75'), calEv(CAL_COURSE, 'psad-supp', 'PSAD Answer Sheet (6h)')];
+    sepSpecial[7] = [calEv(CAL_MILESTONE, 'preboard', 'Mid-Preboard · MSTHC 75'), calEv(CAL_COURSE, 'mSTHC-supp', 'MSTHC Answer Sheet (5h)')];
+    sepSpecial[8] = [calEv(CAL_MILESTONE, 'preboard', 'Mid-Preboard · HGE 50'), calEv(CAL_COURSE, 'hge-supp', 'HGE Answer Sheet (4h)')];
+    const psadLiveDays = [10, 12, 15, 17, 19];
+    for (let d = 9; d <= 19; d++) {
       const isLive = psadLiveDays.includes(d);
       sepSpecial[d] = sepSpecial[d] || [];
       sepSpecial[d].push(isLive
         ? calEv(CAL_COURSE, 'psad-live', 'PSAD - Live')
         : calEv(CAL_COURSE, 'psad-selfpaced', 'PSAD - Self-Paced'));
     }
-    sepSpecial[7] = [calEv(CAL_MILESTONE, 'preboard', 'Mid-Preboard')].concat(sepSpecial[7] || []);
     sepSpecial[13] = [calEv(CAL_COURSE, 'psad-supp', '75 items - PSAD Supp')];
     sepSpecial[19] = [calEv(CAL_MILESTONE, 'end-refresher', 'End of Refresher')].concat(sepSpecial[19] || []);
     sepSpecial[20] = [calEv(CAL_COURSE, 'psad-supp', '75 items - PSAD Supp')];
@@ -8951,8 +9677,10 @@
       const fallback = {
         '2026-8-17': { courseId: 'pre-preboard', lessonId: 'pre-preboard-aug17' },
         '2026-8-18': { courseId: 'pre-preboard', lessonId: 'pre-preboard-aug18' },
+        '2026-8-19': { courseId: 'pre-preboard', lessonId: 'pre-preboard-aug19' },
         '2026-9-6': { courseId: 'mid-preboard', lessonId: 'mid-preboard-sep6' },
         '2026-9-7': { courseId: 'mid-preboard', lessonId: 'mid-preboard-sep7' },
+        '2026-9-8': { courseId: 'mid-preboard', lessonId: 'mid-preboard-sep8' },
         '2026-9-21': { courseId: 'ceterms', lessonId: 'ceterms-sep21' },
         '2026-9-22': { courseId: 'ceformulas', lessonId: 'ceformulas-sep22' },
         '2026-9-23': { courseId: 'final-preboard', lessonId: 'final-preboard-sep23' },
@@ -9344,9 +10072,9 @@
         { date: 'Aug 14', type: 'self', topic: 'Analytic Geometry and Differential Calculus' },
         { date: 'Aug 15', type: 'live', topic: 'Calculus and Differential Equation' },
         { date: 'Aug 16', type: 'set', topic: 'Problem Set (Topics from August 11–15)' },
-        { date: 'Aug 17', type: 'self', topic: 'Engineering Economy; Advanced Mathematics, Numerical Methods, Permutations' },
-        { date: 'Aug 18', type: 'live', topic: 'Combinations, Probability and Statistics' },
-        { date: 'Aug 19', type: 'self', topic: 'Elementary and Higher Surveying' },
+        { date: 'Aug 17', type: 'set', topic: 'Pre-Preboard · PSAD (75 items, 6h answer sheet)' },
+        { date: 'Aug 18', type: 'set', topic: 'Pre-Preboard · MSTHC (75 items, 5h answer sheet)' },
+        { date: 'Aug 19', type: 'set', topic: 'Pre-Preboard · HGE (50 items, 4h answer sheet)' },
         { date: 'Aug 20', type: 'live', topic: 'Highway Engineering' },
         { date: 'Aug 21', type: 'self', topic: 'Transportation Engineering' },
         { date: 'Aug 22', type: 'live', topic: 'Ports and Harbors; Construction Equipment Productivity' },
@@ -9365,11 +10093,11 @@
         { date: 'Sep 3', type: 'live', topic: 'Hydraulics – Pipes, Headloss, Bernoulli, Continuity, Velocity Distribution, Connections' },
         { date: 'Sep 4', type: 'self', topic: 'Hydraulics – 3-Reservoir, Venturimeter, Pitot, Orificemeter, Weirs' },
         { date: 'Sep 5', type: 'live', topic: 'Hydraulics – Orifice, Channels, Hydrodynamics, Hydrology' },
-        { date: 'Sep 6', type: 'set', topic: 'Problem Set (Hydraulics)' }
+        { date: 'Sep 6', type: 'set', topic: 'Mid-Preboard · PSAD (75 items, 6h answer sheet)' }
       ]},
       { course: 'PSAD', color: '#6366f1', items: [
-        { date: 'Sep 7', type: 'self', topic: 'Statics 1' },
-        { date: 'Sep 8', type: 'live', topic: 'Statics 2' },
+        { date: 'Sep 7', type: 'set', topic: 'Mid-Preboard · MSTHC (75 items, 5h answer sheet)' },
+        { date: 'Sep 8', type: 'set', topic: 'Mid-Preboard · HGE (50 items, 4h answer sheet)' },
         { date: 'Sep 9', type: 'self', topic: 'Dynamics 1' },
         { date: 'Sep 10', type: 'live', topic: 'Dynamics 2' },
         { date: 'Sep 11', type: 'self', topic: 'Strength of Materials 1' },
