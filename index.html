@@ -2693,6 +2693,38 @@
       line-height: 1.45;
     }
 
+
+    .timer-pause-btn {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.7rem;
+      border-radius: 8px;
+      cursor: pointer;
+      min-height: 36px;
+      touch-action: manipulation;
+    }
+    .timer-pause-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .timer-pause-btn.is-paused {
+      background: rgba(245,158,11,0.18);
+      border-color: rgba(245,158,11,0.5);
+      color: var(--warning);
+    }
+    .timer-paused-banner {
+      margin: 0.65rem 0 0.85rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 10px;
+      border: 1px solid rgba(245,158,11,0.45);
+      background: rgba(245,158,11,0.12);
+      color: var(--text);
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+    .timer-paused-banner strong { color: var(--warning); }
+    .quiz-timer-wrap { display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap; }
+
     /* Analytics */
 
     .chart-card {
@@ -8030,6 +8062,7 @@
           timeLeft: activeQuiz.timeLeft,
           startedAt: activeQuiz.startedAt,
           type: activeQuiz.type,
+          paused: !!activeQuiz.paused,
           savedAt: Date.now()
         }));
       } catch (e) {}
@@ -8037,6 +8070,55 @@
 
     function clearQuizProgress() {
       try { localStorage.removeItem('calqsept2026hub_quiz_progress'); } catch (e) {}
+    }
+
+    function runQuizTimerTick() {
+      if (!activeQuiz || activeQuiz.paused) return;
+      activeQuiz.timeLeft--;
+      var el = document.getElementById('quizTimer');
+      if (el) {
+        el.textContent = formatTime(activeQuiz.timeLeft);
+        if (activeQuiz.timeLeft <= 300) el.classList.add('danger');
+        else if (activeQuiz.timeLeft <= 1800) el.classList.add('warn');
+      }
+      var hand = document.getElementById('quizClockHand');
+      if (hand && activeQuiz.totalLimitSec) {
+        hand.style.transform = 'rotate(' + renderQuizClockFace(activeQuiz.timeLeft, activeQuiz.totalLimitSec) + 'deg)';
+      }
+      if (activeQuiz.timeLeft % 15 === 0 || activeQuiz.timeLeft <= 60) saveQuizProgress();
+      if (activeQuiz.timeLeft <= 0) {
+        stopQuizTimer();
+        clearQuizProgress();
+        submitQuiz(true);
+      }
+    }
+
+    function startQuizCountdown() {
+      stopQuizTimer();
+      if (!activeQuiz || activeQuiz.paused || activeQuiz.timeLeft <= 0) return;
+      quizTimerId = setInterval(runQuizTimerTick, 1000);
+    }
+
+    function pauseQuizTimer() {
+      if (!activeQuiz || activeQuiz.paused) return;
+      activeQuiz.paused = true;
+      stopQuizTimer();
+      saveQuizProgress();
+      renderQuizQuestion();
+    }
+
+    function resumeQuizTimer() {
+      if (!activeQuiz || !activeQuiz.paused) return;
+      activeQuiz.paused = false;
+      saveQuizProgress();
+      startQuizCountdown();
+      renderQuizQuestion();
+    }
+
+    function toggleQuizPause() {
+      if (!activeQuiz) return;
+      if (activeQuiz.paused) resumeQuizTimer();
+      else pauseQuizTimer();
     }
 
     function quizRemarks(pct) {
@@ -8140,6 +8222,7 @@
           answers: as.answers,
           timeLeft: as.timeLeft,
           startedAt: as.startedAt,
+          paused: !!as.paused,
           savedAt: Date.now()
         }));
       } catch (e) {}
@@ -8148,6 +8231,64 @@
     function clearAnswerSheetProgress() {
       try { localStorage.removeItem('calqsept2026hub_answersheet_progress'); } catch (e) {}
     }
+
+    function runAnswerSheetTimerTick() {
+      var as = window._answerSheet;
+      if (!as || as.submitted || as.paused) return;
+      as.timeLeft--;
+      var el = document.getElementById('asTimer');
+      if (el) {
+        el.textContent = formatTime(as.timeLeft);
+        if (as.timeLeft <= 300) el.classList.add('danger');
+      }
+      if (as.timeLeft % 15 === 0 || as.timeLeft <= 60) saveAnswerSheetProgress();
+      if (as.timeLeft <= 0) {
+        stopAnswerSheetTimer();
+        submitAnswerSheet(true);
+      }
+    }
+
+    function startAnswerSheetCountdown() {
+      stopAnswerSheetTimer();
+      var as = window._answerSheet;
+      if (!as || as.paused || as.submitted || as.timeLeft <= 0) return;
+      answerSheetTimerId = setInterval(runAnswerSheetTimerTick, 1000);
+    }
+
+    function pauseAnswerSheetTimer() {
+      var as = window._answerSheet;
+      if (!as || as.submitted || as.paused) return;
+      as.paused = true;
+      stopAnswerSheetTimer();
+      saveAnswerSheetProgress();
+      renderAnswerSheet();
+    }
+
+    function resumeAnswerSheetTimer() {
+      var as = window._answerSheet;
+      if (!as || as.submitted || !as.paused) return;
+      as.paused = false;
+      saveAnswerSheetProgress();
+      startAnswerSheetCountdown();
+      renderAnswerSheet();
+    }
+
+    function toggleAnswerSheetPause() {
+      var as = window._answerSheet;
+      if (!as || as.submitted) return;
+      if (as.paused) resumeAnswerSheetTimer();
+      else pauseAnswerSheetTimer();
+    }
+
+    function persistTimedAssessmentProgress() {
+      try { if (activeQuiz && !activeQuiz._lastResult) saveQuizProgress(); } catch (e) {}
+      try { if (window._answerSheet && !window._answerSheet.submitted) saveAnswerSheetProgress(); } catch (e) {}
+    }
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') persistTimedAssessmentProgress();
+    });
+    window.addEventListener('pagehide', persistTimedAssessmentProgress);
+    window.addEventListener('beforeunload', persistTimedAssessmentProgress);
 
     function startAnswerSheet(courseId, lessonId) {
       stopQuizTimer();
@@ -8160,6 +8301,7 @@
       var restoredAnswers = {};
       var restoredTimeLeft = timeLimitSec;
       var restoredStarted = Date.now();
+      var restoredPaused = false;
       try {
         var raw = localStorage.getItem('calqsept2026hub_answersheet_progress');
         if (raw) {
@@ -8168,6 +8310,7 @@
             restoredAnswers = prog.answers;
             restoredTimeLeft = prog.timeLeft;
             restoredStarted = prog.startedAt || Date.now();
+            restoredPaused = !!prog.paused;
           }
         }
       } catch (e) {}
@@ -8181,24 +8324,11 @@
         total: total,
         timerHours: meta.timerHours,
         subject: meta.subject || '',
-        submitted: false
+        submitted: false,
+        paused: restoredPaused
       };
       saveAnswerSheetProgress();
-      answerSheetTimerId = setInterval(function () {
-        var as = window._answerSheet;
-        if (!as || as.submitted) { stopAnswerSheetTimer(); return; }
-        as.timeLeft--;
-        var el = document.getElementById('asTimer');
-        if (el) {
-          el.textContent = formatTime(as.timeLeft);
-          if (as.timeLeft <= 300) el.classList.add('danger');
-        }
-        if (as.timeLeft % 15 === 0 || as.timeLeft <= 60) saveAnswerSheetProgress();
-        if (as.timeLeft <= 0) {
-          stopAnswerSheetTimer();
-          submitAnswerSheet(true);
-        }
-      }, 1000);
+      if (!window._answerSheet.paused) startAnswerSheetCountdown();
       renderAnswerSheet();
     }
 
@@ -8239,14 +8369,25 @@
               '<div class="answer-sheet-title">Answer Sheet — ' + as.total + ' Items' + (as.subject ? (' · ' + as.subject) : '') + '</div>' +
               '<div class="answer-sheet-meta">Click a letter to shade · click again to clear · use Questionnaire tab for questions' + (as.timerHours ? (' · ' + as.timerHours + 'h timer') : '') + '</div>' +
             '</div>' +
-            '<div class="answer-sheet-timer' + (as.timeLeft <= 300 ? ' danger' : '') + '" id="asTimer">' + formatTime(as.timeLeft) + '</div>' +
+            '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem;">' +
+              '<div class="answer-sheet-timer' + (as.timeLeft <= 300 ? ' danger' : '') + '" id="asTimer">' + formatTime(as.timeLeft) + '</div>' +
+              '<button type="button" class="timer-pause-btn' + (as.paused ? ' is-paused' : '') + '" onclick="toggleAnswerSheetPause()">' +
+                (as.paused ? '▶ Resume timer' : '⏸ Pause timer') +
+              '</button>' +
+            '</div>' +
           '</div>' +
-          '<div class="answer-sheet-progress" id="asProgress">' + answered + ' / ' + as.total + ' shaded</div>' +
+          (as.paused
+            ? '<div class="timer-paused-banner"><strong>Timer paused.</strong> Your shaded answers are saved on this device. Resume when you return — time will not count down while paused.</div>'
+            : '') +
+          '<div class="answer-sheet-progress" id="asProgress">' + answered + ' / ' + as.total + ' shaded' + (as.paused ? ' · PAUSED' : '') + '</div>' +
           '<div class="answer-sheet-grid">' + rows + '</div>' +
           '<div class="answer-sheet-actions">' +
             '<button type="button" class="btn btn-success" onclick="submitAnswerSheet(false)">Submit Answer Sheet</button>' +
             '<button type="button" class="btn btn-ghost" onclick="switchLessonTab(\'questionnaire\')">📄 View Questionnaire</button>' +
-            '<span class="answer-sheet-progress">Unshaded items count as blank.</span>' +
+            '<button type="button" class="timer-pause-btn' + (as.paused ? ' is-paused' : '') + '" onclick="toggleAnswerSheetPause()">' +
+              (as.paused ? '▶ Resume timer' : '⏸ Pause timer') +
+            '</button>' +
+            '<span class="answer-sheet-progress">Unshaded items count as blank. Progress autosaves.</span>' +
           '</div>' +
         '</div>';
     }
@@ -8413,6 +8554,7 @@
       let restoredCurrent = 0;
       let restoredTimeLeft = timeLimitSec;
       let restoredStarted = Date.now();
+      let restoredPaused = false;
       try {
         const raw = localStorage.getItem('calqsept2026hub_quiz_progress');
         if (raw) {
@@ -8422,6 +8564,7 @@
             restoredCurrent = Math.min(prog.current || 0, questions.length - 1);
             restoredTimeLeft = prog.timeLeft;
             restoredStarted = prog.startedAt || Date.now();
+            restoredPaused = !!prog.paused;
           }
         }
       } catch (e) {}
@@ -8436,34 +8579,12 @@
         courseId,
         type: (is75 || lessonId === 'msthc-aug16') ? '75' : '20',
         longTimer: lessonId === 'msthc-aug16',
-        totalLimitSec: timeLimitSec
+        totalLimitSec: timeLimitSec,
+        paused: restoredPaused
       };
       saveQuizProgress();
       stopQuizTimer();
-      quizTimerId = setInterval(() => {
-        if (!activeQuiz) { stopQuizTimer(); return; }
-        activeQuiz.timeLeft--;
-        const el = document.getElementById('quizTimer');
-        if (el) {
-          el.textContent = formatTime(activeQuiz.timeLeft);
-          if (activeQuiz.timeLeft <= 300) el.classList.add('danger');
-          else if (activeQuiz.timeLeft <= 1800) el.classList.add('warn');
-        }
-        const hand = document.getElementById('quizClockHand');
-        if (hand && activeQuiz.totalLimitSec) {
-          const deg = renderQuizClockFace(activeQuiz.timeLeft, activeQuiz.totalLimitSec);
-          hand.style.transform = 'rotate(' + deg + 'deg)';
-        }
-        // Autosave every 15 seconds and on each tick near end
-        if (activeQuiz.timeLeft % 15 === 0 || activeQuiz.timeLeft <= 60) {
-          saveQuizProgress();
-        }
-        if (activeQuiz.timeLeft <= 0) {
-          stopQuizTimer();
-          clearQuizProgress();
-          submitQuiz(true);
-        }
-      }, 1000);
+      if (!activeQuiz.paused) startQuizCountdown();
       renderQuizQuestion();
     }
 
@@ -8497,6 +8618,12 @@
         return `<div class="quiz-option ${sel}" role="button" tabindex="0" data-opt="${i}" aria-label="Option ${letter}" onclick="selectAnswer(${i})" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();selectAnswer(${i});}">${letter}. ${c}</div>`;
       }).join('');
 
+      const pauseBtnHtml = qz.timed
+        ? `<button type="button" class="timer-pause-btn ${qz.paused ? 'is-paused' : ''}" onclick="toggleQuizPause()">${qz.paused ? '▶ Resume timer' : '⏸ Pause timer'}</button>`
+        : '';
+      const pauseBannerHtml = (qz.timed && qz.paused)
+        ? `<div class="timer-paused-banner"><strong>Timer paused.</strong> Your answers are saved on this device. Resume when you return to continue — time will not count down while paused.</div>`
+        : '';
       const timerHtml = qz.timed
         ? (qz.longTimer
           ? `<div class="quiz-timer-wrap">
@@ -8507,8 +8634,12 @@
                 </div>
               </div>
               <div class="quiz-timer ${qz.timeLeft <= 300 ? 'danger' : (qz.timeLeft <= 1800 ? 'warn' : '')}" id="quizTimer">${formatTime(qz.timeLeft)}</div>
+              ${pauseBtnHtml}
             </div>`
-          : `<div class="quiz-timer ${qz.timeLeft <= 300 ? 'danger' : ''}" id="quizTimer">${formatTime(qz.timeLeft)}</div>`)
+          : `<div class="quiz-timer-wrap">
+              <div class="quiz-timer ${qz.timeLeft <= 300 ? 'danger' : ''}" id="quizTimer">${formatTime(qz.timeLeft)}</div>
+              ${pauseBtnHtml}
+            </div>`)
         : '';
 
       const imgHtml = q.img
@@ -8527,6 +8658,7 @@
           </div>
           ${timerHtml}
         </div>
+        ${pauseBannerHtml}
         <div class="card">
           <div style="font-weight:600;margin-bottom:0.5rem;line-height:1.5;">${q.q}</div>
           ${imgHtml}
