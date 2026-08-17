@@ -8072,9 +8072,40 @@
       return { itemCount: itemCount, timerHours: timerHours, subject: subject, lesson: lesson };
     }
 
+    function lettersToKeyIndex(letters) {
+      var map = { A: 0, B: 1, C: 2, D: 3 };
+      var key = [];
+      String(letters || '').toUpperCase().replace(/[^ABCD]/g, '').split('').forEach(function (ch) {
+        if (map[ch] !== undefined) key.push(map[ch]);
+      });
+      return key;
+    }
+
+    /** Official answer keys: letter strings A–D mapped to 0–3. */
+    const OFFICIAL_ANSWER_KEYS = {
+      // Pre-Preboard Aug 17 — PSAD 75 items
+      // 1-5 AACDA · 6-10 ACADB · 11-15 BABAD · 16-20 CABDA · 21-25 CBACD
+      // 26-30 CDAAA · 31-35 BDDAB · 36-40 ACDAA · 41-45 DAACB · 46-50 DADAB
+      // 51-55 CCAAC · 56-60 BDBCC · 61-65 ABACD · 66-70 CABCD · 71-75 BDADB
+      'pre-preboard-aug17': lettersToKeyIndex(
+        'AACDA' + 'ACADB' + 'BABAD' + 'CABDA' + 'CBACD' +
+        'CDAAA' + 'BDDAB' + 'ACDAA' + 'DAACB' + 'DADAB' +
+        'CCAAC' + 'BDBCC' + 'ABACD' + 'CABCD' + 'BDADB'
+      )
+    };
+
     function getOrCreateAnswerKey(lessonId, itemCount) {
       itemCount = itemCount || 75;
       if (!state.answerKeys) state.answerKeys = {};
+      // Prefer official keys (always overwrite any prior random local key)
+      if (OFFICIAL_ANSWER_KEYS[lessonId] && OFFICIAL_ANSWER_KEYS[lessonId].length) {
+        var official = OFFICIAL_ANSWER_KEYS[lessonId].slice(0, itemCount);
+        if (official.length === itemCount) {
+          state.answerKeys[lessonId] = official;
+          try { saveState(); } catch (e) {}
+          return official;
+        }
+      }
       if (state.answerKeys[lessonId] && state.answerKeys[lessonId].length === itemCount) {
         return state.answerKeys[lessonId];
       }
@@ -8086,6 +8117,10 @@
       state.answerKeys[lessonId] = key;
       saveState();
       return key;
+    }
+
+    function hasOfficialAnswerKey(lessonId) {
+      return !!(OFFICIAL_ANSWER_KEYS[lessonId] && OFFICIAL_ANSWER_KEYS[lessonId].length);
     }
 
     function stopAnswerSheetTimer() {
@@ -8281,7 +8316,7 @@
             '<p style="font-size:1.1rem;margin:0.5rem 0;">' + correct + ' / ' + as.total + ' correct</p>' +
             '<p style="color:var(--text-muted);">Time used: ' + formatTime(timeSec) + (auto ? ' (auto-submitted)' : '') + '</p>' +
             '<div class="quiz-remarks-box"><strong>Remarks</strong><p>' + remarks + '</p>' +
-              '<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.45rem;">Answer keys are provisional (random placeholders) until official keys are loaded.</p></div>' +
+              '<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.45rem;">' + (hasOfficialAnswerKey(as.lessonId) ? 'Scored against the official answer key for this session.' : 'Answer keys are provisional (random placeholders) until official keys are loaded.') + '</p></div>' +
             '<p style="color:var(--text-muted);margin-top:0.75rem;font-size:0.85rem;">Results recorded in your Summary Log.</p>' +
             '<div style="margin-top:1.25rem;display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">' +
               '<button class="btn btn-primary" onclick="showAnswerSheetReview()">Review Shading</button>' +
