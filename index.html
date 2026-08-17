@@ -129,6 +129,39 @@
     html[data-theme="dark"] .theme-toggle .icon-sun { display: inline; }
     html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
+    .cheer-toggle {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 1.05rem;
+      transition: all 0.15s;
+      color: var(--text);
+      padding: 0;
+      line-height: 1;
+    }
+    .cheer-toggle:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: scale(1.06);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+    }
+    .cheer-toggle.is-active {
+      border-color: #a855f7;
+      background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.2));
+      box-shadow: 0 0 0 3px rgba(168,85,247,0.25);
+    }
+    html[data-theme="dark"] .cheer-toggle {
+      background: var(--surface-2);
+      border-color: var(--border);
+    }
+    @media (max-width: 480px) {
+      .cheer-toggle { width: 34px; height: 34px; font-size: 0.95rem; }
+    }
+
     .sidebar-theme-row {
       display: flex;
       align-items: center;
@@ -1112,135 +1145,205 @@
       .terms-modal-head p { font-size: 0.78rem; }
     }
 
-    /* Student ID Card */
+    /* Student ID Card — PRC-inspired aspirational layout */
     .id-card-wrap {
       margin-bottom: 1.5rem;
       max-width: 560px;
     }
     .id-card {
       display: flex;
-      background: linear-gradient(145deg, #0b1c3a 0%, #1a3c5e 55%, #0f2744 100%);
-      border-radius: 14px;
+      flex-direction: column;
+      background: linear-gradient(180deg, #f4f9ff 0%, #e8f2fb 45%, #f7fbff 100%);
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(255,255,255,0.08);
-      color: #e2e8f0;
-      min-height: 180px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(30, 64, 120, 0.12);
+      color: #0f172a;
       position: relative;
+      min-height: 280px;
     }
     .id-card::before {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(120deg, transparent 40%, rgba(56,189,248,0.08) 50%, transparent 60%),
-        radial-gradient(circle at 90% 10%, rgba(56,189,248,0.18), transparent 40%);
+        repeating-linear-gradient(
+          -12deg,
+          transparent,
+          transparent 10px,
+          rgba(37, 99, 235, 0.03) 10px,
+          rgba(37, 99, 235, 0.03) 20px
+        ),
+        radial-gradient(ellipse at 15% 20%, rgba(59,130,246,0.12), transparent 50%),
+        radial-gradient(ellipse at 85% 80%, rgba(14,165,233,0.1), transparent 45%);
       pointer-events: none;
+      z-index: 0;
     }
-    .id-photo {
-      width: 150px;
-      min-width: 150px;
-      background: #0a1628;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
+    .id-card-header {
       position: relative;
       z-index: 1;
-      border-right: 3px solid rgba(56,189,248,0.35);
+      text-align: center;
+      padding: 0.75rem 0.85rem 0.45rem;
+      border-bottom: 1px solid rgba(30, 64, 120, 0.12);
+    }
+    .id-card-header .id-org-main {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #1e3a5f;
+      letter-spacing: 0.02em;
+    }
+    .id-card-header .id-org-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #c2410c, #dc2626, #b91c1c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+      margin: 0.15rem 0 0.1rem;
+    }
+    .id-card-header .id-org-sub {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    .id-card-mid {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem 0.5rem;
+      flex: 1;
+    }
+    .id-fields {
+      flex: 1;
+      min-width: 0;
+    }
+    .id-banner {
+      display: inline-block;
+      background: linear-gradient(90deg, #1e3a5f, #2563eb);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.65rem;
+      border-radius: 4px;
+      margin-bottom: 0.55rem;
+    }
+    .id-row {
+      display: grid;
+      grid-template-columns: minmax(88px, 34%) 1fr;
+      gap: 0.25rem 0.4rem;
+      align-items: baseline;
+      margin-bottom: 0.28rem;
+      font-size: 0.78rem;
+    }
+    .id-row .id-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin: 0;
+    }
+    .id-row .id-value {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+      word-break: break-word;
+      line-height: 1.25;
+    }
+    .id-row .id-value.name { font-size: 0.95rem; color: #b91c1c; }
+    .id-row .id-value.blank {
+      color: #94a3b8;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+    .id-photo {
+      width: 118px;
+      min-width: 118px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      z-index: 1;
     }
     .id-photo-inner {
-      width: 100%;
-      aspect-ratio: 3/4;
-      max-height: 200px;
+      width: 110px;
+      height: 130px;
       background: linear-gradient(135deg, #6366f1, #a855f7);
       display: grid;
       place-items: center;
-      font-size: 3rem;
+      font-size: 2.4rem;
       font-weight: 700;
       color: #fff;
       background-size: cover;
       background-position: center;
-      align-self: center;
-      margin: 10px;
-      border-radius: 8px;
+      border-radius: 4px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      box-shadow: 0 2px 8px rgba(15,23,42,0.18);
+      border: 2px solid #93c5fd;
     }
     .id-photo-inner.has-photo { font-size: 0; }
-    .id-body {
-      flex: 1;
-      padding: 1rem 1.15rem 0.9rem;
-      display: flex;
-      flex-direction: column;
+    .id-profession {
       position: relative;
       z-index: 1;
-      min-width: 0;
-    }
-    .id-org {
-      font-size: 0.68rem;
-      font-weight: 800;
+      margin: 0.15rem 0.85rem 0;
+      background: linear-gradient(90deg, #ea580c, #dc2626);
+      color: #fff;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 900;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #38bdf8;
-      margin-bottom: 0.15rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: 3px;
+      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
     }
-    .id-org-url {
-      font-size: 0.72rem;
-      color: #94a3b8;
-      margin-bottom: 0.65rem;
-    }
-    .id-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #64748b;
-      margin-bottom: 0.08rem;
-    }
-    .id-value {
-      font-size: 0.95rem;
+    .id-motto {
+      position: relative;
+      z-index: 1;
+      margin: 0.45rem 0.85rem 0.75rem;
+      text-align: center;
+      font-size: 0.78rem;
       font-weight: 600;
-      color: #f1f5f9;
-      margin-bottom: 0.45rem;
-      word-break: break-word;
-      line-height: 1.25;
+      font-style: italic;
+      color: #1e3a5f;
+      line-height: 1.4;
     }
-    .id-value.name { font-size: 1.05rem; font-weight: 700; }
-    .id-footer {
-      margin-top: auto;
-      padding-top: 0.45rem;
-      border-top: 1px solid rgba(148,163,184,0.25);
-      font-size: 0.68rem;
-      color: #94a3b8;
+    .id-card-footer-meta {
+      position: relative;
+      z-index: 1;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 0.5rem;
+      padding: 0 0.85rem 0.65rem;
+      font-size: 0.65rem;
+      color: #64748b;
       flex-wrap: wrap;
     }
     .id-badge-chip {
       display: inline-block;
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 800;
       letter-spacing: 0.04em;
       padding: 0.15rem 0.45rem;
       border-radius: 4px;
-      background: rgba(56,189,248,0.2);
-      color: #7dd3fc;
+      background: rgba(37,99,235,0.12);
+      color: #1d4ed8;
       text-transform: uppercase;
     }
     @media (max-width: 480px) {
-      .id-card { flex-direction: column; }
-      .id-photo {
-        width: 100%;
-        min-width: 0;
-        border-right: none;
-        border-bottom: 3px solid rgba(56,189,248,0.35);
-        padding: 0.75rem 0 0;
-      }
-      .id-photo-inner {
-        max-height: 160px;
-        width: 120px;
-        margin: 0 auto 0.75rem;
-      }
+      .id-card-mid { flex-direction: column-reverse; align-items: center; }
+      .id-photo { width: 100%; min-width: 0; }
+      .id-photo-inner { width: 120px; height: 142px; }
+      .id-fields { width: 100%; }
+      .id-row { grid-template-columns: minmax(100px, 40%) 1fr; }
     }
     .profile-rules-link {
       display: inline-flex;
@@ -3061,6 +3164,191 @@
     .txt-ce-formulas     { color: #8a6d00; }
     .txt-preboard        { color: #2e7d32; }
     .txt-rest            { color: #0c7489; }
+
+    /* ===== Flying cheer avatar (Home) ===== */
+    #cheerAvatar {
+      position: fixed !important;
+      z-index: 1500 !important;
+      width: 76px;
+      height: 76px;
+      left: 40px;
+      top: 120px;
+      margin: 0;
+      padding: 0;
+      pointer-events: auto;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      will-change: left, top;
+    }
+    #cheerAvatar.is-hidden {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+    #cheerAvatar .cheer-orb {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      margin: 4px auto 0;
+      animation: cheerBob 2.2s ease-in-out infinite;
+    }
+    #cheerAvatar .cheer-body {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #6366f1 0%, #a855f7 50%, #38bdf8 100%);
+      box-shadow: 0 10px 28px rgba(99,102,241,0.45), 0 0 0 3px rgba(255,255,255,0.35);
+      display: grid;
+      place-items: center;
+      font-size: 1.75rem;
+      line-height: 1;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+    #cheerAvatar .cheer-ring-text {
+      position: absolute;
+      inset: 0;
+      width: 72px;
+      height: 72px;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 2;
+    }
+    #cheerAvatar .cheer-arc-text {
+      fill: #0f172a;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      text-transform: uppercase;
+      paint-order: stroke fill;
+      stroke: rgba(255, 255, 255, 0.55);
+      stroke-width: 0.7px;
+    }
+    html[data-theme="dark"] #cheerAvatar .cheer-arc-text {
+      fill: #ffffff;
+      stroke: rgba(15, 23, 42, 0.55);
+    }
+    #cheerAvatar .cheer-wings {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      width: 92px;
+      height: 28px;
+      margin-left: -46px;
+      pointer-events: none;
+      z-index: -1;
+    }
+    #cheerAvatar .cheer-wings::before,
+    #cheerAvatar .cheer-wings::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 36px;
+      height: 22px;
+      background: rgba(147, 197, 253, 0.9);
+      border-radius: 50% 50% 40% 40%;
+      animation: cheerFlap 0.5s ease-in-out infinite alternate;
+    }
+    #cheerAvatar .cheer-wings::before { left: 0; transform-origin: right center; }
+    #cheerAvatar .cheer-wings::after { right: 0; transform-origin: left center; animation-delay: 0.1s; }
+    #cheerAvatar .cheer-bubble {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      max-width: min(230px, 68vw);
+      background: #ffffff;
+      color: #1e293b;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1.4;
+      box-shadow: 0 14px 36px rgba(15,23,42,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      text-align: center;
+      z-index: 2;
+    }
+    html[data-theme="dark"] #cheerAvatar .cheer-bubble {
+      background: #141c2e;
+      color: #e2e8f0;
+      border-color: #2a3548;
+    }
+    #cheerAvatar .cheer-bubble::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -7px;
+      border: 7px solid transparent;
+      border-top-color: #ffffff;
+    }
+    html[data-theme="dark"] #cheerAvatar .cheer-bubble::after {
+      border-top-color: #141c2e;
+    }
+    #cheerAvatar .cheer-bubble.show { opacity: 1; }
+    #cheerAvatar .cheer-bubble .cheer-label {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #2563eb;
+      margin-bottom: 0.2rem;
+    }
+    #cheerAvatar .cheer-x {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 0.85rem;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      z-index: 3;
+      padding: 0;
+    }
+    #cheerAvatar .cheer-x:hover { color: #ef4444; border-color: #ef4444; }
+    @keyframes cheerBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes cheerFlap {
+      from { transform: rotate(-20deg) scaleY(0.88); }
+      to { transform: rotate(18deg) scaleY(1.08); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #cheerAvatar .cheer-orb,
+      #cheerAvatar .cheer-wings::before,
+      #cheerAvatar .cheer-wings::after { animation: none !important; }
+    }
+    @media (max-width: 768px) {
+      #cheerAvatar { width: 68px; height: 68px; }
+      #cheerAvatar .cheer-orb { width: 64px; height: 64px; }
+      #cheerAvatar .cheer-body { width: 50px; height: 50px; font-size: 1.45rem; }
+      #cheerAvatar .cheer-ring-text { width: 64px; height: 64px; }
+      #cheerAvatar .cheer-arc-text { font-size: 10.5px; letter-spacing: 1.2px; }
+      #cheerAvatar .cheer-wings { width: 76px; margin-left: -38px; }
+      #cheerAvatar .cheer-wings::before,
+      #cheerAvatar .cheer-wings::after { width: 28px; height: 18px; }
+    }
   </style>
 </head>
 <body>
@@ -3118,6 +3406,9 @@
       <div style="display:flex;align-items:center;gap:0.75rem;">
         <button class="theme-toggle" type="button" id="themeToggleBtn" title="Toggle dark mode" onclick="toggleTheme()" aria-label="Toggle dark mode">
           <span class="icon-moon">🌙</span><span class="icon-sun">☀️</span>
+        </button>
+        <button class="cheer-toggle" type="button" id="cheerToggleBtn" title="Sensei" aria-label="Sensei" onclick="forceShowCheerAvatar()">
+          🦸
         </button>
         <button class="notif-btn" type="button" title="Notifications" onclick="alert('Check Session Bulletin on Home for today\'s GMeet link or self-paced reminder.')">🔔<span class="badge-dot"></span></button>
         <div class="user-chip">
@@ -3415,23 +3706,53 @@
               ⬇ Download ID (JPEG)
             </button>
           </div>
-          <div class="id-card" id="studentIdCard" aria-label="Student ID Card">
-            <div class="id-photo">
-              <div class="id-photo-inner" id="idPhotoInner"><span id="idPhotoLetter">L</span></div>
+          <div class="id-card" id="studentIdCard" aria-label="Enrollee Identification Card">
+            <div class="id-card-header">
+              <div class="id-org-main">CALQARE REFRESHER HUB</div>
+              <div class="id-org-title">Professional Aspiration Card</div>
+              <div class="id-org-sub">www.calqare.com · Civil Engineering Board Exam</div>
             </div>
-            <div class="id-body">
-              <div class="id-org">CALQARE REFRESHER HUB</div>
-              <div class="id-org-url">www.calqare.com</div>
-              <div class="id-label">Full Name</div>
-              <div class="id-value name" id="idName">Learner</div>
-              <div class="id-label">School</div>
-              <div class="id-value" id="idSchool">—</div>
-              <div class="id-label">Email Address</div>
-              <div class="id-value" id="idEmail">—</div>
-              <div class="id-footer">
-                <span class="id-badge-chip">Enrollee ID</span>
-                <span>Civil Engineering Board Exam</span>
+            <div class="id-card-mid">
+              <div class="id-fields">
+                <div class="id-banner">Enrollee Identification Card</div>
+                <div class="id-row">
+                  <span class="id-label">Last Name</span>
+                  <span class="id-value name" id="idLastName">—</span>
+                </div>
+                <div class="id-row">
+                  <span class="id-label">First Name</span>
+                  <span class="id-value name" id="idFirstName">—</span>
+                </div>
+                <div class="id-row">
+                  <span class="id-label">Middle Name</span>
+                  <span class="id-value" id="idMiddleName">—</span>
+                </div>
+                <div class="id-row">
+                  <span class="id-label">School</span>
+                  <span class="id-value" id="idSchool">—</span>
+                </div>
+                <div class="id-row">
+                  <span class="id-label">Registration No.</span>
+                  <span class="id-value blank" id="idRegNo">— — — — —</span>
+                </div>
+                <div class="id-row">
+                  <span class="id-label">Registration Date</span>
+                  <span class="id-value blank" id="idRegDate">— / — / —</span>
+                </div>
+                <div class="id-row">
+                  <span class="id-label">Valid Until</span>
+                  <span class="id-value blank" id="idValidUntil">— / — / —</span>
+                </div>
               </div>
+              <div class="id-photo">
+                <div class="id-photo-inner" id="idPhotoInner"><span id="idPhotoLetter">L</span></div>
+              </div>
+            </div>
+            <div class="id-profession">Civil Engineer</div>
+            <div class="id-motto" id="idMotto">“I want to become a licensed civil engineer.”</div>
+            <div class="id-card-footer-meta">
+              <span class="id-badge-chip">Future Licensee</span>
+              <span id="idEmail">—</span>
             </div>
           </div>
         </div>
@@ -3870,7 +4191,7 @@
             'https://lh3.googleusercontent.com/d/15WJt7HHvGpk075wwmaYdel__FZHAG26o=w1920',
             'https://lh3.googleusercontent.com/d/1JacuZMPZX3FiQ8rOumHvvJfggZeUPwvH=w1920'], content: 'Session topics:\n• Calculus and Differential Equation\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug16', title: '2026 August 16 Session', subtitle: '75 items – MSTHC Supplemental Problem Set · Problem Set (Topics from August 11–15)', type: 'set', duration: 'Problem Set', unlockAt: '2026-08-16T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Topics from August 11–15)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
-          { id: 'msthc-aug17', title: '2026 August 17 Session', subtitle: 'MSTHC – Self-Paced Session · Engineering Economy; Advanced Mathematics, Numerical Methods, Permutations', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', pdfUrl: 'https://drive.google.com/file/d/1AZ0v5E1XH6q69Mp3EjSR9hXvp0Fhhp9n/view?usp=sharing', unlockAt: '2026-08-17T08:00:00+08:00', images: [
+          { id: 'msthc-aug17', title: '2026 August 17 Session', subtitle: 'MSTHC – Self-Paced Session · Engineering Economy; Advanced Mathematics, Numerical Methods, Permutations', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/8sTrBz2o3ro', videoUrls: ['https://youtu.be/8sTrBz2o3ro', 'https://youtu.be/ZbwfDQIj3Zo'], pdfUrl: 'https://drive.google.com/file/d/1AZ0v5E1XH6q69Mp3EjSR9hXvp0Fhhp9n/view?usp=sharing', unlockAt: '2026-08-17T08:00:00+08:00', images: [
             'https://lh3.googleusercontent.com/d/1hEguVH6hTd_jFKfwdqcQPBLXVXgfgxNG=w1920',
             'https://lh3.googleusercontent.com/d/1HDzm29oIH_TYQ2gjx-Caelk984dm4NIc=w1920',
             'https://lh3.googleusercontent.com/d/1GJZMKpZgmW4Mq5dyIO2rEd3hytN7Wubu=w1920',
@@ -3895,7 +4216,7 @@
             'https://lh3.googleusercontent.com/d/1hJecTn30Z3prL3Ytz7EuA8wYc4XAuasH=w1920',
             'https://lh3.googleusercontent.com/d/1ta7ZaIU0Ih_i52sLm7z8UA-B54Y97d16=w1920'
           ], content: 'Session topics:\n• Engineering Economy\n• Advanced Mathematics, Numerical Methods, Permutations\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug18', title: '2026 August 18 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Combinations, Probability and Statistics', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-18T08:00:00+08:00', content: 'Session topics:\n• Combinations, Probability and Statistics\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug18', title: '2026 August 18 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Combinations, Probability and Statistics', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-18T08:00:00+08:00', pdfUrl: 'https://drive.google.com/file/d/1frmvJ9zSegGmC8CJ11ww2cprh4dNPiAL/view?usp=sharing', content: 'Session topics:\n• Combinations, Probability and Statistics\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug19', title: '2026 August 19 Session', subtitle: 'MSTHC – Self-Paced Session · Elementary and Higher Surveying', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-19T08:00:00+08:00', content: 'Session topics:\n• Elementary and Higher Surveying\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug20', title: '2026 August 20 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Highway Engineering', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-20T08:00:00+08:00', content: 'Session topics:\n• Highway Engineering\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug21', title: '2026 August 21 Session', subtitle: 'MSTHC – Self-Paced Session · Transportation Engineering', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-21T08:00:00+08:00', content: 'Session topics:\n• Transportation Engineering\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
@@ -3994,7 +4315,7 @@
         category: 'preboard',
         lessons: [
           { id: 'pre-preboard-aug17', title: '2026 August 17 Session', subtitle: 'Pre-Preboard · PSAD • 75 items · 6 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'PSAD', itemCount: 75, timerHours: 6, questionnairePdf: 'https://drive.google.com/file/d/1yd4wCtja1_mRKQ6E9DD4rqLjg7I0k9eC/view?usp=sharing', unlockAt: '2026-08-17T08:00:00+08:00', content: 'Pre-Preboard Examination — PSAD.\n\n75-item answer sheet with a 6-hour countdown. Use the questionnaire PDF and shade answers on the Answer Sheet tab.\n\nSubject: Principles of Structural Analysis and Design (PSAD).\nCalendar: August 17 — Pre-Preboard (PSAD).\nUnlock: 8:00 AM Asia/Manila.' },
-          { id: 'pre-preboard-aug18', title: '2026 August 18 Session', subtitle: 'Pre-Preboard · MSTHC • 75 items · 5 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'MSTHC', itemCount: 75, timerHours: 5, unlockAt: '2026-08-18T08:00:00+08:00', content: 'Pre-Preboard Examination — MSTHC.\n\n75-item answer sheet with a 5-hour countdown. Use the questionnaire PDF and shade answers on the Answer Sheet tab.\n\nSubject: Mathematics, Surveying, Transportation, Highway Construction (MSTHC).\nCalendar: August 18 — Pre-Preboard (MSTHC).\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'pre-preboard-aug18', title: '2026 August 18 Session', subtitle: 'Pre-Preboard · MSTHC • 75 items · 5 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'MSTHC', itemCount: 75, timerHours: 5, questionnairePdf: 'https://drive.google.com/file/d/1q_su7phmd957K_QtTOAUOms7kaJybohu/view?usp=sharing', unlockAt: '2026-08-18T08:00:00+08:00', content: 'Pre-Preboard Examination — MSTHC.\n\n75-item answer sheet with a 5-hour countdown. Use the questionnaire PDF and shade answers on the Answer Sheet tab.\n\nSubject: Mathematics, Surveying, Transportation, Highway Construction (MSTHC).\nCalendar: August 18 — Pre-Preboard (MSTHC).\nUnlock: 8:00 AM Asia/Manila.' },
           { id: 'pre-preboard-aug19', title: '2026 August 19 Session', subtitle: 'Pre-Preboard · HGE • 50 items · 4 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'HGE', itemCount: 50, timerHours: 4, unlockAt: '2026-08-19T08:00:00+08:00', content: 'Pre-Preboard Examination — HGE.\n\n50-item answer sheet with a 4-hour countdown. Use the questionnaire PDF and shade answers on the Answer Sheet tab.\n\nSubject: Hydraulics and Geotechnical Engineering (HGE).\nCalendar: August 19 — Pre-Preboard (HGE).\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
@@ -5232,6 +5553,143 @@
     ];
 
 
+    // ===== August 18 Session — Module 7 REPEAT (Combinations, Probability and Statistics) =====
+    const QUIZ_MSTHC_AUG18 = [
+      {
+        id: 'm7q1', topic: 'Permutations',
+        q: '[CELE MAY 2019] How many different ways are there to arrange six people in a round table?',
+        choices: ['150 ways', '200 ways', '1000 ways', '120 ways'],
+        a: 3
+      },
+      {
+        id: 'm7q2', topic: 'Combinations',
+        q: '[CELE MAY 2015] The Court of Appeals has 9 justices. On a certain case, the justices voted 5 to 4 in favor of the defendant. In how many ways could this have happened?',
+        choices: ['126', '159', '250', '306'],
+        a: 0
+      },
+      {
+        id: 'm7q3', topic: 'Combinations',
+        q: '[CELE MAY 2015] Ayala Corporation advertised to hire a financial analyst. The company received applicants from 10 candidates who seem to be equally qualified. The company manager has decided to call only 3 candidates for an interview. If she randomly selects 3 candidates from the 10, how many total selections are possible?',
+        choices: ['100', '210', '320', '120'],
+        a: 3
+      },
+      {
+        id: 'm7q4', topic: 'Combinations',
+        q: '[CELE NOVEMBER 2016] In how many ways can a student select a set of 4 Structural Design Books and 3 Hydraulics Books from a set of 9 Structural Design Books and 56 Hydraulics Books?',
+        choices: ['1,050 ways', '2,564 ways', '1,260 ways', '1,800 ways'],
+        a: 2
+      },
+      {
+        id: 'm7q5', topic: 'Probability (Expected Value)',
+        q: '[CELE MARCH 2026] A project manager is reviewing the risk of her project. One of the risks she is reviewing has an impact of ₱25,000 and an associated probability of 10%. The risk is associated with an activity that is the predecessor to seven other activities in the schedule. All eight activities have a budget of ₱75,000. What is the expected value of this risk?',
+        choices: ['₱2,000', '₱1,000', '₱2,500', '₱1,500'],
+        a: 2
+      },
+      {
+        id: 'm7q6', topic: 'Probability (Expectation)',
+        q: '[CELE NOVEMBER 2015] From the given distribution shown, find the expectation. (See figure.)',
+        choices: ['4', '5', '3', '2'],
+        a: 0,
+        img: gdriveImg('https://drive.google.com/file/d/1_jCy7qYWBEeZeB01z2RNIr19CX0CCv_7/view?usp=sharing')
+      },
+      {
+        id: 'm7q7', topic: 'Probability / Risk Analysis',
+        q: '[CELE MARCH 2026] The risk of a potential project is shown on the table. What is the value of the best-case and worst-case scenario? (See figure.)',
+        choices: ['₱105,000 and ₱10,000, respectively', '₱375,000 and ₱10,000, respectively', '₱445,000 and ₱20,000, respectively', '₱225,000 and ₱20,000, respectively'],
+        a: 1,
+        img: gdriveImg('https://drive.google.com/file/d/1LbzBCxG9NTCOuE3soIoWr77Wgi8YhHEE/view?usp=sharing')
+      },
+      {
+        id: 'm7q8', topic: 'Probability (Expectation)',
+        q: '[CELE NOVEMBER 2024] In town fiestas, the spinning wheel is one of the attractions. Assume that the person spins the pointer and is awarded the amount shown under the point. If it costs ₱8 to play the game, determine the expectation of a person who plays the game. (See figure.)',
+        choices: ['0.625', '0.653', '0.604', '0.611'],
+        a: 0,
+        img: gdriveImg('https://drive.google.com/file/d/1Fql0mgd7lV0JdRjk2RPJdji-IMHjRUkF/view?usp=sharing')
+      },
+      {
+        id: 'm7q9', topic: 'Probability',
+        q: '[CELE NOVEMBER 2017] Throughout history many people contributed to the development of Mathematics. These mathematicians include Pythagoras, Hypatia, Euclid, Euler, Einstein, Fibonacci, Agnesia and Pascal. What is the probability that a mathematician\u2019s name selected at random from those listed will start with either the letter E or the letter A?',
+        choices: ['0.1', '0.2', '0.4', '0.5'],
+        a: 3
+      },
+      {
+        id: 'm7q10', topic: 'Probability',
+        q: '[CELE APRIL 2024] The Montesclaros couple plan to purchase paint for the walls and the baseboard in their living room. They will select one color for the walls and one color for the baseboard from the given colors. Determine the probability that they select Java and Oyster. (See figure.)',
+        choices: ['1/5', '2/3', '1/9', '2/7'],
+        a: 2,
+        img: gdriveImg('https://drive.google.com/file/d/1p97_oTIWvl7wnZCHglkCQm4LYWNNbYN9/view?usp=sharing')
+      },
+      {
+        id: 'm7q11', topic: 'Probability (Hypergeometric)',
+        q: '[CELE APRIL 2024] A geology professor has 5 silicates, 7 pyrites and 8 carbonates in a rock collection. He picks six rocks at random for a student to analyze. Find the probability that the professor picked 2 silicates, 1 pyrite and 3 carbonates.',
+        choices: ['0.311', '0.202', '0.655', '0.101'],
+        a: 3
+      },
+      {
+        id: 'm7q12', topic: 'Probability / Risk Analysis',
+        q: '[CELE MARCH 2026] In a certain barangay hearing, constituents identified three intersections as potentially dangerous. Based on the data collected for each intersection, find the probability that a vehicle entering the intersection will be involved in an accident. Which intersection is the most dangerous? Use 365 days per year. (See figure.)',
+        choices: ['Intersection A', 'Intersection B', 'Intersection C', 'None of the above'],
+        a: 2,
+        img: gdriveImg('https://drive.google.com/file/d/1uy5Q_0e0VLE6E1VaDf8-ePKhX0V-Y3_V/view?usp=sharing')
+      },
+      {
+        id: 'm7q13', topic: 'Probability',
+        q: '[CELE NOVEMBER 2016] To encourage Elmer\u2019s promising tennis career, his father offers him a prize if he wins (at least) two tennis sets in a row in a three-set series to be played with his father and the club champion alternatively: Father-Champion-Father or Champion-Father-Champion, according to Elmer\u2019s choice. The champion is a better player than Elmer\u2019s father. Which should Elmer choose?',
+        choices: [
+          'Elmer should choose Champion-Father-Champion with 0.512 probability',
+          'Elmer should choose Father-Champion-Father with 0.512 probability',
+          'Elmer should choose Champion-Father-Champion with 0.384 probability',
+          'Elmer should choose Father-Champion-Father with 0.384 probability'
+        ],
+        a: 0
+      },
+      {
+        id: 'm7q14', topic: 'Statistics (Standard Error)',
+        q: '[CELE NOVEMBER 2025] According to the Mendelian Law of Segregation in genetics, when certain types of peas are crossed, the probability that the plant yields a yellow pea is \u00be and that it yields a green pea is 1/4. For a plant giving 400 peas, determine the standard error of the proportion of peas.\n\nHint: Standard Error = \u221a[p(1 \u2212 p)/n]',
+        choices: ['0.0112', '0.0217', '2.5', '10'],
+        a: 1
+      },
+      {
+        id: 'm7q15', topic: 'Statistics (Binomial Distribution)',
+        q: '[CELE MAY 2015] How many trials must be made if the standard deviation is to be 5 and approximates a binomial distribution with a probability of 0.70 of success?',
+        choices: ['168', '211', '119', '502'],
+        a: 2
+      },
+      {
+        id: 'm7q16', topic: 'Statistics (Normal Distribution)',
+        q: '[CELE MARCH 2026] The amount of paper discarded by household per week is normally distributed with mean 9.4 lbs and a standard deviation of 4.2 lbs. Determine the percentage of household that could throw out at least 10 lbs of paper per week.',
+        choices: ['22%', '44%', '33%', '55%'],
+        a: 1
+      },
+      {
+        id: 'm7q17', topic: 'Probability',
+        q: '[CELE NOVEMBER 2021] A sample of 5 ipods from 100 ipods is chosen in which 5 are defective. What is the probability that at least one is defective?',
+        choices: ['0.2262', '0.1122', '0.5431', '0.0675'],
+        a: 0
+      },
+      {
+        id: 'm7q18', topic: 'Statistics (Quartile)',
+        q: '[CELE MAY 2015] The number of working days lost due to accidents for each of 12 one-monthly periods are as follows: 27, 37, 40, 28, 30, 35, 24, 30, 32, 31, 28. Determine the first quartile.',
+        choices: ['37.50', '27.50', '30.20', '35.20'],
+        a: 1
+      },
+      {
+        id: 'm7q19', topic: 'Statistics (Standard Deviation)',
+        q: '[CELE MAY 2019] From the given data shown, determine the standard deviation. (See figure.)',
+        choices: ['1.754', '1.349', '1.205', '1.111'],
+        a: 1,
+        img: gdriveImg('https://drive.google.com/file/d/196VWBPOX9nmpb8Wn4npBqlqP9m2UuekZ/view?usp=sharing')
+      },
+      {
+        id: 'm7q20', topic: 'Statistics (Frequency Polygon)',
+        q: '[CELE APRIL 2024] From the given frequency polygon, how many people are included in the survey? Note: Frequency polygons are line graphs where the horizontal scale indicates observed values and the vertical scale indicates frequency. (See figure.)',
+        choices: ['36', '54', '65', '84'],
+        a: 0,
+        img: gdriveImg('https://drive.google.com/file/d/19EvsBBbVCq4zENbVE1hzU119F02_ht0D/view?usp=sharing')
+      }
+    ];
+
+
     // ===== August 16 Session — 75-item Supplemental Problem Set (5-hour timed) =====
     const QUIZ_MSTHC_AUG16 = [
       {
@@ -6459,7 +6917,7 @@
       saveState();
     }
 
-    function onCeleScoreInputChange() {
+    function readCeleScoreInputsIntoState() {
       const msthc = parseCeleScoreInput(document.getElementById('celeScoreMSTHC') && document.getElementById('celeScoreMSTHC').value);
       const hge = parseCeleScoreInput(document.getElementById('celeScoreHGE') && document.getElementById('celeScoreHGE').value);
       const psad = parseCeleScoreInput(document.getElementById('celeScorePSAD') && document.getElementById('celeScorePSAD').value);
@@ -6469,14 +6927,53 @@
         PSAD: psad
       };
       saveState();
-      const rating = computeCeleBoardRatingFromScores(state.celeManualScores);
-      if (rating.canCompute) saveCeleRatingSnapshot(rating);
-      updateCeleRatingResultsUI(rating);
+      return state.celeManualScores;
     }
 
-    function updateCeleRatingResultsUI(rating) {
+    /** Called only by the Calculate Rating button — shows report card after click. */
+    function onCeleScoreInputChange() {
+      calculateCeleBoardRating();
+    }
+
+    function calculateCeleBoardRating() {
+      readCeleScoreInputsIntoState();
+      const rating = computeCeleBoardRatingFromScores(state.celeManualScores);
+      if (!rating.canCompute) {
+        const host = document.getElementById('celeRatingResults');
+        if (host) {
+          host.innerHTML =
+            '<div class="card" style="margin-bottom:1rem;border-color:rgba(245,158,11,0.45);">' +
+              '<div class="card-title">Incomplete scores</div>' +
+              '<p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.35rem;">Enter all three subject ratings (MSTHC, HGE, and PSAD), then click <strong>Calculate Rating</strong> again.</p>' +
+            '</div>';
+        }
+        return;
+      }
+      saveCeleRatingSnapshot(rating);
+      window._celeLastComputedRating = rating;
+      updateCeleRatingResultsUI(rating, true);
+    }
+
+    function showCeleRatingPlaceholder() {
+      const host = document.getElementById('celeRatingResults');
+      if (!host) return;
+      host.innerHTML =
+        '<div class="card" style="margin-bottom:1rem;">' +
+          '<div class="card-title">Report card</div>' +
+          '<p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.35rem;">Enter your MSTHC, HGE, and PSAD scores above, then click <strong>Calculate Rating</strong> to generate your report card.</p>' +
+        '</div>';
+      window._celeLastComputedRating = null;
+    }
+
+    function updateCeleRatingResultsUI(rating, showReport) {
       const host = document.getElementById('celeRatingResults');
       if (!host || !rating) return;
+      // Only show full report card after explicit Calculate click
+      if (!showReport) {
+        showCeleRatingPlaceholder();
+        return;
+      }
+
       const subjectRows = rating.subjects.map(function (s) {
         const pctTxt = s.pct == null ? '—' : (s.pct + '%');
         const color = s.pct == null ? 'var(--text-muted)' : (s.pct >= 70 ? 'var(--success)' : (s.pct >= 50 ? 'var(--warning)' : 'var(--danger)'));
@@ -6504,6 +7001,10 @@
             '</p>' +
             '<div class="quiz-remarks-box"><strong>Remarks</strong><p>' + rating.remarks + '</p>' +
               '<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.45rem;">Criteria: GWA ≥ 70% and no subject below 50%. Weights: MSTE 35% · HGE 30% · PSAD 35%.</p></div>' +
+            '<div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.55rem;justify-content:center;">' +
+              '<button type="button" class="btn btn-primary" onclick="emailCeleReportCardViaGmail()">📧 Email Report Card via Gmail</button>' +
+            '</div>' +
+            '<p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.65rem;text-align:center;">Opens Gmail compose to <strong>calqare@gmail.com</strong> with your scores and GWA filled in. Review and send.</p>' +
           '</div>';
       } else {
         gwaBlock =
@@ -6515,10 +7016,63 @@
       host.innerHTML = gwaBlock + '<div class="section-head"><h3>Subject Remarks</h3></div>' + subjectRows;
     }
 
+    function emailCeleReportCardViaGmail() {
+      const rating = window._celeLastComputedRating || computeCeleBoardRatingFromScores(getManualCeleScores());
+      if (!rating || !rating.canCompute) {
+        alert('Please click Calculate Rating first so your report card is ready to email.');
+        return;
+      }
+      const learner = (state && state.name) ? String(state.name).trim() : 'Learner';
+      const school = (state && state.school) ? String(state.school).trim() : '—';
+      const email = (state && state.email) ? String(state.email).trim() : '—';
+      const lines = [];
+      lines.push('CELE Board Exam Rating Report Card');
+      lines.push('CALQARE Refresher Hub');
+      lines.push('');
+      lines.push('Learner: ' + learner);
+      lines.push('School: ' + school);
+      lines.push('Email: ' + email);
+      lines.push('');
+      lines.push('Subject Ratings');
+      rating.subjects.forEach(function (s) {
+        lines.push('- ' + s.short + ' (weight ' + Math.round(s.weight * 100) + '%): ' + s.pct + '%');
+        lines.push('  Remarks: ' + s.remarks);
+      });
+      lines.push('');
+      lines.push('General Weighted Average (GWA): ' + rating.gwa + '%');
+      lines.push('Projected status: ' + (rating.pass ? 'PASSED' : 'NOT YET PASSING'));
+      lines.push('Overall remarks: ' + rating.remarks);
+      lines.push('');
+      lines.push('Criteria: GWA ≥ 70% and no subject below 50%.');
+      lines.push('Weights: MSTE 35% · HGE 30% · PSAD 35%.');
+      lines.push('');
+      lines.push('Generated: ' + new Date().toLocaleString());
+      const body = lines.join('\n');
+      const subject = 'CELE Rating Report Card — ' + learner + ' — GWA ' + rating.gwa + '%';
+      // Gmail web compose (preferred)
+      const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+        encodeURIComponent('calqare@gmail.com') +
+        '&su=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+      try {
+        const w = window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+        if (!w) {
+          // Popup blocked — fall back to mailto
+          const mailto = 'mailto:calqare@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+          window.location.href = mailto;
+        }
+      } catch (e) {
+        const mailto = 'mailto:calqare@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        window.location.href = mailto;
+      }
+    }
+    window.emailCeleReportCardViaGmail = emailCeleReportCardViaGmail;
+    window.calculateCeleBoardRating = calculateCeleBoardRating;
+
     function renderCeleRatingPanel(courseId, lessonId) {
       const scores = getManualCeleScores();
       const rating = computeCeleBoardRatingFromScores(scores);
-      if (rating.canCompute) saveCeleRatingSnapshot(rating);
+      // Do not auto-show or auto-save report card on open — wait for Calculate Rating
       if (lessonId) {
         try { markComplete(lessonId, 'Opened CELE rating calculator'); } catch (e) {}
       }
@@ -6538,7 +7092,7 @@
               '<input type="number" id="celeScorePSAD" min="0" max="100" step="0.01" inputmode="decimal" placeholder="e.g. 75" value="' + val('PSAD') + '" /></div>' +
           '</div>' +
           '<div style="margin-top:0.85rem;display:flex;flex-wrap:wrap;gap:0.5rem;">' +
-            '<button type="button" class="btn btn-primary" onclick="onCeleScoreInputChange()">Calculate Rating</button>' +
+            '<button type="button" class="btn btn-primary" onclick="calculateCeleBoardRating()">Calculate Rating</button>' +
             '<button type="button" class="btn btn-ghost" onclick="clearCeleManualScores()">Clear</button>' +
           '</div>' +
         '</div>' +
@@ -6555,13 +7109,8 @@
       const box = document.getElementById('quizContainer');
       if (box) {
         box.innerHTML = formHtml;
-        ['celeScoreMSTHC', 'celeScoreHGE', 'celeScorePSAD'].forEach(function (id) {
-          const el = document.getElementById(id);
-          if (!el) return;
-          el.addEventListener('input', onCeleScoreInputChange);
-          el.addEventListener('change', onCeleScoreInputChange);
-        });
-        updateCeleRatingResultsUI(rating);
+        // Scores only — do NOT live-update the report card while typing
+        showCeleRatingPlaceholder();
       }
       return formHtml;
     }
@@ -6569,12 +7118,13 @@
     function clearCeleManualScores() {
       state.celeManualScores = { MSTHC: null, HGE: null, PSAD: null };
       state.celeRating = null;
+      window._celeLastComputedRating = null;
       saveState();
       ['celeScoreMSTHC', 'celeScoreHGE', 'celeScorePSAD'].forEach(function (id) {
         const el = document.getElementById(id);
         if (el) el.value = '';
       });
-      updateCeleRatingResultsUI(computeCeleBoardRatingFromScores(state.celeManualScores));
+      showCeleRatingPlaceholder();
     }
 
     function isTestTrack(course) {
@@ -8274,6 +8824,15 @@
         'AACDA' + 'ACADB' + 'BABAD' + 'CABDA' + 'CBACD' +
         'CDAAA' + 'BDDAB' + 'ACDAA' + 'DAACB' + 'DADAB' +
         'CCAAC' + 'BDBCC' + 'ABACD' + 'CABCD' + 'BDADB'
+      ),
+      // Pre-Preboard Aug 18 — MSTHC 75 items
+      // 1-5 BADAC · 6-10 CAAAB · 11-15 ABADA · 16-20 AAABA · 21-25 CCACA
+      // 26-30 ACABC · 31-35 CDACB · 36-40 DDCDA · 41-45 DAADB · 46-50 CBDCA
+      // 51-55 BCADA · 56-60 ACCAB · 61-65 CDAAD · 66-70 DABDC · 71-75 DABAA
+      'pre-preboard-aug18': lettersToKeyIndex(
+        'BADAC' + 'CAAAB' + 'ABADA' + 'AAABA' + 'CCACA' +
+        'ACABC' + 'CDACB' + 'DDCDA' + 'DAADB' + 'CBDCA' +
+        'BCADA' + 'ACCAB' + 'CDAAD' + 'DABDC' + 'DABAA'
       )
     };
 
@@ -8642,6 +9201,9 @@
       } else if (!is75 && lessonId === 'msthc-aug17' && typeof QUIZ_MSTHC_AUG17 !== 'undefined') {
         // August 17 Session exclusive Module-6 questionnaire (Engineering Economy / Numerical Methods)
         questions = QUIZ_MSTHC_AUG17.map(q => ({ ...q, img: q.img || null }));
+      } else if (!is75 && lessonId === 'msthc-aug18' && typeof QUIZ_MSTHC_AUG18 !== 'undefined') {
+        // August 18 Session exclusive Module-7 questionnaire (Combinations, Probability and Statistics)
+        questions = QUIZ_MSTHC_AUG18.map(q => ({ ...q, img: q.img || null }));
       } else if (lessonId === 'msthc-aug16' && typeof QUIZ_MSTHC_AUG16 !== 'undefined') {
         // August 16 Supplemental — exclusive 75-item set, 5-hour board-style timer
         questions = QUIZ_MSTHC_AUG16.map(q => ({ ...q, img: q.img || null }));
@@ -9080,10 +9642,10 @@
       const school = (state.school || '').trim() || '—';
       const email = (state.email || '').trim() || '—';
       const letter = (typeof avatarLetterFromName === 'function') ? avatarLetterFromName(name) : (name.charAt(0) || 'L').toUpperCase();
+      const parts = (typeof parseIdNameParts === 'function') ? parseIdNameParts(name) : { last: name, first: '—', middle: '—' };
 
-      // High-res card for print/download
       const W = 1120;
-      const H = 400;
+      const H = 700;
       const canvas = document.createElement('canvas');
       canvas.width = W;
       canvas.height = H;
@@ -9093,36 +9655,27 @@
         return;
       }
 
-      // Background gradient
-      const grad = ctx.createLinearGradient(0, 0, W, H);
-      grad.addColorStop(0, '#0b1c3a');
-      grad.addColorStop(0.55, '#1a3c5e');
-      grad.addColorStop(1, '#0f2744');
+      // Light PRC-style background
+      const grad = ctx.createLinearGradient(0, 0, 0, H);
+      grad.addColorStop(0, '#f4f9ff');
+      grad.addColorStop(0.5, '#e8f2fb');
+      grad.addColorStop(1, '#f7fbff');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, W, H);
 
-      // Soft highlight
-      const rad = ctx.createRadialGradient(W * 0.9, H * 0.1, 10, W * 0.9, H * 0.1, W * 0.45);
-      rad.addColorStop(0, 'rgba(56,189,248,0.22)');
-      rad.addColorStop(1, 'rgba(56,189,248,0)');
-      ctx.fillStyle = rad;
-      ctx.fillRect(0, 0, W, H);
+      // Soft pattern
+      ctx.fillStyle = 'rgba(37,99,235,0.04)';
+      for (let i = -H; i < W + H; i += 28) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i + H, H);
+        ctx.lineTo(i + H + 12, H);
+        ctx.lineTo(i + 12, 0);
+        ctx.closePath();
+        ctx.fill();
+      }
 
-      // Photo panel
-      const photoW = 300;
-      ctx.fillStyle = '#0a1628';
-      ctx.fillRect(0, 0, photoW, H);
-      ctx.fillStyle = 'rgba(56,189,248,0.35)';
-      ctx.fillRect(photoW - 6, 0, 6, H);
-
-      const photoPad = 28;
-      const photoInnerW = photoW - photoPad * 2;
-      const photoInnerH = Math.min(H - photoPad * 2, Math.round(photoInnerW * 4 / 3));
-      const photoX = photoPad;
-      const photoY = Math.round((H - photoInnerH) / 2);
-      const photoR = 16;
-
-      function roundRectPath(x, y, w, h, r) {
+      function roundRect(x, y, w, h, r) {
         ctx.beginPath();
         ctx.moveTo(x + r, y);
         ctx.arcTo(x + w, y, x + w, y + h, r);
@@ -9132,100 +9685,97 @@
         ctx.closePath();
       }
 
-      function drawLetterAvatar() {
-        const avGrad = ctx.createLinearGradient(photoX, photoY, photoX + photoInnerW, photoY + photoInnerH);
-        avGrad.addColorStop(0, '#6366f1');
-        avGrad.addColorStop(1, '#a855f7');
-        ctx.fillStyle = avGrad;
-        roundRectPath(photoX, photoY, photoInnerW, photoInnerH, photoR);
+      // Header
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#1e3a5f';
+      ctx.font = '700 22px "Segoe UI", system-ui, sans-serif';
+      ctx.fillText('CALQARE REFRESHER HUB', W / 2, 48);
+      ctx.font = '900 34px "Segoe UI", system-ui, sans-serif';
+      ctx.fillStyle = '#b91c1c';
+      ctx.fillText('PROFESSIONAL ASPIRATION CARD', W / 2, 90);
+      ctx.font = '600 18px "Segoe UI", system-ui, sans-serif';
+      ctx.fillStyle = '#334155';
+      ctx.fillText('www.calqare.com  ·  Civil Engineering Board Exam', W / 2, 122);
+
+      // Banner
+      roundRect(48, 150, 420, 36, 6);
+      ctx.fillStyle = '#1e3a5f';
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 18px "Segoe UI", system-ui, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('ENROLLEE IDENTIFICATION CARD', 62, 175);
+
+      // Fields
+      const rows = [
+        ['LAST NAME', parts.last, true],
+        ['FIRST NAME', parts.first, true],
+        ['MIDDLE NAME', parts.middle, false],
+        ['SCHOOL', school, false],
+        ['REGISTRATION NO.', '— — — — —', false],
+        ['REGISTRATION DATE', '— / — / —', false],
+        ['VALID UNTIL', '— / — / —', false]
+      ];
+      let y = 210;
+      rows.forEach(function (r) {
+        ctx.fillStyle = '#64748b';
+        ctx.font = '700 14px "Segoe UI", system-ui, sans-serif';
+        ctx.fillText(r[0], 48, y);
+        ctx.fillStyle = r[2] ? '#b91c1c' : '#0f172a';
+        ctx.font = (r[2] ? '800 ' : '700 ') + '22px "Segoe UI", system-ui, sans-serif';
+        ctx.fillText(String(r[1]), 260, y);
+        y += 42;
+      });
+
+      // Photo frame
+      const px = 820, py = 150, pw = 240, ph = 290;
+      ctx.strokeStyle = '#93c5fd';
+      ctx.lineWidth = 4;
+      roundRect(px, py, pw, ph, 8);
+      ctx.stroke();
+
+      function drawLetter() {
+        const av = ctx.createLinearGradient(px, py, px + pw, py + ph);
+        av.addColorStop(0, '#6366f1');
+        av.addColorStop(1, '#a855f7');
+        ctx.fillStyle = av;
+        roundRect(px, py, pw, ph, 8);
         ctx.fill();
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 120px "Segoe UI", system-ui, sans-serif';
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 110px "Segoe UI", system-ui, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(letter, photoX + photoInnerW / 2, photoY + photoInnerH / 2 + 4);
-      }
-
-      function drawLabels() {
-        const left = photoW + 48;
-        let y = 48;
-        ctx.textAlign = 'left';
+        ctx.fillText(letter, px + pw / 2, py + ph / 2);
         ctx.textBaseline = 'alphabetic';
-
-        ctx.fillStyle = '#38bdf8';
-        ctx.font = '800 18px "Segoe UI", system-ui, sans-serif';
-        ctx.letterSpacing = '2px';
-        ctx.fillText('CALQARE REFRESHER HUB', left, y);
-        y += 28;
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '600 18px "Segoe UI", system-ui, sans-serif';
-        ctx.fillText('www.calqare.com', left, y);
-        y += 48;
-
-        function field(label, value, valueSize, bold) {
-          ctx.fillStyle = '#64748b';
-          ctx.font = '700 14px "Segoe UI", system-ui, sans-serif';
-          ctx.fillText(label.toUpperCase(), left, y);
-          y += 28;
-          ctx.fillStyle = '#f1f5f9';
-          ctx.font = (bold ? '700 ' : '600 ') + valueSize + 'px "Segoe UI", system-ui, sans-serif';
-          // Wrap long values
-          const maxW = W - left - 40;
-          const words = String(value).split(/\s+/);
-          let line = '';
-          for (let i = 0; i < words.length; i++) {
-            const test = line ? line + ' ' + words[i] : words[i];
-            if (ctx.measureText(test).width > maxW && line) {
-              ctx.fillText(line, left, y);
-              y += valueSize + 6;
-              line = words[i];
-            } else {
-              line = test;
-            }
-          }
-          if (line) {
-            ctx.fillText(line, left, y);
-            y += valueSize + 22;
-          } else {
-            y += 22;
-          }
-        }
-
-        field('Full Name', name, 28, true);
-        field('School', school, 22, false);
-        field('Email Address', email, 22, false);
-
-        // Footer bar
-        const footY = H - 52;
-        ctx.strokeStyle = 'rgba(148,163,184,0.35)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(left, footY);
-        ctx.lineTo(W - 40, footY);
-        ctx.stroke();
-
-        // Badge chip
-        const badgeText = 'ENROLLEE ID';
-        ctx.font = '800 14px "Segoe UI", system-ui, sans-serif';
-        const bw = ctx.measureText(badgeText).width + 24;
-        const bh = 28;
-        const bx = left;
-        const by = footY + 14;
-        ctx.fillStyle = 'rgba(56,189,248,0.25)';
-        roundRectPath(bx, by, bw, bh, 6);
-        ctx.fill();
-        ctx.fillStyle = '#7dd3fc';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(badgeText, bx + 12, by + bh / 2);
-
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '600 16px "Segoe UI", system-ui, sans-serif';
-        ctx.textAlign = 'right';
-        ctx.fillText('Civil Engineering Board Exam', W - 40, by + bh / 2);
       }
 
-      function finishAndDownload() {
-        drawLabels();
+      // Profession bar
+      function drawFooter() {
+        roundRect(48, 520, W - 96, 48, 6);
+        const g2 = ctx.createLinearGradient(48, 520, W - 48, 520);
+        g2.addColorStop(0, '#ea580c');
+        g2.addColorStop(1, '#dc2626');
+        ctx.fillStyle = g2;
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.font = '900 28px "Segoe UI", system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('CIVIL ENGINEER', W / 2, 553);
+
+        ctx.fillStyle = '#1e3a5f';
+        ctx.font = 'italic 600 22px "Segoe UI", system-ui, sans-serif';
+        ctx.fillText('"I want to become a licensed civil engineer."', W / 2, 600);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '600 16px "Segoe UI", system-ui, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('FUTURE LICENSEE', 48, 650);
+        ctx.textAlign = 'right';
+        ctx.fillText(email, W - 48, 650);
+      }
+
+      function finish() {
+        drawFooter();
         try {
           const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
           const a = document.createElement('a');
@@ -9245,42 +9795,34 @@
         const img = new Image();
         img.onload = function () {
           ctx.save();
-          roundRectPath(photoX, photoY, photoInnerW, photoInnerH, photoR);
+          roundRect(px, py, pw, ph, 8);
           ctx.clip();
-          // Cover fit
           const ir = img.width / img.height;
-          const br = photoInnerW / photoInnerH;
+          const br = pw / ph;
           let dw, dh, dx, dy;
           if (ir > br) {
-            dh = photoInnerH;
-            dw = img.width * (photoInnerH / img.height);
-            dx = photoX - (dw - photoInnerW) / 2;
-            dy = photoY;
+            dh = ph; dw = img.width * (ph / img.height);
+            dx = px - (dw - pw) / 2; dy = py;
           } else {
-            dw = photoInnerW;
-            dh = img.height * (photoInnerW / img.width);
-            dx = photoX;
-            dy = photoY - (dh - photoInnerH) / 2;
+            dw = pw; dh = img.height * (pw / img.width);
+            dx = px; dy = py - (dh - ph) / 2;
           }
           ctx.drawImage(img, dx, dy, dw, dh);
           ctx.restore();
-          // Soft border
-          ctx.strokeStyle = 'rgba(0,0,0,0.35)';
-          ctx.lineWidth = 2;
-          roundRectPath(photoX, photoY, photoInnerW, photoInnerH, photoR);
+          ctx.strokeStyle = '#93c5fd';
+          ctx.lineWidth = 4;
+          roundRect(px, py, pw, ph, 8);
           ctx.stroke();
-          finishAndDownload();
+          finish();
         };
-        img.onerror = function () {
-          drawLetterAvatar();
-          finishAndDownload();
-        };
+        img.onerror = function () { drawLetter(); finish(); };
         img.src = state.photoData;
       } else {
-        drawLetterAvatar();
-        finishAndDownload();
+        drawLetter();
+        finish();
       }
     }
+
 
     function doResetProgress() {
       try {
@@ -9783,6 +10325,293 @@
       });
       carousel.addEventListener('mouseleave', () => startQuoteAutoplay());
     })();
+
+    /* ========== Flying cheer avatar (Home) ========== */
+    (function () {
+      var QUOTES = [
+        { label: 'Cheer', text: "You're building something great — one problem at a time!" },
+        { label: 'Boost', text: "Future Licensed CE energy loading… keep going!" },
+        { label: 'Focus', text: "Small sessions today beat big regrets tomorrow." },
+        { label: 'Win', text: "Consistency beats intensity. Show up again." },
+        { label: 'Spark', text: "That tough topic? You're closer than you think." },
+        { label: 'Pep', text: "Sir.DAC believes in you. Believe in yourself too!" },
+        { label: 'Drive', text: "Board exam distance shrinks with every focused hour." },
+        { label: 'Smile', text: "Hydrate, stretch, then conquer the next set." },
+        { label: 'Fire', text: "Mistakes are data. Adjust and retake when ready." },
+        { label: 'Rise', text: "You didn't come this far to only come this far." },
+        { label: 'Calm', text: "Breathe. One question. Then the next." },
+        { label: 'Pride', text: "Proud of you for opening this hub today." },
+        { label: 'Momentum', text: "Progress is progress — even 15 focused minutes." },
+        { label: 'Courage', text: "Start the session. Momentum follows action." },
+        { label: 'Hope', text: "September 2026 is closer — and so is your license." },
+        { label: 'Grit', text: "When it feels hard, remember why you started." },
+        { label: 'Joy', text: "Celebrate tiny wins. They compound." },
+        { label: 'Clarity', text: "Review weak topics early. Confidence follows." },
+        { label: 'Steady', text: "Rest is part of the plan. So is showing up." },
+        { label: 'Power', text: "Engineers solve problems. You're in training!" }
+      ];
+      var EMOJIS = ['🦸', '🌟', '💪', '🚀', '✨', '🏆', '🎯', '☀️', '🧠', '🛠️'];
+      var pos = { x: 48, y: 140 };
+      var target = { x: 220, y: 200 };
+      var raf = null;
+      var moveTimer = null;
+      var quoteTimer = null;
+      var bubbleTimer = null;
+      var hiddenUntil = 0;
+      var forceUntil = 0; // force-show from topbar icon
+      var qIdx = 0;
+      var reduced = false;
+
+      function el() { return document.getElementById('cheerAvatar'); }
+
+      function cheerAllowedSection() {
+        // Show on Home, Dashboard, Courses, Profile — hide on Tests + any quiz/lesson/course-detail session
+        var blocked = {
+          tests: true,
+          lessonView: true,
+          courseDetail: true,
+          quiz: true
+        };
+        var active = document.querySelector('.section.active');
+        if (!active || !active.id) return false;
+        if (blocked[active.id]) return false;
+        // Also hide if a timed quiz / answer sheet is actively running
+        try {
+          if (typeof activeQuiz !== 'undefined' && activeQuiz) return false;
+          if (window._answerSheet && window._answerSheet.timerId) return false;
+        } catch (e) {}
+        var allowed = { home: true, dashboard: true, courses: true, profile: true };
+        return !!allowed[active.id];
+      }
+      function homeOn() {
+        // kept name for minimal churn — means "avatar should be visible"
+        if (Date.now() < forceUntil) return true;
+        return cheerAllowedSection();
+      }
+
+      function bounds() {
+        var pad = 12;
+        var w = window.innerWidth || 800;
+        var h = window.innerHeight || 600;
+        var size = 76;
+        var minX = pad;
+        if (w > 768) minX = Math.min(270, Math.floor(w * 0.18));
+        return {
+          minX: minX,
+          maxX: Math.max(minX + 40, w - size - pad),
+          minY: 72,
+          maxY: Math.max(100, h - size - 20)
+        };
+      }
+
+      function pickTarget() {
+        var b = bounds();
+        target.x = b.minX + Math.random() * (b.maxX - b.minX);
+        target.y = b.minY + Math.random() * (b.maxY - b.minY);
+      }
+
+      function applyPos() {
+        var node = el();
+        if (!node) return;
+        node.style.left = Math.round(pos.x) + 'px';
+        node.style.top = Math.round(pos.y) + 'px';
+      }
+
+      function tick() {
+        var node = el();
+        if (!node) return;
+        var dx = target.x - pos.x;
+        var dy = target.y - pos.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var speed = 1.35;
+        if (dist < 2.5) {
+          pos.x = target.x;
+          pos.y = target.y;
+        } else {
+          pos.x += (dx / dist) * Math.min(speed, dist);
+          pos.y += (dy / dist) * Math.min(speed, dist);
+        }
+        if (Math.abs(dx) > 2) {
+          node.style.transform = dx < 0 ? 'scaleX(-1)' : 'scaleX(1)';
+          var bubble = document.getElementById('cheerBubble');
+          if (bubble) {
+            bubble.style.transform = dx < 0 ? 'translateX(-50%) scaleX(-1)' : 'translateX(-50%)';
+          }
+        }
+        applyPos();
+        raf = requestAnimationFrame(tick);
+      }
+
+      function showQuote() {
+        if (!homeOn() || Date.now() < hiddenUntil) return;
+        var bubble = document.getElementById('cheerBubble');
+        var textEl = document.getElementById('cheerBubbleText');
+        var labelEl = document.getElementById('cheerBubbleLabel');
+        var face = document.getElementById('cheerFace');
+        if (!bubble || !textEl) return;
+        qIdx = (qIdx + 1 + Math.floor(Math.random() * (QUOTES.length - 1))) % QUOTES.length;
+        var q = QUOTES[qIdx];
+        textEl.textContent = q.text;
+        if (labelEl) labelEl.textContent = q.label;
+        if (face) face.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+        bubble.classList.add('show');
+        if (bubbleTimer) clearTimeout(bubbleTimer);
+        bubbleTimer = setTimeout(function () {
+          bubble.classList.remove('show');
+        }, 30000);
+      }
+
+      function updateVis() {
+        var node = el();
+        if (!node) return;
+        // Force-show overrides dismiss hide
+        var forced = Date.now() < forceUntil;
+        var hide = forced ? false : (!homeOn() || Date.now() < hiddenUntil);
+        if (hide) {
+          node.classList.add('is-hidden');
+          var bubble = document.getElementById('cheerBubble');
+          if (bubble) bubble.classList.remove('show');
+        } else {
+          node.classList.remove('is-hidden');
+        }
+        var btn = document.getElementById('cheerToggleBtn');
+        if (btn) btn.classList.toggle('is-active', forced || (!hide && cheerAllowedSection()));
+      }
+
+      function start() {
+        var node = el();
+        if (!node) return;
+        try {
+          reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        } catch (e) { reduced = false; }
+        var b = bounds();
+        pos.x = b.minX + 30;
+        pos.y = b.minY + 50;
+        pickTarget();
+        applyPos();
+        updateVis();
+        if (raf) cancelAnimationFrame(raf);
+        if (!reduced) raf = requestAnimationFrame(tick);
+        if (moveTimer) clearInterval(moveTimer);
+        moveTimer = setInterval(function () {
+          if (!homeOn() || Date.now() < hiddenUntil || reduced) return;
+          pickTarget();
+        }, 4000);
+        if (quoteTimer) clearInterval(quoteTimer);
+        quoteTimer = setInterval(showQuote, 32000);
+        setTimeout(function () {
+          updateVis();
+          showQuote();
+        }, 1800);
+      }
+
+      function onReady(fn) {
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', fn);
+        } else {
+          fn();
+        }
+      }
+
+      onReady(function () {
+        var node = el();
+        if (!node) return;
+        node.addEventListener('click', function (e) {
+          if (e.target && (e.target.id === 'cheerDismiss' || e.target.classList.contains('cheer-x'))) return;
+          showQuote();
+        });
+        node.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            showQuote();
+          }
+        });
+        var dismiss = document.getElementById('cheerDismiss');
+        if (dismiss) {
+          dismiss.addEventListener('click', function (e) {
+            e.stopPropagation();
+            hiddenUntil = Date.now() + 30 * 60 * 1000;
+            forceUntil = 0;
+            updateVis();
+          });
+        }
+
+        // Topbar icon: toggle Sensei on/off on the current page
+        window.forceShowCheerAvatar = function forceShowCheerAvatar() {
+          var node = el();
+          var currentlyVisible = node && !node.classList.contains('is-hidden') && (Date.now() < forceUntil || homeOn());
+          // If forced or visibly showing, clicking again hides
+          if (currentlyVisible && (Date.now() < forceUntil || (node && !node.classList.contains('is-hidden')))) {
+            // Hide
+            forceUntil = 0;
+            hiddenUntil = Date.now() + 30 * 60 * 1000;
+            if (node) node.classList.add('is-hidden');
+            var bubble = document.getElementById('cheerBubble');
+            if (bubble) bubble.classList.remove('show');
+            updateVis();
+            var btn = document.getElementById('cheerToggleBtn');
+            if (btn) {
+              btn.classList.remove('is-active');
+              try { btn.title = 'Sensei'; } catch (e) {}
+            }
+            return;
+          }
+          // Show / force on current page
+          hiddenUntil = 0;
+          forceUntil = Date.now() + 10 * 60 * 1000;
+          if (node) {
+            var b = bounds();
+            pos.x = Math.max(b.minX, b.maxX - 40);
+            pos.y = b.minY + 20;
+            pickTarget();
+            applyPos();
+            node.classList.remove('is-hidden');
+          }
+          updateVis();
+          showQuote();
+          var btn2 = document.getElementById('cheerToggleBtn');
+          if (btn2) {
+            btn2.classList.add('is-active');
+            try { btn2.title = 'Sensei (click to hide)'; } catch (e) {}
+          }
+        };
+        window.addEventListener('resize', function () {
+          var b = bounds();
+          pos.x = Math.min(Math.max(pos.x, b.minX), b.maxX);
+          pos.y = Math.min(Math.max(pos.y, b.minY), b.maxY);
+          pickTarget();
+          applyPos();
+        });
+        // Watch home section active class
+        if (typeof MutationObserver !== 'undefined') {
+          document.querySelectorAll('.section').forEach(function (sec) {
+            new MutationObserver(updateVis).observe(sec, { attributes: true, attributeFilter: ['class'] });
+          });
+        }
+        setInterval(updateVis, 1000);
+        start();
+
+        // Patch showSection when it becomes available
+        var tries = 0;
+        var hook = setInterval(function () {
+          tries++;
+          if (typeof showSection === 'function' && !showSection._cheerPatched) {
+            var orig = showSection;
+            var wrapped = function () {
+              var r = orig.apply(this, arguments);
+              try { updateVis(); } catch (e) {}
+              return r;
+            };
+            wrapped._cheerPatched = true;
+            showSection = wrapped;
+            try { window.showSection = wrapped; } catch (e) {}
+            clearInterval(hook);
+          }
+          if (tries > 50) clearInterval(hook);
+        }, 200);
+      });
+    })();
+
 
     /* ========== Program calendar (Home) ========== */
     const CAL_MILESTONE = 'milestone';
@@ -10524,17 +11353,47 @@
       document.body.style.overflow = '';
     }
 
+    function parseIdNameParts(full) {
+      full = (full || '').trim();
+      if (!full) return { last: '—', first: 'Learner', middle: '—' };
+      // Prefer "Last, First Middle" (comma form from profile hint)
+      if (full.indexOf(',') !== -1) {
+        var parts = full.split(',');
+        var last = (parts[0] || '').trim() || '—';
+        var rest = (parts.slice(1).join(' ') || '').trim().split(/\s+/).filter(Boolean);
+        var first = rest[0] || '—';
+        var middle = rest.slice(1).join(' ') || '—';
+        return { last: last, first: first, middle: middle };
+      }
+      var words = full.split(/\s+/).filter(Boolean);
+      if (words.length === 1) return { last: words[0], first: '—', middle: '—' };
+      if (words.length === 2) return { last: words[words.length - 1], first: words[0], middle: '—' };
+      return {
+        last: words[words.length - 1],
+        first: words[0],
+        middle: words.slice(1, -1).join(' ') || '—'
+      };
+    }
+
     function updateStudentIdCard() {
       const full = (state.name || '').trim() || 'Learner';
       const school = (state.school || '').trim() || '—';
       const email = (state.email || '').trim() || '—';
       const letter = avatarLetterFromName(full);
-      const nameEl = document.getElementById('idName');
-      const schoolEl = document.getElementById('idSchool');
-      const emailEl = document.getElementById('idEmail');
-      if (nameEl) nameEl.textContent = full;
-      if (schoolEl) schoolEl.textContent = school;
-      if (emailEl) emailEl.textContent = email;
+      const parts = parseIdNameParts(full);
+      const setTxt = function (id, val) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+      setTxt('idLastName', parts.last);
+      setTxt('idFirstName', parts.first);
+      setTxt('idMiddleName', parts.middle);
+      setTxt('idSchool', school);
+      setTxt('idEmail', email);
+      setTxt('idRegNo', '— — — — —');
+      setTxt('idRegDate', '— / — / —');
+      setTxt('idValidUntil', '— / — / —');
+      setTxt('idMotto', '“I want to become a licensed civil engineer.”');
       const photo = document.getElementById('idPhotoInner');
       const letterEl = document.getElementById('idPhotoLetter');
       if (photo) {
@@ -10569,5 +11428,27 @@
     updateSessionBulletin();
     setInterval(updateCountdown, 1000);
   </script>
+
+  <!-- Flying cheer avatar (Home / Dashboard / Courses / Profile; hidden on Tests & quiz sessions) -->
+  <div id="cheerAvatar" class="is-hidden" title="Sensei" aria-live="polite" role="button" tabindex="0">
+    <button type="button" class="cheer-x" id="cheerDismiss" title="Hide Sensei for 30 minutes" aria-label="Hide Sensei">×</button>
+    <div class="cheer-bubble" id="cheerBubble">
+      <span class="cheer-label" id="cheerBubbleLabel">Motivation</span>
+      <span id="cheerBubbleText">You&apos;ve got this, future Engineer!</span>
+    </div>
+    <div class="cheer-wings" aria-hidden="true"></div>
+    <div class="cheer-orb">
+      <svg class="cheer-ring-text" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <path id="cheerArcTop" d="M 12,50 A 38,38 0 1,1 88,50" fill="none"/>
+        </defs>
+        <text class="cheer-arc-text">
+          <textPath href="#cheerArcTop" startOffset="50%" text-anchor="middle">ENGR.DAC</textPath>
+        </text>
+      </svg>
+      <div class="cheer-body" id="cheerFace" aria-hidden="true">🦸</div>
+    </div>
+  </div>
+
 </body>
 </html>
