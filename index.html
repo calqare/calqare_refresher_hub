@@ -4791,7 +4791,7 @@
             'https://lh3.googleusercontent.com/d/1GzaTZQlN4v1ihvrZHz7wEvMTEQSWWGgG=w1920',
             'https://lh3.googleusercontent.com/d/1xkezD4XKYivgSNZFBAgWSEos4m8vgoS4=w1920'
           ], content: 'Session topics:\n• Elementary and Higher Surveying\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug20', title: '2026 August 20 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Highway Engineering', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-20T08:00:00+08:00', content: 'Session topics:\n• Highway Engineering\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug20', title: '2026 August 20 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Highway Engineering', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-20T08:00:00+08:00', pdfUrl: 'https://drive.google.com/file/d/1IQ899i_HJF3kGWA_e_YSM9wd2NAT3Xcq/view?usp=sharing', content: 'Session topics:\n• Highway Engineering\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug21', title: '2026 August 21 Session', subtitle: 'MSTHC – Self-Paced Session · Transportation Engineering', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-21T08:00:00+08:00', content: 'Session topics:\n• Transportation Engineering\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug22', title: '2026 August 22 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Ports and Harbors; Construction Equipment Productivity', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-22T08:00:00+08:00', content: 'Session topics:\n• Ports and Harbors; Construction Equipment Productivity\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug23', title: '2026 August 23 Session', subtitle: '75 items – MSTHC Supplemental Problem Set · Problem Set (Topics from August 17–22)', type: 'set', duration: 'Problem Set', unlockAt: '2026-08-23T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Topics from August 17–22)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
@@ -4987,6 +4987,11 @@
       // August 13, 2026 — special window
       if (y === 2026 && m === 7 && d === 13) {
         return '7:00 PM – 10:00 PM';
+      }
+
+      // August 20, 2026 only — evening window (does not affect other Tue/Thu)
+      if (y === 2026 && m === 7 && d === 20) {
+        return '6:00 PM – 9:00 PM';
       }
 
       // All Saturdays in the Aug–Sep 2026 program schedule
@@ -6343,6 +6348,97 @@
       }
     ];
 
+
+
+
+    // ===== August 20 Session — Module 9 REPEAT (Highway Engineering) =====
+    // Answers from yellow-shaded choices in MSTHC-Module 9 (hub quiz).docx
+    const QUIZ_MSTHC_AUG20 = [
+      {
+        id: 'm9q1', topic: 'Highway / Simple Curve',
+        q: '[CELE APRIL 2024] The intersection angle I = 80°24\', the station of P.I is (64+27.46) and terrain conditions require the maximum degree of the curve permitted by the specifications, which is 2° (arc definition). What are the external and middle ordinate distances for this curve?',
+        choices: [
+          '8.65 ft and 8.34 ft, respectively',
+          '6.78 ft and 6.24 ft, respectively',
+          '9.31 ft and 8.89 ft, respectively',
+          '7.71 ft and 7.69 ft, respectively'
+        ],
+        a: 3
+      },
+      {
+        id: 'm9q2', topic: 'Highway / Reversed Curve',
+        q: '[CELE NOVEMBER 2023] A historical monument must be avoided near a proposed highway. A reversed curve is being considered. Both curves will have the same curvature. What is the station of the PC, PRC, and PT? (See figure.)',
+        choices: [
+          'PC: Sta. 33+63.2 · PRC: Sta. 57+24.24 · PT: Sta. 74+10.70',
+          'PC: Sta. 33+23.2 · PRC: Sta. 57+14.24 · PT: Sta. 74+10.20',
+          'PC: Sta. 32+63.2 · PRC: Sta. 56+24.24 · PT: Sta. 73+10.70',
+          'PC: Sta. 23+23.2 · PRC: Sta. 47+14.24 · PT: Sta. 64+10.20'
+        ],
+        a: 0,
+        img: gdriveImg('https://drive.google.com/file/d/1WbWE9zyvHBfeCEcCK0iYBwAQwY7iSYKR/view?usp=sharing')
+      },
+      {
+        id: 'm9q3', topic: 'Highway / Compound Curve',
+        q: '[CELE NOVEMBER 2017] A compound curve has the following characteristics: I₁ = 24°, I₂ = 36°, D₁ = 6°, D₂ = 4°. Stationing of PC = 10+420. Compute the stationing of P.C.C.',
+        choices: [
+          'Sta. 10+520',
+          'Sta. 10+480',
+          'Sta. 10+500',
+          'Sta. 10+475'
+        ],
+        a: 2
+      },
+      {
+        id: 'm9q4', topic: 'Highway / Spiral Curve',
+        q: '[CELE NOVEMBER 2017] A spiral 80 m long connects a tangent with a 6.5° circular curve. Determine the deflection angle at the first quarter point.',
+        choices: ['520.21', '520.18', '520.27', '520.15'],
+        a: 0
+      },
+      {
+        id: 'm9q5', topic: 'Highway / Vertical Sag Curve',
+        q: '[CELE MARCH 2026] Based on the following illustration of a vertical sag curve, the low point station for the vertical curve shown is located at: (See figure.)',
+        choices: [
+          'Sta. 78+55',
+          'Sta. 87+00',
+          'Sta. 87+44',
+          'Sta. 91+00'
+        ],
+        a: 2,
+        img: gdriveImg('https://drive.google.com/file/d/1xJQTOQAKWMBq2Bx6s0hgpka3-zUmWUh-/view?usp=sharing')
+      },
+      {
+        id: 'm9q6', topic: 'Highway / Stopping Distance',
+        q: '[CELE MARCH 2026] A driver with a reaction time of 0.50 sec is driving a car down a 5% grade at 89 kph when a deer runs onto the road 0.04 km in front of the car. The road is dry with a coefficient of friction of f = 0.70. Determine the distance the car travels from the moment the deer appears until the car comes to a stop.',
+        choices: ['0.06 km', '0.05 km', '0.04 km', '0.07 km'],
+        a: 0
+      },
+      {
+        id: 'm9q7', topic: 'Highway / Minimum Radius',
+        q: '[CELE MARCH 2026] A road is being designed for a speed of 110 kph on a horizontal curve with a superelevation of 6%. If the coefficient of side friction is 0.10, what is the minimum radius of the curve (in meters) required for safe vehicular movement?',
+        choices: ['605', '345', '712', '595'],
+        a: 3
+      },
+      {
+        id: 'm9q8', topic: 'Highway / Sight Distance Setback',
+        q: '[CELE MARCH 2026] A two-way horizontal curve has a length of 200 m and width of the pavement is 8 m. For a stopping sight distance of 75 m, what is the required setback from the centerline of the inner lane of the pavement?',
+        choices: ['3.367 m', '1.243 m', '4.056 m', '2.356 m'],
+        a: 3
+      },
+      {
+        id: 'm9q9', topic: 'Highway / Cross-Section Area',
+        q: '[CELE MAY 2017] Find the area of the given cross-section if the width of roadway is 12 m. (See figure.)',
+        choices: ['45.87 m²', '32.33 m²', '51.63 m²', '60.54 m²'],
+        a: 2,
+        img: gdriveImg('https://drive.google.com/file/d/1wDPoM00VWeb8v8cwaRGCJRXdSlEDmI4-/view?usp=sharing')
+      },
+      {
+        id: 'm9q10', topic: 'Highway / Area (Simpson’s Rule)',
+        q: '[CELE NOVEMBER 2025] A cliff and a traverse line borders a mountain view property. What is the total area in square meters between the cliff and the traverse line using Simpson’s 1/3 Rule? (See figure.)',
+        choices: ['211.32 m²', '156.23 m²', '258.11 m²', '149.17 m²'],
+        a: 3,
+        img: gdriveImg('https://drive.google.com/file/d/1InZBkhmfFaF8uICIOSbUWJ_5BLQA0e0z/view?usp=sharing')
+      }
+    ];
 
     // ===== August 16 Session — 75-item Supplemental Problem Set (5-hour timed) =====
     const QUIZ_MSTHC_AUG16 = [
@@ -9993,6 +10089,9 @@
       } else if (!is75 && lessonId === 'msthc-aug19' && typeof QUIZ_MSTHC_AUG19 !== 'undefined') {
         // August 19 Session exclusive Module-8 questionnaire (Elementary and Higher Surveying)
         questions = QUIZ_MSTHC_AUG19.map(q => ({ ...q, img: q.img || null }));
+      } else if (!is75 && lessonId === 'msthc-aug20' && typeof QUIZ_MSTHC_AUG20 !== 'undefined') {
+        // August 20 Session exclusive Module-9 questionnaire (Highway Engineering)
+        questions = QUIZ_MSTHC_AUG20.map(q => ({ ...q, img: q.img || null }));
       } else if (lessonId === 'msthc-aug16' && typeof QUIZ_MSTHC_AUG16 !== 'undefined') {
         // August 16 Supplemental — exclusive 75-item set, 5-hour board-style timer
         questions = QUIZ_MSTHC_AUG16.map(q => ({ ...q, img: q.img || null }));
