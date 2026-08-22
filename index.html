@@ -4832,7 +4832,7 @@
             'https://lh3.googleusercontent.com/d/14k0YiYmufub0Yn2axZlE-IuEZ6osXeAo=w1920',
             'https://lh3.googleusercontent.com/d/1RzCjdil2eFD9k5I0Q5lrHea1r-MBFXE7=w1920'
           ], content: 'Session topics:\n• Transportation Engineering\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug22', title: '2026 August 22 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Ports and Harbors; Construction Equipment Productivity', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-22T08:00:00+08:00', content: 'Session topics:\n• Ports and Harbors; Construction Equipment Productivity\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'msthc-aug22', title: '2026 August 22 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Ports and Harbors; Construction Equipment Productivity', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-22T08:00:00+08:00', pdfUrl: 'https://drive.google.com/file/d/1QYJ5Lx8jId3dVv3R89Qs3PCCkaJpIXpT/view?usp=sharing', content: 'Session topics:\n• Ports and Harbors; Construction Equipment Productivity\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'msthc-aug23', title: '2026 August 23 Session', subtitle: '75 items – MSTHC Supplemental Problem Set · Problem Set (Topics from August 17–22)', type: 'set', duration: 'Problem Set', unlockAt: '2026-08-23T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Topics from August 17–22)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
           { id: 'msthc-aug25', title: '2026 August 25 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Construction Estimates, Project Management and Safety', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-25T08:00:00+08:00', content: 'Session topics:\n• Construction Estimates, Project Management and Safety\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' }
         ]
@@ -6576,6 +6576,154 @@
         q: '[CELE NOVEMBER 2016] The number of accidents for 5 years recorded in a certain section of a highway is 5,432. If the average daily traffic is 476, determine the accident rate per million entering vehicles.',
         choices: ['6754', '4442', '8056', '5211'],
         a: 3
+      }
+    ];
+
+
+
+    // ===== August 22 Session — Module 11 REPEAT (Ports & Harbors; Construction Equipment) =====
+    // Answers from yellow-shaded choices in MSTHC-Module 11 (hub quiz).docx — 20 items
+    const QUIZ_MSTHC_AUG22 = [
+      {
+        id: 'm11q1', topic: 'Equipment / Soil Factors',
+        q: '[CELE NOVEMBER 2025] The weight per loose unit volume of soil is 1,163 kg/m³, the weight per bank unit volume is 1,661 kg/m³ and the weight per compacted unit volume is 2,077 kg/m³. What is the value of its load factor and shrinkage factor of the soil?',
+        choices: [
+          '0.7 and 0.8, respectively',
+          '0.8 and 0.7, respectively',
+          '0.6 and 0.9, respectively',
+          '0.9 and 0.6, respectively'
+        ],
+        a: 0
+      },
+      {
+        id: 'm11q2', topic: 'Equipment / Backhoe',
+        q: '[CELE MARCH 2026] Which part of the backhoe is used to provide maneuverability allowing the operator to adjust the angle of the boom? (See figure.)',
+        choices: [
+          'Front discharge bucket',
+          'Dipper arm',
+          'Hydraulic arm',
+          'Diesel Engine Power Unit'
+        ],
+        a: 2,
+        img: gdriveImg('https://drive.google.com/file/d/1NCEhDnncNR3LMJU3FWXkCNSnbja4l9uy/view?usp=sharing')
+      },
+      {
+        id: 'm11q3', topic: 'Equipment / Bucket Capacity',
+        q: '[CELE MAY 2022] The bucket volume contained within the bucket when following the outline of the bucket sides is referred to as:',
+        choices: [
+          'Plate line capacity',
+          'Water line capacity',
+          'Heap volume',
+          'Bucket load capacity'
+        ],
+        a: 0
+      },
+      {
+        id: 'm11q4', topic: 'Equipment / Backhoe Output',
+        q: '[CELE NOVEMBER 2025] What is the net output in cubic meters per hour allowing 30% bulking or swell of soil material for a backhoe with a 1 m³ capacity bucket engaged in normal trench excavation of clayey soil and discharging directly into a waiting dump truck, given:\n• Optimum output = 60 bucket loads per hour\n• Tasking efficiency factor = 0.80\n• Operator efficiency factor = 75%',
+        choices: ['15 m³/hr', '30 m³/hr', '43 m³/hr', '25 m³/hr'],
+        a: 3
+      },
+      {
+        id: 'm11q5', topic: 'Equipment / Excavator Production',
+        q: '[CELE APRIL 2024 | NOV 2023 | MAY 2022 | NOV 2021] Find the expected production in loose cubic meters (LCM) per hour of a small hydraulic excavator. Heaped bucket capacity is 0.57 m³. Material is sand and gravel with bucket fill factor 0.95. Job efficiency is 50 min/hr. Average depth of cut is 4.3 m. Maximum depth of cut is 6.1 m and average swing is 90°.\n\nHint: Production (LCM/h) = C × S × V × B × E\nwhere C = cycles/hr, S = swing-depth factor, V = heaped bucket volume, B = bucket fill factor, E = job efficiency.\nCycle output = 250 cycles/60 min; swing-depth factor = 1.0',
+        choices: ['120 LCM/hr', '110 LCM/hr', '115 LCM/hr', '113 LCM/hr'],
+        a: 3
+      },
+      {
+        id: 'm11q6', topic: 'Equipment / Dozer Production',
+        q: '[CELE APRIL 2023] A power-shift crawler tractor has a rated blade capacity of 7.65 loose cubic meters (LCM). The dozer is excavating loose common earth and pushing it a distance of 61 m. Maximum reverse speed in third range is 8 kph. Estimate the production of the dozer if job efficiency is 50 min/hr.',
+        choices: ['271 LCM/hr', '210 LCM/hr', '251 LCM/hr', '260 LCM/hr'],
+        a: 0
+      },
+      {
+        id: 'm11q7', topic: 'Equipment / Backhoe Hourly Production',
+        q: '[CELE APRIL 2023] Determine the hourly production of a 0.57 m³ capacity backhoe excavating a foundation 3 m deep in common earth.\n\nGiven:\n• Angle of swing = 90°\n• Swell factor = 1.10\n• Ideal output for equivalent face shovel (easy dig) = 100 m³/hr\n• Backhoe proportion of face shovel = 0.80\n• Job conditions = 40% losses',
+        choices: ['22 m³/hr', '33 m³/hr', '44 m³/hr', '55 m³/hr'],
+        a: 2
+      },
+      {
+        id: 'm11q8', topic: 'Equipment / Truck Fleet',
+        q: '[CELE NOVEMBER 2024] A contractor needs to bring in 4,200 cubic yards of select soil to replace unsuitable subgrade material for a new highway. The borrow site is 2.6 miles away with an average round-trip travel/loading/dumping time of 30 min. The soil has a unit weight of 125 pcf and dump truck drivers are on 10-hour workdays. Determine the minimum number of 10-ton (net capacity) trucks needed to complete the job within 8 working days.',
+        choices: ['10 trucks', '5 trucks', '8 trucks', '3 trucks'],
+        a: 1
+      },
+      {
+        id: 'm11q9', topic: 'Ports / Structures',
+        q: '[CELE MAY 2022] A berth structure projecting out from the shoreline is a:',
+        choices: ['Groin', 'Breakwater', 'Wharf', 'Pier'],
+        a: 3
+      },
+      {
+        id: 'm11q10', topic: 'Ports / Structures',
+        q: '[CELE MAY 2016] A continuous structure built parallel to and along the margin of the sea or alongside river banks, canals or waterways where vessels may lie alongside to receive or discharge cargo or disembark passengers or lie at rest is a:',
+        choices: ['Breakwater', 'Pier', 'Port', 'Wharf'],
+        a: 3
+      },
+      {
+        id: 'm11q11', topic: 'Ports / Ship Motion',
+        q: '[CELE NOVEMBER 2017] The movement in the vertical plane of a ship, which tends to move it up and down due to impact of current, waves, and wind gusts is called ____.',
+        choices: ['Pitch', 'Heave', 'Surge', 'Roll'],
+        a: 1
+      },
+      {
+        id: 'm11q12', topic: 'Ports / Waves',
+        q: '[CELE MAY 2018] Waves under the influence of the winds that generated them are called:',
+        choices: ['Wakes', 'Sea', 'Swell', 'Seiche'],
+        a: 1
+      },
+      {
+        id: 'm11q13', topic: 'Ports / Waves',
+        q: '[CELE MAY 2016] Wave at a point where the water depth is equal to ½ the wavelength or greater, expressed in terms of the parameters of significant waves:',
+        choices: ['Deep water waves', 'Highest waves', 'Significant waves', 'Equivalent deep water waves'],
+        a: 0
+      },
+      {
+        id: 'm11q14', topic: 'Ports / Waves',
+        q: '[CELE MAY 2019] A wave generated in deep water, when reaching shoaling waters, changes not only in its height but also in its length, but the period will ____.',
+        choices: ['remain constant', 'increase', 'decrease', 'none of the above'],
+        a: 0
+      },
+      {
+        id: 'm11q15', topic: 'Ports / Tides',
+        q: '[CELE NOVEMBER 2019] Owing to the retardation of the tidal wave in the ocean by frictional force, as the earth revolves around its axis and as the tide tends to follow the direction of the moon, the highest tide for each location is not coincident with conjunction and opposition but occurs at some constant time after new and full moon. This interval, which may amount to as much as two and a half days, is known as:',
+        choices: ['Age of tides', 'Lunar tide', 'Diurnal tide', 'Semi-diurnal tide'],
+        a: 0
+      },
+      {
+        id: 'm11q16', topic: 'Ports / Tides',
+        q: '[CELE NOVEMBER 2017] What is the meaning of MLLW?',
+        choices: [
+          'Mean Low Lower Water',
+          'Mean Low Lowest Water',
+          'Mean Lowest Lower Water',
+          'Mean Lower Low Water'
+        ],
+        a: 3
+      },
+      {
+        id: 'm11q17', topic: 'Ports / Wave Velocity',
+        q: '[CELE NOVEMBER 2021] The path of typhoon “DINDO” passes through Batanes Island at a location where the depth of water above the bottom of the sea is 150 m. Determine the approximate velocity of wave propagation in kph.',
+        choices: ['66.89 kph', '50.07 kph', '77.88 kph', '81.32 kph'],
+        a: 2
+      },
+      {
+        id: 'm11q18', topic: 'Ports / Wave Height',
+        q: '[CELE NOVEMBER 2021] Tropical typhoon “YOLANDA” hits the country with an estimated wind speed of 140 kph. This causes a storm surge in Tacloban City with a period of 7.47 s at a point having a depth of 9 m. Compute the height of the wave if it has a steepness of 0.14.\n\nHint: L = 1.56 T²',
+        choices: ['27.31 m', '22.76 m', '15.43 m', '12.19 m'],
+        a: 3
+      },
+      {
+        id: 'm11q19', topic: 'Ports / Residual Water Level',
+        q: '[CELE MAY 2019] Determine the elevation of the residual water level (RWL) for a sheet-pile type if:\n• Elevation of MLLW (datum) = 0.00 m\n• Elevation of HWL = +1.26 m\n• Elevation of LWL = −0.23 m',
+        choices: ['+1.49 m', '+1.03 m', '+0.26 m', '+0.76 m'],
+        a: 3
+      },
+      {
+        id: 'm11q20', topic: 'Ports / Berth Depth',
+        q: '[CELE NOVEMBER 2018] What percentage of the tide of the water level which is safe to ships’ depth of berth?',
+        choices: ['88%', '98%', '92%', '95%'],
+        a: 1
       }
     ];
 
@@ -10234,6 +10382,9 @@
       } else if (!is75 && lessonId === 'msthc-aug21' && typeof QUIZ_MSTHC_AUG21 !== 'undefined') {
         // August 21 Session exclusive Module-10 questionnaire (Transportation Engineering)
         questions = QUIZ_MSTHC_AUG21.map(q => ({ ...q, img: q.img || null }));
+      } else if (!is75 && lessonId === 'msthc-aug22' && typeof QUIZ_MSTHC_AUG22 !== 'undefined') {
+        // August 22 Session exclusive Module-11 questionnaire (Ports & Harbors; Construction Equipment)
+        questions = QUIZ_MSTHC_AUG22.map(q => ({ ...q, img: q.img || null }));
       } else if (lessonId === 'msthc-aug16' && typeof QUIZ_MSTHC_AUG16 !== 'undefined') {
         // August 16 Supplemental — exclusive 75-item set, 5-hour board-style timer
         questions = QUIZ_MSTHC_AUG16.map(q => ({ ...q, img: q.img || null }));
