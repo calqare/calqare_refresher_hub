@@ -4856,7 +4856,7 @@
             'https://lh3.googleusercontent.com/d/1CBxZn2gaYt944wNP560D4Sxg9mZLNlI5=w1920',
             'https://lh3.googleusercontent.com/d/146mVavUqurht7497PnlHW6gs_BAZWhQq=w1920'
           ], content: 'Session topics:\n• Ports and Harbors; Construction Equipment Productivity\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
-          { id: 'msthc-aug23', title: '2026 August 23 Session', subtitle: '75 items – MSTHC Supplemental Problem Set · Problem Set (Topics from August 17–22)', type: 'set', duration: 'Problem Set', unlockAt: '2026-08-23T08:00:00+08:00', content: 'Topics covered in this problem set:\n• Problem Set (Topics from August 17–22)\n\nWork through all items carefully. Review solutions and mark weak areas for follow-up study.' },
+          { id: 'msthc-aug23', title: '2026 August 23 Session', subtitle: '75 items – MSTHC Supplemental Problem Set · 5 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'MSTHC', itemCount: 75, timerHours: 5, questionnairePdf: 'https://drive.google.com/file/d/1chBbp9lygRCLFNza-gJnfPomT9Yze7ln/view?usp=sharing', unlockAt: '2026-08-23T08:00:00+08:00', content: 'MSTHC Supplemental Problem Set — Topics from August 17–22.\n\n75-item answer sheet with a 5-hour countdown (HH:MM:SS) and pause. Use the Questionnaire PDF (downloadable) and shade answers on the Answer Sheet tab.\n\nSubject: MSTHC.\nCalendar: August 23 — 75 items MSTHC Supp.\nUnlock: 8:00 AM Asia/Manila.' },
           { id: 'msthc-aug25', title: '2026 August 25 Session', subtitle: 'MSTHC – Live (GMeet) Discussion · Construction Estimates, Project Management and Safety', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-25T08:00:00+08:00', content: 'Session topics:\n• Construction Estimates, Project Management and Safety\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' }
         ]
       },
@@ -9577,7 +9577,7 @@
 
       // Build tabs
       let tabs = [];
-      const isTestLesson = isTestTrack(course);
+      const isTestLesson = isTestTrack(course) || lesson.duration === 'Test' || !!(lesson.questionnairePdf);
       const isCeleCalculator = (course.id === 'cele-rating') || (lesson.duration === 'Calculator');
       if (isCeleCalculator) {
         tabs = [{ id: 'rating', label: '📊 CELE Board Rating' }];
@@ -10026,6 +10026,15 @@
       'pre-preboard-aug19': lettersToKeyIndex(
         'CBABD' + 'CDDDA' + 'CCAAC' + 'ACDAA' + 'AACDA' +
         'BABCB' + 'ADADC' + 'DDADB' + 'DCBAA' + 'BBBAD'
+      ),
+      // MSTHC Supp Aug 23 — 75 items
+      // 1-5 ACADD · 6-10 CADBC · 11-15 ABADD · 16-20 ACCAD · 21-25 ACBBC
+      // 26-30 ACABA · 31-35 ABDCB · 36-40 CBCAC · 41-45 BACBA · 46-50 BAADC
+      // 51-55 ABCAB · 56-60 BBDDB · 61-65 BCBDD · 66-70 DABAD · 71-75 BBDDC
+      'msthc-aug23': lettersToKeyIndex(
+        'ACADD' + 'CADBC' + 'ABADD' + 'ACCAD' + 'ACBBC' +
+        'ACABA' + 'ABDCB' + 'CBCAC' + 'BACBA' + 'BAADC' +
+        'ABCAB' + 'BBDDB' + 'BCBDD' + 'DABAD' + 'BBDDC'
       )
     };
 
@@ -10093,6 +10102,11 @@
       if (el) {
         el.textContent = formatTime(as.timeLeft);
         if (as.timeLeft <= 300) el.classList.add('danger');
+      }
+      var hand = document.getElementById('asClockHand');
+      if (hand && typeof renderQuizClockFace === 'function') {
+        var total = as.totalLimitSec || (as.timerHours ? as.timerHours * 3600 : 5 * 3600);
+        hand.style.transform = 'rotate(' + renderQuizClockFace(as.timeLeft, total) + 'deg)';
       }
       if (as.timeLeft % 15 === 0 || as.timeLeft <= 60) saveAnswerSheetProgress();
       if (as.timeLeft <= 0) {
@@ -10172,6 +10186,7 @@
         courseId: courseId,
         answers: restoredAnswers,
         key: key,
+        totalLimitSec: meta.timerHours * 3600,
         timeLeft: restoredTimeLeft,
         startedAt: restoredStarted,
         total: total,
@@ -10223,10 +10238,20 @@
               '<div class="answer-sheet-meta">Click a letter to shade · click again to clear · use Questionnaire tab for questions' + (as.timerHours ? (' · ' + as.timerHours + 'h timer') : '') + '</div>' +
             '</div>' +
             '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem;">' +
-              '<div class="answer-sheet-timer' + (as.timeLeft <= 300 ? ' danger' : '') + '" id="asTimer">' + formatTime(as.timeLeft) + '</div>' +
-              '<button type="button" class="timer-pause-btn' + (as.paused ? ' is-paused' : '') + '" onclick="toggleAnswerSheetPause()">' +
-                (as.paused ? '▶ Resume timer' : '⏸ Pause timer') +
-              '</button>' +
+              '<div class="quiz-timer-wrap">' +
+                '<div class="quiz-clock" aria-hidden="true">' +
+                  '<div class="quiz-clock-face">' +
+                    '<div class="quiz-clock-hand" id="asClockHand" style="transform:rotate(' +
+                      (typeof renderQuizClockFace === 'function' ? renderQuizClockFace(as.timeLeft, as.totalLimitSec || (as.timerHours * 3600)) : 0) +
+                    'deg)"></div>' +
+                    '<div class="quiz-clock-center"></div>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="answer-sheet-timer' + (as.timeLeft <= 300 ? ' danger' : '') + '" id="asTimer">' + formatTime(as.timeLeft) + '</div>' +
+                '<button type="button" class="timer-pause-btn' + (as.paused ? ' is-paused' : '') + '" onclick="toggleAnswerSheetPause()">' +
+                  (as.paused ? '▶ Resume timer' : '⏸ Pause timer') +
+                '</button>' +
+              '</div>' +
             '</div>' +
           '</div>' +
           (as.paused
