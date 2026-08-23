@@ -4869,7 +4869,7 @@
         badge: 'HGE',
         badgeClass: 'badge-blue',
         lessons: [
-          { id: 'hge-aug24', title: '2026 August 24 Session', subtitle: 'HGE – Self-Paced Session · Geotechnical Engineering 1 (Soil Properties, Relative Density, Soil Compaction, Soil Consistency)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-24T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering 1 (Soil Properties, Relative Density, Soil Compaction, Soil Consistency)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
+          { id: 'hge-aug24', title: '2026 August 24 Session', subtitle: 'HGE – Self-Paced Session · Geotech 1 · 20-item Answer Sheet', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-24T08:00:00+08:00', pdfUrl: 'https://drive.google.com/file/d/1P2stJdUJlnRzZwxvE4gf9G4QVTFGPQtO/view?usp=sharing', questionnairePdf: 'https://drive.google.com/file/d/1P2stJdUJlnRzZwxvE4gf9G4QVTFGPQtO/view?usp=sharing', subject: 'HGE', itemCount: 20, timerHours: 1.5, content: 'Session topics:\n• Geotechnical Engineering 1 (Soil Properties, Relative Density, Soil Compaction, Soil Consistency)\n\nUse the PROBLEM tab for the questionnaire. Shade answers on the Answer Sheet (20 items, 1.5-hour timer with pause).\n\nStudy the concepts thoroughly and solve practice problems.' },
           { id: 'hge-aug26', title: '2026 August 26 Session', subtitle: 'HGE – Self-Paced Session · Geotechnical Engineering 1 (Soil Permeability, Pumping Well Tests, Flow Nets, Effective Stress)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-26T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering 1 (Soil Permeability, Pumping Well Tests, Flow Nets, Effective Stress)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'hge-aug27', title: '2026 August 27 Session', subtitle: 'HGE – Live (GMeet) Discussion · Geotechnical Engineering 1 (Shear Strength of Soil, Boussinesq Equation – All Cases)', type: 'live', duration: 'Live', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-27T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering 1 (Shear Strength of Soil, Boussinesq Equation – All Cases)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
           { id: 'hge-aug28', title: '2026 August 28 Session', subtitle: 'HGE – Self-Paced Session · Geotechnical Engineering (Soil Settlement, Oedometer Tests, Soil Stability Analysis)', type: 'self', duration: 'Self-Paced', videoUrl: 'https://youtu.be/ZbwfDQIj3Zo', unlockAt: '2026-08-28T08:00:00+08:00', content: 'Session topics:\n• Geotechnical Engineering (Soil Settlement, Oedometer Tests, Soil Stability Analysis)\n\nStudy the concepts thoroughly, watch any recorded lecture, and solve practice problems. Prepare questions for live discussion days.' },
@@ -9334,7 +9334,7 @@
                 mediaHints = isTest ? (' <span class="media-badge">📝 Answer Sheet' + (l.itemCount ? (' ' + l.itemCount) : '') + '</span><span class="media-badge">📄 Questionnaire</span>' + (l.subject ? (' <span class="media-badge">' + l.subject + '</span>') : '')) : ' <span class="media-badge">📝 75-Quiz</span>';
               }
               } else {
-                mediaHints = ' <span class="media-badge">▶ DISCUSSION</span><span class="media-badge">📄 PROBLEM</span><span class="media-badge">🖼 SOLUTION</span><span class="media-badge">📝 REPEAT</span>';
+                mediaHints = ' <span class="media-badge">▶ DISCUSSION</span><span class="media-badge">🖼 SOLUTION</span><span class="media-badge">📄 PROBLEM</span><span class="media-badge">📝 REPEAT</span>';
               }
               const qScore = state.quizScores[l.id];
               if (qScore) mediaHints += ` <span class="session-type type-start">Quiz ${qScore.pct}%</span>`;
@@ -9591,12 +9591,17 @@
       } else if (problemSet) {
         tabs = [{ id: 'quiz', label: '📝 75-item Quiz (Timed)' }];
       } else {
+        // Regular sessions: DISCUSSION → SOLUTION → PROBLEM → REPEAT
         tabs = [
           { id: 'video', label: '▶ DISCUSSION' },
-          { id: 'pdf', label: '📄 PROBLEM' },
           { id: 'images', label: '🖼 SOLUTION' },
-          { id: 'quiz', label: '📝 REPEAT' }
+          { id: 'pdf', label: '📄 PROBLEM' }
         ];
+        if (lesson.questionnairePdf && lesson.itemCount) {
+          tabs.push({ id: 'answersheet', label: '📝 REPEAT' });
+        } else {
+          tabs.push({ id: 'quiz', label: '📝 REPEAT' });
+        }
       }
 
       const tabsHtml = tabs.map((t, i) =>
@@ -9656,6 +9661,10 @@
       // PDF panel
       if (!problemSet && pdfUrl) {
         const embedPdf = fitPdfEmbedUrl(pdfUrl);
+        const hasAnswerSheet = !!(lesson.questionnairePdf && lesson.itemCount);
+        const asBtn = hasAnswerSheet
+          ? '<button type="button" class="btn btn-primary" onclick="switchLessonTab(\'answersheet\')">📝 Go to Answer Sheet</button>'
+          : '';
         panels += `
         <div class="tab-panel" id="panel-pdf">
           <div class="pdf-viewer-shell" id="pdfViewerShell">
@@ -9664,6 +9673,7 @@
           <div class="pdf-actions">
             <a class="btn btn-primary" href="${pdfUrl}" download target="_blank" rel="noopener">⬇ Download PDF</a>
             <a class="btn btn-ghost" href="${pdfUrl}" target="_blank" rel="noopener">Open in new tab</a>
+            ${asBtn}
           </div>
         </div>`;
       }
@@ -9704,7 +9714,6 @@
         </div>`;
       } else if (problemSet && isTestLesson) {
       // TESTS: Questionnaire PDF + Answer Sheet panels
-      
         const qPdf = lesson.questionnairePdf || lesson.pdfUrl || DEFAULT_PDF;
         const embedQPdf = fitPdfEmbedUrl(qPdf);
         const asItems = (lesson.itemCount && Number(lesson.itemCount) > 0) ? Number(lesson.itemCount) : 75;
@@ -9734,6 +9743,27 @@
               <button class="btn btn-primary" style="margin-top:1rem;" onclick="startAnswerSheet('${courseId}','${lesson.id}')">
                 Start ${asItems}-item Answer Sheet
               </button>
+            </div>
+          </div>
+        </div>`;
+      } else if (!problemSet && lesson.questionnairePdf && lesson.itemCount) {
+      // Hybrid REPEAT: Answer Sheet only — questions are on the PROBLEM tab
+        const asItems = (lesson.itemCount && Number(lesson.itemCount) > 0) ? Number(lesson.itemCount) : 20;
+        const asHours = (lesson.timerHours && Number(lesson.timerHours) > 0) ? Number(lesson.timerHours) : 1.5;
+        const asSubject = lesson.subject ? String(lesson.subject) : '';
+        const asLabel = asItems + '-item Answer Sheet' + (asSubject ? (' · ' + asSubject) : '') + ' · ' + asHours + ' hours';
+        panels += `
+        <div class="tab-panel" id="panel-answersheet">
+          <div id="quizContainer">
+            <div class="card" style="margin-bottom:1rem;">
+              <div class="card-title">${asLabel}</div>
+              <p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.35rem;">
+                Use the <strong>PROBLEM</strong> tab for the questionnaire PDF. Click a letter (A–D) to shade your answer; click again to clear. <strong>${asHours}-hour</strong> countdown starts when you begin. Progress autosaves.
+              </p>
+              <button class="btn btn-primary" style="margin-top:1rem;" onclick="startAnswerSheet('${courseId}','${lesson.id}')">
+                Start ${asItems}-item Answer Sheet
+              </button>
+              <button type="button" class="btn btn-ghost" style="margin-top:1rem;margin-left:0.5rem;" onclick="switchLessonTab('pdf')">📄 Open PROBLEM</button>
             </div>
           </div>
         </div>`;
@@ -10035,6 +10065,11 @@
         'ACADD' + 'CADBC' + 'ABADD' + 'ACCAD' + 'ACBBC' +
         'ACABA' + 'ABDCB' + 'CBCAC' + 'BACBA' + 'BAADC' +
         'ABCAB' + 'BBDDB' + 'BCBDD' + 'DABAD' + 'BBDDC'
+      ),
+      // HGE Aug 24 — 20 items
+      // 1-5 DCBBD · 6-10 AAAAD · 11-15 CAACD · 16-20 BDAAC
+      'hge-aug24': lettersToKeyIndex(
+        'DCBBD' + 'AAAAD' + 'CAACD' + 'BDAAC'
       )
     };
 
@@ -10261,7 +10296,7 @@
           '<div class="answer-sheet-grid">' + rows + '</div>' +
           '<div class="answer-sheet-actions">' +
             '<button type="button" class="btn btn-success" onclick="submitAnswerSheet(false)">Submit Answer Sheet</button>' +
-            '<button type="button" class="btn btn-ghost" onclick="switchLessonTab(\'questionnaire\')">📄 View Questionnaire</button>' +
+            '<button type="button" class="btn btn-ghost" onclick="(function(){var t=document.getElementById(\'panel-pdf\')?\'pdf\':\'questionnaire\';switchLessonTab(t);})()">📄 ' + (document.getElementById('panel-pdf') ? 'View PROBLEM' : 'View Questionnaire') + '</button>' +
             '<button type="button" class="timer-pause-btn' + (as.paused ? ' is-paused' : '') + '" onclick="toggleAnswerSheetPause()">' +
               (as.paused ? '▶ Resume timer' : '⏸ Pause timer') +
             '</button>' +
