@@ -4113,7 +4113,7 @@
         <div class="ann-banner" style="margin-top:1.25rem;margin-bottom:0.25rem;">
           <div class="ann-banner-track">
             <span><span class="badge">GREETINGS</span>Welcome to CALQARE REFRESHER HUB: Your September 2026 Online Refresher Program Portal</span>
-            <span><span class="badge">ANNOUNCEMENT</span>Please be advised that this HUB is where we place all our recordings and materials for this program.</span>
+            <span><span class="badge">ANNOUNCEMENT</span>PSAD Live — Postpone due to slow internet connection</span><span><span class="badge">HUB</span>Please be advised that this HUB is where we place all our recordings and materials for this program.</span>
             <span><span class="badge">INSTRUCTOR</span>You can call me Sir.DAC, your review instructor. I'm excited to meet you future engineers! I hope you'll learn a lot from me as I do my very best.</span>
           </div>
         </div>
@@ -5375,6 +5375,17 @@
       const title = document.getElementById('bulletinTitle');
       const body = document.getElementById('bulletinBody');
       if (!card || !title || !body) return;
+
+      // Temporary override — PSAD Live postponed
+      card.classList.remove('live', 'selfpaced', 'open');
+      card.classList.add('selfpaced');
+      if (kicker) kicker.textContent = 'ANNOUNCEMENT';
+      title.textContent = 'PSAD Live — Postpone due to slow internet connection';
+      body.innerHTML =
+        '<p><strong>PSAD Live</strong> is postponed due to a slow internet connection.</p>' +
+        '<p style="margin-top:0.45rem;">Please wait for the next update. Recordings and materials will still be posted in the HUB when available.</p>' +
+        '<div class="bulletin-actions"><button type="button" class="btn btn-primary" onclick="showSection(\'courses\')">Go to Courses</button></div>';
+      return;
 
       const now = new Date();
       const events = (typeof getCalendarEventsForDate === 'function') ? getCalendarEventsForDate(now) : [];
