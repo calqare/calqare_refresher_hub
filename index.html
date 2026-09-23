@@ -5473,15 +5473,16 @@
       {
         id: 'final-preboard',
         title: 'Final Preboard Examination',
-        desc: 'Final preboard set before CELE. Scheduled September 23–24, 2026. Opens 8:00 AM Asia/Manila on each day.',
+        desc: 'Final preboard set before CELE. Scheduled September 23–24, 2026. Opens 8:00 AM Asia/Manila on each day. PSAD Test 1 (Sep 23), MSTHC Test 1 & HGE Test 1 (Sep 24).',
         icon: '🎯',
         color: '#16a34a',
         badge: 'FINAL PREBOARD',
         badgeClass: 'badge-green',
         category: 'preboard',
         lessons: [
-          { id: 'final-preboard-sep23', title: '2026 September 23 Session', subtitle: 'Final Preboard Day 1 • 75 items · 5 hours • Opens 8:00 AM', type: 'set', duration: 'Test', itemCount: 75, timerHours: 5, questionnairePdf: 'https://drive.google.com/file/d/1EceKjZhs8Te-cyL7FdkIK8G8hN3z-UoJ/view?usp=sharing', unlockAt: '2026-09-23T08:00:00+08:00', content: 'Final Preboard Examination — Day 1.\n\n75-item answer sheet with a 5-hour countdown. Use the Questionnaire PDF (downloadable) and shade answers on the Answer Sheet tab.\n\nComprehensive final practice before the board exam. Review notes, formulas, and weak areas after submitting.\n\nCalendar: September 23 — Final Preboard.\nUnlock: 8:00 AM Asia/Manila.' },
-          { id: 'final-preboard-sep24', title: '2026 September 24 Session', subtitle: 'Final Preboard Day 2 • Opens 8:00 AM', type: 'set', duration: 'Test', unlockAt: '2026-09-24T08:00:00+08:00', content: 'Final Preboard Examination — Day 2.\n\nLight review / wrap-up. Rest well, prepare materials, and maintain a positive mindset for the board exam.\n\nCalendar: September 24 — Final Preboard.\nUnlock: 8:00 AM Asia/Manila.' }
+          { id: 'final-preboard-sep23', title: 'PSAD Test 1', subtitle: 'Final Preboard · PSAD • 75 items · 5 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'PSAD', itemCount: 75, timerHours: 5, questionnairePdf: 'https://drive.google.com/file/d/1EceKjZhs8Te-cyL7FdkIK8G8hN3z-UoJ/view?usp=sharing', unlockAt: '2026-09-23T08:00:00+08:00', content: 'Final Preboard Examination — PSAD Test 1.\n\n75-item answer sheet with a 5-hour countdown. Use the Questionnaire PDF (downloadable) and shade answers on the Answer Sheet tab.\n\nSubject: Principles of Structural Analysis and Design (PSAD).\nCalendar: September 23 — PSAD Test 1.\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'final-preboard-sep24-msthc', title: 'MSTHC Test 1', subtitle: 'Final Preboard · MSTHC • 75 items · 5 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'MSTHC', itemCount: 75, timerHours: 5, questionnairePdf: 'https://drive.google.com/file/d/1AnpNEklWGgQRcr9KZlxqejhZkI31a9xo/view?usp=sharing', unlockAt: '2026-09-24T08:00:00+08:00', content: 'Final Preboard Examination — MSTHC Test 1.\n\n75-item answer sheet with a 5-hour countdown. Use the Questionnaire PDF (downloadable) and shade answers on the Answer Sheet tab.\n\nSubject: Mathematics, Surveying, Transportation, Highway Construction (MSTHC).\nCalendar: September 24 — MSTHC Test 1.\nUnlock: 8:00 AM Asia/Manila.' },
+          { id: 'final-preboard-sep24-hge', title: 'HGE Test 1', subtitle: 'Final Preboard · HGE • 50 items · 4 hours • Opens 8:00 AM', type: 'set', duration: 'Test', subject: 'HGE', itemCount: 50, timerHours: 4, questionnairePdf: 'https://drive.google.com/file/d/1GGXiBDHBoT2YePhAetl74xGa6E01MUgs/view?usp=sharing', unlockAt: '2026-09-24T08:00:00+08:00', content: 'Final Preboard Examination — HGE Test 1.\n\n50-item answer sheet with a 4-hour countdown. Use the Questionnaire PDF (downloadable) and shade answers on the Answer Sheet tab.\n\nSubject: Hydraulics and Geotechnical Engineering (HGE).\nCalendar: September 24 — HGE Test 1.\nUnlock: 8:00 AM Asia/Manila.' }
         ]
       },
       {
@@ -5628,7 +5629,7 @@
         title.textContent = 'Final Session: Last Minute Approach';
         body.innerHTML =
           '<p>Mark your calendars! Our <strong>Final Session: Last Minute Approach</strong> is scheduled for tomorrow.</p>' +
-          '<p style="margin:0.35rem 0 0.55rem;font-weight:700;color:var(--text);">📅 September 24, 2026</p>' +
+          '<p style="margin:0.35rem 0 0.55rem;font-weight:700;color:var(--text);">📅 September 24, 2026 · 2:30pm to 3:30pm</p>' +
           '<p style="margin:0.35rem 0 0.55rem;">The Google Meet link will also be posted on the Session Bulletin on the day itself. See you there!</p>' +
           '<div class="bulletin-actions">' +
           '<button type="button" class="btn btn-primary" onclick="showSection(\'tests\')">Go to Tests</button>' +
@@ -5646,7 +5647,7 @@
         title.textContent = 'Final Session: Last Minute Approach';
         body.innerHTML =
           '<p>Join the scheduled <strong>Final Session: Last Minute Approach</strong> via Google Meet.</p>' +
-          '<p style="margin:0.35rem 0 0.55rem;font-weight:700;color:var(--text);">📅 September 24, 2026</p>' +
+          '<p style="margin:0.35rem 0 0.55rem;font-weight:700;color:var(--text);">📅 September 24, 2026 · 2:30pm to 3:30pm</p>' +
           '<div class="bulletin-gmeet">' +
           '<strong>To join the video meeting, click this link:</strong><br>' +
           '<a href="' + FINAL_SESSION_GMEET + '" target="_blank" rel="noopener noreferrer">' + FINAL_SESSION_GMEET + '</a>' +
@@ -10843,7 +10844,7 @@
         'DCABB' + 'ABDCA' + 'CAACB' + 'DDBAC' + 'DDBCB' +
         'BBABC' + 'ADACC' + 'ADCDC' + 'AADDB' + 'DCBCC'
       ),
-      // Final Preboard Sep 23 — 75 items
+      // Final Preboard Sep 23 — PSAD Test 1 (75 items)
       // 1-5 DBAAD · 6-10 CACDD · 11-15 DACAD · 16-20 ABADA · 21-25 CBCDB
       // 26-30 BADAD · 31-35 DCBAA · 36-40 BBDAA · 41-45 DBABA · 46-50 CACAB
       // 51-55 DBABB · 56-60 DCABC · 61-65 DCCAA · 66-70 CABBA · 71-75 BAADC
@@ -10851,6 +10852,22 @@
         'DBAAD' + 'CACDD' + 'DACAD' + 'ABADA' + 'CBCDB' +
         'BADAD' + 'DCBAA' + 'BBDAA' + 'DBABA' + 'CACAB' +
         'DBABB' + 'DCABC' + 'DCCAA' + 'CABBA' + 'BAADC'
+      ),
+      // Final Preboard Sep 24 — MSTHC Test 1 (75 items)
+      // 1-5 DCDAD · 6-10 CDAAC · 11-15 CAABD · 16-20 ABCDC · 21-25 CBCBC
+      // 26-30 BBCCC · 31-35 BADBA · 36-40 ABADB · 41-45 DBBBC · 46-50 BAADA
+      // 51-55 DCCCD · 56-60 CABBA · 61-65 CBABC · 66-70 CACDB · 71-75 ABABC
+      'final-preboard-sep24-msthc': lettersToKeyIndex(
+        'DCDAD' + 'CDAAC' + 'CAABD' + 'ABCDC' + 'CBCBC' +
+        'BBCCC' + 'BADBA' + 'ABADB' + 'DBBBC' + 'BAADA' +
+        'DCCCD' + 'CABBA' + 'CBABC' + 'CACDB' + 'ABABC'
+      ),
+      // Final Preboard Sep 24 — HGE Test 1 (50 items)
+      // 1-5 CBABD · 6-10 DADAC · 11-15 ABCAA · 16-20 BDBAA · 21-25 ABAAD
+      // 26-30 DABCA · 31-35 DBABB · 36-40 ABDBC · 41-45 DCCBA · 46-50 CBADD
+      'final-preboard-sep24-hge': lettersToKeyIndex(
+        'CBABD' + 'DADAC' + 'ABCAA' + 'BDBAA' + 'ABAAD' +
+        'DABCA' + 'DBABB' + 'ABDBC' + 'DCCBA' + 'CBADD'
       )
     };
 
@@ -12884,8 +12901,8 @@
     sepSpecial[20] = [calEv(CAL_COURSE, 'psad-supp', '75 items - PSAD Supp')];
     sepSpecial[21] = [calEv(CAL_MILESTONE, 'ce-formulas', 'CE Terminologies Test')];
     sepSpecial[22] = [calEv(CAL_MILESTONE, 'ce-formulas', 'CE Formulas Test')];
-    sepSpecial[23] = [calEv(CAL_MILESTONE, 'preboard', 'Final Preboard')];
-    sepSpecial[24] = [calEv(CAL_MILESTONE, 'preboard', 'Final Preboard')];
+    sepSpecial[23] = [calEv(CAL_MILESTONE, 'preboard', 'Final Preboard · PSAD Test 1')];
+    sepSpecial[24] = [calEv(CAL_MILESTONE, 'preboard', 'Final Preboard · MSTHC Test 1 & HGE Test 1')];
     sepSpecial[25] = [calEv(CAL_MILESTONE, 'rest', 'Rest, you deserve it!')];
     sepSpecial[26] = [calEv(CAL_MILESTONE, 'board-exam', 'Board Exam')];
     sepSpecial[27] = [calEv(CAL_MILESTONE, 'board-exam', 'Board Exam')];
@@ -13005,7 +13022,7 @@
         '2026-9-21': { courseId: 'ceterms', lessonId: 'ceterms-sep21' },
         '2026-9-22': { courseId: 'ceformulas', lessonId: 'msthc-test1-sep22' },
         '2026-9-23': { courseId: 'final-preboard', lessonId: 'final-preboard-sep23' },
-        '2026-9-24': { courseId: 'final-preboard', lessonId: 'final-preboard-sep24' }
+        '2026-9-24': { courseId: 'final-preboard', lessonId: 'final-preboard-sep24-msthc' }
       };
       if (fallback[key]) return fallback[key];
 
