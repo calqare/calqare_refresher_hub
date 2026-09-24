@@ -3882,6 +3882,9 @@
       <button class="nav-item" data-section="tests">
         <span class="icon">📝</span> Tests
       </button>
+      <button class="nav-item" data-section="guessing">
+        <span class="icon">🎯</span> Guessing Strategies
+      </button>
       <button class="nav-item" data-section="profile">
         <span class="icon">👤</span> Profile
       </button>
@@ -4193,6 +4196,32 @@
           <p>CE Terminologies, CE Formulas, and Preboard sets (Pre / Mid / Final) follow the program calendar unlock times.</p>
         </div>
         <div class="grid grid-3" id="testsGrid"></div>
+      </section>
+
+      <!-- GUESSING STRATEGIES -->
+      <section class="section" id="guessing">
+        <div class="welcome" style="margin-bottom:1.25rem;">
+          <h2>Guessing Strategies 🎯</h2>
+          <p>Smart approaches for multiple-choice items when you are unsure — use with care and only after eliminating weak options.</p>
+        </div>
+        <div class="card glass-card" style="max-width:960px;">
+          <div class="card-title" style="margin-bottom:0.35rem;">Guessing Strategies Video</div>
+          <p class="card-desc" style="margin-bottom:1rem;">Watch this short guide on practical guessing techniques for board-style exams.</p>
+          <div class="video-wrap" style="max-width:100%;">
+            <iframe
+              class="yt-player"
+              src="https://www.youtube.com/embed/T57XGxcOt2U?rel=0"
+              title="Guessing Strategies"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              referrerpolicy="strict-origin-when-cross-origin"
+              loading="lazy"></iframe>
+          </div>
+          <p style="margin-top:0.85rem;font-size:0.85rem;color:var(--text-muted);">
+            Source:
+            <a href="https://youtu.be/T57XGxcOt2U" target="_blank" rel="noopener noreferrer" style="color:var(--primary);font-weight:600;">youtu.be/T57XGxcOt2U</a>
+          </p>
+        </div>
       </section>
 
       <!-- COURSE DETAIL -->
@@ -12033,6 +12062,7 @@
           dashboard: 'Dashboard',
           courses: 'Courses',
           tests: 'Tests',
+          guessing: 'Guessing Strategies',
           profile: 'Profile'
         };
         if (titles[id]) document.getElementById('pageTitle').textContent = titles[id];
@@ -12574,7 +12604,7 @@
           if (typeof activeQuiz !== 'undefined' && activeQuiz) return false;
           if (window._answerSheet && window._answerSheet.timerId) return false;
         } catch (e) {}
-        var allowed = { home: true, dashboard: true, courses: true, profile: true };
+        var allowed = { home: true, dashboard: true, courses: true, guessing: true, profile: true };
         return !!allowed[active.id];
       }
       function homeOn() {
