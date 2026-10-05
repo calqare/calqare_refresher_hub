@@ -3877,13 +3877,19 @@
         <span class="icon">📋</span> Dashboard
       </button>
       <button class="nav-item" data-section="courses">
-        <span class="icon">📖</span> Courses
+        <span class="icon">📖</span> Refresher Courses
       </button>
-      <button class="nav-item" data-section="tests">
-        <span class="icon">📝</span> Tests
+      <button class="nav-item" data-section="enhancement">
+        <span class="icon">🚀</span> Enhancement Courses
+      </button>
+      <button class="nav-item" data-section="caltech">
+        <span class="icon">⚡</span> Caltech/Shortcut Courses
       </button>
       <button class="nav-item" data-section="guessing">
         <span class="icon">🎯</span> Guessing Strategies
+      </button>
+      <button class="nav-item" data-section="tests">
+        <span class="icon">📝</span> Tests
       </button>
       <button class="nav-item" data-section="profile">
         <span class="icon">👤</span> Profile
@@ -4189,6 +4195,30 @@
         <div class="grid grid-3" id="coursesGrid"></div>
       </section>
 
+      <!-- ENHANCEMENT COURSES -->
+      <section class="section" id="enhancement">
+        <div class="welcome" style="margin-bottom:1.25rem;">
+          <h2>Enhancement Courses 🚀</h2>
+          <p>Supplementary modules to strengthen weak areas and deepen understanding beyond the core refresher track.</p>
+        </div>
+        <div class="card glass-card" style="max-width:720px;">
+          <div class="card-title">Coming soon</div>
+          <p class="card-desc" style="margin-bottom:0;">Enhancement course materials will appear here when they are published.</p>
+        </div>
+      </section>
+
+      <!-- CALTECH / SHORTCUT COURSES -->
+      <section class="section" id="caltech">
+        <div class="welcome" style="margin-bottom:1.25rem;">
+          <h2>Caltech / Shortcut Courses ⚡</h2>
+          <p>Fast-track and shortcut review packs for efficient last-mile preparation.</p>
+        </div>
+        <div class="card glass-card" style="max-width:720px;">
+          <div class="card-title">Coming soon</div>
+          <p class="card-desc" style="margin-bottom:0;">Caltech / Shortcut course materials will appear here when they are published.</p>
+        </div>
+      </section>
+
       <!-- TESTS -->
       <section class="section" id="tests">
         <div class="welcome" style="margin-bottom:1.25rem;">
@@ -4226,7 +4256,7 @@
 
       <!-- COURSE DETAIL -->
       <section class="section" id="courseDetail">
-        <button class="btn btn-ghost back-btn" onclick="showSection('courses')">← Back to Courses</button>
+        <button class="btn btn-ghost back-btn" onclick="showSection('courses')">← Back to Refresher Courses</button>
         <div id="courseDetailContent"></div>
       </section>
 
@@ -9870,7 +9900,7 @@
       const p = courseProgress(course);
       const isTest = !!TESTS.find(t => t.id === courseId);
       const backSection = isTest ? 'tests' : 'courses';
-      const backLabel = isTest ? '← Back to Tests' : '← Back to Courses';
+      const backLabel = isTest ? '← Back to Tests' : '← Back to Refresher Courses';
       const content = document.getElementById('courseDetailContent');
       // Update the shared courseDetail section back button (sibling of content)
       const backBtn = document.querySelector('#courseDetail > .back-btn');
@@ -12060,7 +12090,9 @@
         const titles = {
           home: 'Home',
           dashboard: 'Dashboard',
-          courses: 'Courses',
+          courses: 'Refresher Courses',
+          enhancement: 'Enhancement Courses',
+          caltech: 'Caltech/Shortcut Courses',
           tests: 'Tests',
           guessing: 'Guessing Strategies',
           profile: 'Profile'
@@ -12604,7 +12636,7 @@
           if (typeof activeQuiz !== 'undefined' && activeQuiz) return false;
           if (window._answerSheet && window._answerSheet.timerId) return false;
         } catch (e) {}
-        var allowed = { home: true, dashboard: true, courses: true, guessing: true, profile: true };
+        var allowed = { home: true, dashboard: true, courses: true, enhancement: true, caltech: true, guessing: true, profile: true };
         return !!allowed[active.id];
       }
       function homeOn() {
